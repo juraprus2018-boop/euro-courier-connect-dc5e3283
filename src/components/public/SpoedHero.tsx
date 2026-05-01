@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search, Users, Wallet, Zap } from 'lucide-react';
 import { useState } from 'react';
-import vanImage from '@/assets/citan.webp';
+import vanImage from '@/assets/citan.png';
 
 interface SpoedHeroProps {
   bedrijfsNaam: string;
