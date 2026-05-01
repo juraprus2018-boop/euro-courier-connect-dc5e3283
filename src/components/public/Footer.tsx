@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Truck, Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
-import citan from '@/assets/citan.webp';
+import citan from '@/assets/citan.png';
 import bestelbus from '@/assets/bestelbus.webp';
 import bakwagen from '@/assets/bakwagen.webp';
 
@@ -23,12 +23,10 @@ export function Footer() {
                 to="/laadcapaciteit"
                 className="group block text-center"
               >
-                <div className="relative bg-gradient-to-b from-muted/40 to-muted rounded-xl p-4 mb-3 flex items-end justify-center h-44 overflow-hidden ring-1 ring-border/60 shadow-sm hover:shadow-lg transition-all">
-                  {/* Subtiele 'wegen' achtergrond */}
-                  <div className="absolute inset-x-0 bottom-0 h-10 bg-[linear-gradient(to_top,hsl(var(--foreground)/0.06),transparent)]" />
-                  {/* Rijdende stippellijn (alleen bij hover op de hele kaart) */}
+                <div className="relative p-4 mb-3 flex items-end justify-center h-44 overflow-hidden">
+                  {/* Rijdende stippellijn (altijd zichtbaar) */}
                   <div
-                    className="absolute left-0 right-0 bottom-3 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute left-0 right-0 bottom-4 h-[2px]"
                     style={{
                       backgroundImage:
                         'repeating-linear-gradient(to right, hsl(var(--foreground)/0.35) 0 12px, transparent 12px 24px)',
@@ -40,7 +38,7 @@ export function Footer() {
                     src={v.src}
                     alt={v.alt}
                     loading="lazy"
-                    className="relative z-10 max-h-36 w-auto object-contain drop-shadow-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:animate-van-drive"
+                    className="relative z-10 max-h-36 w-auto object-contain drop-shadow-lg animate-van-drive transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
