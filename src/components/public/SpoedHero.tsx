@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search, Users, Wallet, Zap } from 'lucide-react';
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import vanImage from '@/assets/citan.webp';
 
 interface SpoedHeroProps {
@@ -10,27 +9,15 @@ interface SpoedHeroProps {
   landNaam?: string;
 }
 
-type TransportType = 'personenauto' | 'bestelauto' | 'bestelbus';
-
-const transportTypes: { id: TransportType; label: string; max: string }[] = [
-  { id: 'personenauto', label: 'Personenauto', max: '2 items – max 40x40x40 cm – Max 40 kg' },
-  { id: 'bestelauto', label: 'Bestelauto', max: '6 items – max 100x80x80 cm – Max 150 kg' },
-  { id: 'bestelbus', label: 'Bestelbus', max: '12 items – max 150x100x100 cm – Max 300 kg' },
-];
-
 export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
-  const [selected, setSelected] = useState<TransportType>('bestelauto');
   const [van, setVan] = useState('');
   const [naar, setNaar] = useState('');
-
-  const active = transportTypes.find((t) => t.id === selected)!;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (van) params.set('van', van);
     if (naar) params.set('naar', naar);
-    if (selected) params.set('type', selected);
     window.location.href = `/offerte?${params.toString()}`;
   };
 
