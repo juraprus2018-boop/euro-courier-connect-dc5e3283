@@ -18,7 +18,8 @@ interface RouteDetail {
 }
 
 const RouteDetailPage = () => {
-  const { slug, landSlug } = useParams();
+  const { slug, landPrefix } = useParams();
+  const landSlug = landPrefix?.startsWith('spoed-koerier-') ? landPrefix.slice('spoed-koerier-'.length) : undefined;
   const { land, loading: landLoading } = useLand();
   const [route, setRoute] = useState<RouteDetail | null>(null);
   const [kmTarief, setKmTarief] = useState<number>(0.85);
