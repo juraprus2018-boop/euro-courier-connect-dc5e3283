@@ -174,7 +174,8 @@ const LandPage = () => {
 
       {/* SEO content */}
       <section className="py-12 bg-muted/30">
-        <div className="container max-w-4xl">
+        <div className="container">
+          <div className="max-w-4xl mr-auto">
           <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">
             Wij rijden naar {naam} – elke dag opnieuw
           </h2>
