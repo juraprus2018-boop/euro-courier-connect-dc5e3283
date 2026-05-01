@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search, Users, Wallet, Zap } from 'lucide-react';
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import vanImage from '@/assets/citan.webp';
 
 interface SpoedHeroProps {
@@ -10,27 +9,15 @@ interface SpoedHeroProps {
   landNaam?: string;
 }
 
-type TransportType = 'personenauto' | 'bestelauto' | 'bestelbus';
-
-const transportTypes: { id: TransportType; label: string; max: string }[] = [
-  { id: 'personenauto', label: 'Personenauto', max: '2 items – max 40x40x40 cm – Max 40 kg' },
-  { id: 'bestelauto', label: 'Bestelauto', max: '6 items – max 100x80x80 cm – Max 150 kg' },
-  { id: 'bestelbus', label: 'Bestelbus', max: '12 items – max 150x100x100 cm – Max 300 kg' },
-];
-
 export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
-  const [selected, setSelected] = useState<TransportType>('bestelauto');
   const [van, setVan] = useState('');
   const [naar, setNaar] = useState('');
-
-  const active = transportTypes.find((t) => t.id === selected)!;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (van) params.set('van', van);
     if (naar) params.set('naar', naar);
-    if (selected) params.set('type', selected);
     window.location.href = `/offerte?${params.toString()}`;
   };
 
@@ -73,45 +60,8 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
               className="mt-8 rounded-3xl bg-card text-card-foreground shadow-2xl p-6 sm:p-8 animate-fade-in"
             >
               <p className="text-sm font-semibold text-primary mb-4">
-                Waar past jouw zending in?
+                Waar moet jouw spoedzending heen?
               </p>
-
-              {/* Transport types */}
-              <div className="grid grid-cols-3 gap-3 mb-5">
-                {transportTypes.map((t) => {
-                  const isActive = selected === t.id;
-                  return (
-                    <button
-                      key={t.id}
-                      type="button"
-                      onClick={() => setSelected(t.id)}
-                      className={cn(
-                        'group relative rounded-2xl border-2 p-3 sm:p-4 text-center transition-all',
-                        isActive
-                          ? 'border-primary bg-primary text-primary-foreground shadow-lg'
-                          : 'border-border bg-card hover:border-primary/40 hover:shadow-md'
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          'mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl',
-                          isActive ? 'bg-primary-foreground/15' : 'bg-primary/10'
-                        )}
-                      >
-                        <Zap className={cn('h-6 w-6', isActive ? 'text-primary-foreground' : 'text-primary')} />
-                      </div>
-                      <span className="block text-[11px] sm:text-xs font-bold uppercase tracking-wide">
-                        {t.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="rounded-xl bg-muted/60 p-3 mb-5">
-                <p className="text-xs font-semibold text-foreground">Maxima van zending</p>
-                <p className="text-xs text-muted-foreground">{active.max}</p>
-              </div>
 
               {/* From / To */}
               <div className="grid sm:grid-cols-2 gap-3 mb-5">
