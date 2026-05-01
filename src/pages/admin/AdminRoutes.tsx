@@ -95,7 +95,6 @@ const AdminRoutes = () => {
                     <TableHead>Route</TableHead>
                     <TableHead>Land</TableHead>
                     <TableHead>Afstand</TableHead>
-                    <TableHead>Prijs</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -110,12 +109,11 @@ const AdminRoutes = () => {
                       </TableCell>
                       <TableCell>{route.buitenland_stad?.land?.naam}</TableCell>
                       <TableCell>{Number(route.afstand_km).toLocaleString('nl-NL')} km</TableCell>
-                      <TableCell>€{Number(route.geschatte_prijs).toFixed(0)}</TableCell>
                     </TableRow>
                   ))}
                   {routes.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                      <TableCell colSpan={3} className="text-center py-8 text-muted-foreground">
                         {search ? 'Geen routes gevonden' : 'Nog geen routes gegenereerd'}
                       </TableCell>
                     </TableRow>
