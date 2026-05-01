@@ -9,15 +9,15 @@ interface SpoedKoerierSectionProps {
 
 export function SpoedKoerierSection({ landNaam }: SpoedKoerierSectionProps) {
   return (
-    <section className="py-16 bg-accent/10 border-y border-accent/20">
+    <section className="py-16 bg-primary-soft border-y border-primary/20">
       <div className="container">
         <div className="max-w-4xl mx-auto flex flex-col lg:flex-row items-center gap-8 text-center lg:text-left">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-accent text-accent-foreground flex-shrink-0 shadow-lg">
+          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-cta text-cta-foreground flex-shrink-0 shadow-cta">
             <Zap className="h-10 w-10" />
           </div>
 
           <div className="flex-1">
-            <span className="inline-block text-accent font-bold uppercase tracking-widest text-sm">
+            <span className="inline-block text-primary font-bold uppercase tracking-widest text-sm">
               Spoedkoerier
             </span>
             <h2 className="font-display text-3xl lg:text-4xl font-bold mt-2">
@@ -30,13 +30,13 @@ export function SpoedKoerierSection({ landNaam }: SpoedKoerierSectionProps) {
           </div>
 
           <div className="flex flex-col gap-3 flex-shrink-0">
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
               <a href={CONTACT.telefoonHref}>
                 <Phone className="mr-2 h-5 w-5" />
                 {CONTACT.telefoon}
               </a>
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" className="bg-gradient-cta text-cta-foreground hover:brightness-110 shadow-cta" asChild>
               <Link to="/offerte">
                 Direct offerte
                 <ArrowRight className="ml-2 h-4 w-4" />
