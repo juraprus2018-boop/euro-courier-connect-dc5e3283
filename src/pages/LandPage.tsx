@@ -157,10 +157,10 @@ const LandPage = () => {
       <section className="py-12 bg-muted/30">
         <div className="container">
           <div className="max-w-4xl mr-auto">
-          <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="font-display text-xl md:text-2xl font-bold mb-4">
             Wij rijden naar {naam} – elke dag opnieuw
           </h2>
-          <div className="prose prose-slate max-w-none text-foreground">
+          <div className="prose prose-slate max-w-none text-foreground text-[18px] leading-relaxed">
             <p>
               Heeft u op korte termijn een <strong>spoedkoerier naar {naam}</strong> nodig?
               De Europa Koerier rijdt dagelijks vanuit Nederland naar {naam} en is gespecialiseerd
