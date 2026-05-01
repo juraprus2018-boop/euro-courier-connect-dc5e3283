@@ -68,6 +68,7 @@ export function Footer() {
               <li><Link to="/medisch-transport" className="hover:text-foreground transition-colors">Medisch transport</Link></li>
               <li><Link to="/on-board-koeriersdienst" className="hover:text-foreground transition-colors">On-Board Koeriersdienst</Link></li>
               <li><Link to="/laadcapaciteit" className="hover:text-foreground transition-colors">Laadcapaciteit</Link></li>
+              <li><Link to="/certificeringen" className="hover:text-foreground transition-colors">Certificeringen</Link></li>
             </ul>
             <h4 className="font-display font-semibold pt-2">Navigatie</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
