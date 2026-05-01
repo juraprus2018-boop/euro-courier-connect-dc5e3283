@@ -66,7 +66,7 @@ const LandPage = () => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', `${window.location.origin}/spoedkoerier-naar-${land.slug}`);
+    canonical.setAttribute('href', `${window.location.origin}/spoedkoerier-naar/${land.slug}`);
   }, [land]);
 
   if (landLoading || isLoading) {
