@@ -112,8 +112,7 @@ const RouteDetailPage = () => {
               Koerier van {nlPlaats} naar {buitenlandStad}
             </h1>
             <p className="mt-4 text-primary-foreground/80 max-w-2xl">
-              Betrouwbare koeriersdienst van {nlPlaats} naar {buitenlandStad}, {landNaam}. 
-              Dagelijks op pad voor snelle en veilige leveringen.
+              Spoedkoerier van {nlPlaats} naar {buitenlandStad} ({landNaam}). Eén chauffeur, één auto, rechtstreeks naar het afleveradres.
             </p>
           </div>
         </section>
