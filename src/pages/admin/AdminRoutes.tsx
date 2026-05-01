@@ -3,8 +3,9 @@ import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Search, ArrowRight } from 'lucide-react';
+import { Loader2, Search, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface RouteData {
   id: string;
@@ -12,7 +13,7 @@ interface RouteData {
   afstand_km: number;
   geschatte_prijs: number;
   nl_plaats: { naam: string };
-  buitenland_stad: { naam: string; land: { naam: string } };
+  buitenland_stad: { naam: string; land: { naam: string; domein: string | null } };
 }
 
 const AdminRoutes = () => {
