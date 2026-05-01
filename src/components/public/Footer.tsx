@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { Truck, Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
-import citan from '@/assets/citan.png';
-import bestelbus from '@/assets/bestelbus.webp';
-import bakwagen from '@/assets/bakwagen.webp';
+import citan from '@/assets/citan-transparent.png';
+import bestelbus from '@/assets/bestelbus-transparent.png';
+import bakwagen from '@/assets/bakwagen-transparent.png';
 
 export function Footer() {
   return (
@@ -19,7 +19,7 @@ export function Footer() {
               { src: bakwagen, alt: 'Bakwagen met laadklep van De Europa Koerier', label: 'Bakwagen met laadklep' },
             ].map((v) => (
               <Link key={v.label} to="/laadcapaciteit" className="group block text-center">
-                <div className="bg-muted rounded-lg p-4 mb-2 flex items-center justify-center h-32 overflow-hidden">
+                <div className="rounded-lg p-4 mb-2 flex items-center justify-center h-32 overflow-hidden">
                   <img src={v.src} alt={v.alt} loading="lazy" className="max-h-full w-auto object-contain transition-transform group-hover:scale-105" />
                 </div>
                 <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
