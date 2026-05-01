@@ -33,7 +33,7 @@ const AdminRoutes = () => {
         afstand_km,
         geschatte_prijs,
         nl_plaats:nl_plaatsen(naam),
-        buitenland_stad:buitenland_steden(naam, land:landen(naam))
+        buitenland_stad:buitenland_steden(naam, land:landen(naam, domein))
       `, { count: 'exact' })
       .order('created_at', { ascending: false })
       .limit(100);
