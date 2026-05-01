@@ -17,6 +17,7 @@ import InternationaalTransportPage from "./pages/services/InternationaalTranspor
 import KunsttransportPage from "./pages/services/KunsttransportPage";
 import MedischTransportPage from "./pages/services/MedischTransportPage";
 import OnBoardKoeriersdienstPage from "./pages/services/OnBoardKoeriersdienstPage";
+import LaadcapaciteitPage from "./pages/LaadcapaciteitPage";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminLanden from "./pages/admin/AdminLanden";
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/kunsttransport" element={<KunsttransportPage />} />
           <Route path="/medisch-transport" element={<MedischTransportPage />} />
           <Route path="/on-board-koeriersdienst" element={<OnBoardKoeriersdienstPage />} />
+          <Route path="/laadcapaciteit" element={<LaadcapaciteitPage />} />
           <Route path="/auth" element={<Navigate to="/admin/login" replace />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
