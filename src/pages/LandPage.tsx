@@ -153,25 +153,6 @@ const LandPage = () => {
         </div>
       </section>
 
-      {/* Voordelen */}
-      <section className="py-12 bg-background">
-        <div className="container grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { icon: Clock, titel: 'Direct beschikbaar', tekst: `Binnen 1 uur onderweg naar ${naam}.` },
-            { icon: Truck, titel: 'Eigen wagenpark', tekst: 'Geen overslag, één chauffeur, één rit.' },
-            { icon: ShieldCheck, titel: 'Volledig verzekerd', tekst: 'Track & trace en goederenverzekering inbegrepen.' },
-          ].map((v) => (
-            <div key={v.titel} className="rounded-xl border border-border p-6 bg-card">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 mb-4">
-                <v.icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-display text-lg font-semibold mb-2">{v.titel}</h3>
-              <p className="text-muted-foreground text-sm">{v.tekst}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* SEO content */}
       <section className="py-12 bg-muted/30">
         <div className="container">
