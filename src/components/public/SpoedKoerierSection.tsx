@@ -24,8 +24,9 @@ export function SpoedKoerierSection({ landNaam }: SpoedKoerierSectionProps) {
               Spoed nodig? Wij rijden direct van A naar B
             </h2>
             <p className="mt-3 text-lg text-muted-foreground">
-              Geen tussenstops, geen overslag. De chauffeur vertrekt na uw boeking en
-              rijdt rechtstreeks naar {landNaam ? landNaam : 'de bestemming'}. Ook 's avonds en in het weekend.
+              Wij zijn De Europa Koerier en vervoeren jouw spoedzending rechtstreeks – bijvoorbeeld
+              van Amsterdam naar {landNaam ? landNaam : 'Parijs'}. Geen tussenstops, geen overslag.
+              De chauffeur vertrekt direct na uw boeking, ook 's avonds en in het weekend.
             </p>
           </div>
 
