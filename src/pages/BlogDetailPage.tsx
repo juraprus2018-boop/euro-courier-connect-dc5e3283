@@ -83,7 +83,7 @@ const BlogDetailPage = () => {
             </div>
           ) : (
             <article>
-              <PageBreadcrumb items={[{ label: 'Blog', href: '/blog' }, { label: artikel.titel }]} />
+              <PageBreadcrumb items={[{ label: 'Blog', to: '/blog' }, { label: artikel.titel }]} />
               <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
                 <ArrowLeft className="h-4 w-4" /> Terug naar overzicht
               </Link>
