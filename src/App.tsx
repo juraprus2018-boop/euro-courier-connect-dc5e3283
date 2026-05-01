@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
-import RoutesPage from "./pages/RoutesPage";
+
 import RouteDetailPage from "./pages/RouteDetailPage";
 import BestemmingenPage from "./pages/BestemmingenPage";
 import BestemmingDetailPage from "./pages/BestemmingDetailPage";
@@ -44,7 +44,7 @@ const App = () => (
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/routes" element={<RoutesPage />} />
+          <Route path="/routes" element={<Navigate to="/bestemmingen" replace />} />
           <Route path="/route/:slug" element={<RouteDetailPage />} />
           <Route path="/bestemmingen" element={<BestemmingenPage />} />
           <Route path="/bestemming/:slug" element={<BestemmingDetailPage />} />
