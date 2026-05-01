@@ -13,7 +13,7 @@ interface RouteData {
   afstand_km: number;
   geschatte_prijs: number;
   nl_plaats: { naam: string };
-  buitenland_stad: { naam: string; land: { naam: string; domein: string | null } };
+  buitenland_stad: { naam: string; land: { naam: string; slug: string; domein: string | null } };
 }
 
 const AdminRoutes = () => {
