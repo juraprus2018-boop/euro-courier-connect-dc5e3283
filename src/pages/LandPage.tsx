@@ -34,7 +34,7 @@ const LandPage = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('buitenland_steden')
-        .select('id, naam, slug')
+        .select('id, naam, slug, latitude, longitude')
         .eq('land_id', land!.id)
         .order('naam');
       if (error) throw error;
