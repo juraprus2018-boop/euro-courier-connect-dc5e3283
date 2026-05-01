@@ -3,8 +3,7 @@ import { ServicePageLayout } from '@/components/public/ServicePageLayout';
 
 const InternationaalTransportPage = () => (
   <ServicePageLayout
-    metaTitle="Internationaal transport | De Europa Koerier"
-    metaDescription="Internationaal koerierstransport vanuit Nederland naar heel Europa. Direct van A naar B, 24/7 beschikbaar. Vraag uw offerte aan."
+    pageKey="service_internationaal"
     badge="Internationaal transport"
     title="Internationaal transport door heel Europa"
     intro="Van Nederland naar elke uithoek van Europa. Met onze eigen vloot bestelwagens en bakwagens met laadklep verzorgen wij directe ritten naar alle EU-landen, zonder overslag en zonder vertraging."

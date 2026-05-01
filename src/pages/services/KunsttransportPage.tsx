@@ -3,8 +3,7 @@ import { ServicePageLayout } from '@/components/public/ServicePageLayout';
 
 const KunsttransportPage = () => (
   <ServicePageLayout
-    metaTitle="Kunsttransport | De Europa Koerier"
-    metaDescription="Veilig en discreet kunsttransport door heel Europa. Klimaatbeheerst en met ervaren koeriers. Vraag een offerte aan."
+    pageKey="service_kunst"
     badge="Kunsttransport"
     title="Veilig kunsttransport voor galeries en verzamelaars"
     intro="Kunstwerken vragen om een aparte aanpak. Wij vervoeren schilderijen, beelden en andere waardevolle stukken zorgvuldig, met professionele verpakking en klimaatcontrole."
