@@ -6,7 +6,7 @@ import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
-import { Loader2, MapPin, ArrowRight, Truck, Clock, Euro } from 'lucide-react';
+import { Loader2, MapPin, ArrowRight, Truck, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface RouteDetail {
@@ -121,7 +121,7 @@ const RouteDetailPage = () => {
         {/* Route Info */}
         <section className="py-12">
           <div className="container">
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-4">
@@ -131,20 +131,6 @@ const RouteDetailPage = () => {
                     <div>
                       <p className="text-sm text-muted-foreground">Afstand</p>
                       <p className="font-display text-2xl font-bold">{Number(route.afstand_km).toLocaleString('nl-NL')} km</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
-                      <Euro className="h-6 w-6 text-accent" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Vanaf</p>
-                      <p className="font-display text-2xl font-bold">€{Number(route.geschatte_prijs).toFixed(0)}</p>
                     </div>
                   </div>
                 </CardContent>
