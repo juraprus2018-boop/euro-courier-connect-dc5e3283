@@ -6,7 +6,7 @@ import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
-import { Loader2, MapPin, ArrowRight, Truck, Clock, Euro } from 'lucide-react';
+import { Loader2, MapPin, ArrowRight, Truck, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface RouteDetail {
