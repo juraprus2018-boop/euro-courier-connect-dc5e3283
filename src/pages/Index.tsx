@@ -12,8 +12,9 @@ import { USPSection } from '@/components/public/USPSection';
 import { FAQSection } from '@/components/public/FAQSection';
 import { CTASection } from '@/components/public/CTASection';
 import { SpoedKoerierSection } from '@/components/public/SpoedKoerierSection';
+import { SpoedHero } from '@/components/public/SpoedHero';
+import { DriePuntenSection } from '@/components/public/DriePuntenSection';
 // Main site components
-import { MainHeroSection } from '@/components/public/MainHeroSection';
 import { ServicesSection } from '@/components/public/ServicesSection';
 import { CountriesSection } from '@/components/public/CountriesSection';
 import { StatsSection } from '@/components/public/StatsSection';
