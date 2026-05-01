@@ -10,6 +10,7 @@ import RouteDetailPage from "./pages/RouteDetailPage";
 import BestemmingenPage from "./pages/BestemmingenPage";
 import BestemmingDetailPage from "./pages/BestemmingDetailPage";
 import QuotePage from "./pages/QuotePage";
+import PrijsBerekenenPage from "./pages/PrijsBerekenenPage";
 import ContactPage from "./pages/ContactPage";
 import FaqPage from "./pages/FaqPage";
 import AlgemeneVoorwaardenPage from "./pages/AlgemeneVoorwaardenPage";
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/bestemmingen" element={<BestemmingenPage />} />
           <Route path="/bestemming/:slug" element={<BestemmingDetailPage />} />
           <Route path="/offerte" element={<QuotePage />} />
+          <Route path="/prijs-berekenen" element={<PrijsBerekenenPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaardenPage />} />
