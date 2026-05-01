@@ -44,7 +44,7 @@ export function ServicePageLayout({
                 { label: 'Diensten' },
                 { label: title },
               ]}
-              className="mb-6 text-primary-foreground/90 [&_a]:text-primary-foreground/80 [&_a:hover]:text-primary-foreground [&_[aria-current]]:text-primary-foreground [&_[aria-current]]:font-semibold [&_svg]:text-primary-foreground/60"
+              className="mb-6 !text-primary-foreground/90 [&_*]:!text-primary-foreground [&_a]:!text-primary-foreground/80 [&_a:hover]:!text-primary-foreground [&_svg]:!text-primary-foreground/70"
             />
             <div className="max-w-3xl">
               <span className="inline-block text-primary-foreground/80 font-semibold uppercase tracking-widest text-sm">
@@ -54,7 +54,7 @@ export function ServicePageLayout({
               <p className="mt-6 text-lg text-primary-foreground/85">{intro}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
+                <Button size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta" asChild>
                   <Link to="/offerte">
                     Offerte aanvragen
                     <ArrowRight className="ml-2 h-5 w-5" />
