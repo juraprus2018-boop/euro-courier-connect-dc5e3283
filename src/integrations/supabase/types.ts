@@ -553,6 +553,45 @@ export type Database = {
           },
         ]
       }
+      seo_paginas: {
+        Row: {
+          beschikbare_variabelen: string[]
+          beschrijving_admin: string | null
+          created_at: string
+          description_template: string
+          id: string
+          is_dynamisch: boolean
+          label: string
+          pagina_key: string
+          titel_template: string
+          updated_at: string
+        }
+        Insert: {
+          beschikbare_variabelen?: string[]
+          beschrijving_admin?: string | null
+          created_at?: string
+          description_template?: string
+          id?: string
+          is_dynamisch?: boolean
+          label: string
+          pagina_key: string
+          titel_template?: string
+          updated_at?: string
+        }
+        Update: {
+          beschikbare_variabelen?: string[]
+          beschrijving_admin?: string | null
+          created_at?: string
+          description_template?: string
+          id?: string
+          is_dynamisch?: boolean
+          label?: string
+          pagina_key?: string
+          titel_template?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       terugbel_verzoeken: {
         Row: {
           created_at: string
