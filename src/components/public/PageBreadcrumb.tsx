@@ -46,7 +46,7 @@ export function PageBreadcrumb({ items, className = '' }: PageBreadcrumbProps) {
             )}
             {isLast || !item.to ? (
               <span
-                className="font-medium inline-flex items-center gap-1 text-primary-foreground"
+                className="font-medium inline-flex items-center gap-1 text-primary"
                 aria-current={isLast ? 'page' : undefined}
               >
                 {idx === 0 && <Home className="h-3.5 w-3.5" aria-hidden="true" />}
