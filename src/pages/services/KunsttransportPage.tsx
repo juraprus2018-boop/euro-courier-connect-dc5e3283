@@ -7,7 +7,7 @@ const KunsttransportPage = () => (
     metaDescription="Veilig en discreet kunsttransport door heel Europa. Klimaatbeheerst, verzekerd en met ervaren koeriers. Vraag een offerte aan."
     badge="Kunsttransport"
     title="Veilig kunsttransport voor galeries en verzamelaars"
-    intro="Kunstwerken vragen om een speciale aanpak. Wij vervoeren schilderijen, beelden en andere waardevolle kunst met de grootste zorg, voorzien van professionele verpakking, klimaatcontrole en een volledige verzekering."
+    intro="Kunstwerken vragen om een aparte aanpak. Wij vervoeren schilderijen, beelden en andere waardevolle stukken zorgvuldig, met professionele verpakking, klimaatcontrole en volledige verzekering."
     icon={Palette}
     features={[
       { title: 'Discreet en vertrouwelijk', description: 'Wij respecteren de waarde en gevoeligheid van uw kunstwerken. Geen openbare informatie, geen omwegen.' },
