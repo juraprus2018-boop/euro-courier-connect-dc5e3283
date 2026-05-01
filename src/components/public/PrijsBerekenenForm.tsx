@@ -158,6 +158,14 @@ export function PrijsBerekenenForm({
       setCalcError('Vul eerst laad- en losplaats in.');
       return;
     }
+    if (!values.contact_naam || !values.contact_email || !values.contact_telefoon) {
+      setCalcError('Vul eerst je contactgegevens (naam, e-mail en telefoon) in om de prijs te zien.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.contact_email)) {
+      setCalcError('Vul een geldig e-mailadres in.');
+      return;
+    }
     setCalculating(true);
     try {
       const pickup = await geocode(values.ophaal_adres, 'nl');
@@ -564,14 +572,19 @@ export function PrijsBerekenenForm({
             )}
           </div>
 
-          <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            size="lg"
+            disabled={isSubmitting}
+            className="w-full bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta animate-cta-pulse"
+          >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Verzenden...
               </>
             ) : (
               <>
-                <Send className="mr-2 h-4 w-4" /> Aanvraag versturen
+                <Send className="mr-2 h-4 w-4" /> Offerte afronden
               </>
             )}
           </Button>
