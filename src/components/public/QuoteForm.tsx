@@ -143,6 +143,11 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
                 placeholder="Adres of plaats in Nederland"
               />
               {errors.ophaal_adres && <p className="text-sm text-destructive">{errors.ophaal_adres.message}</p>}
+              <div className="grid grid-cols-2 gap-2">
+                <Input {...register('ophaal_postcode')} placeholder="Postcode" />
+                <Input {...register('ophaal_plaats')} placeholder="Plaats" />
+              </div>
+              {errors.ophaal_plaats && <p className="text-sm text-destructive">{errors.ophaal_plaats.message}</p>}
             </div>
 
             <div className="space-y-2">
@@ -162,6 +167,11 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
                 placeholder={afleverPlaceholder}
               />
               {errors.aflever_adres && <p className="text-sm text-destructive">{errors.aflever_adres.message}</p>}
+              <div className="grid grid-cols-2 gap-2">
+                <Input {...register('aflever_postcode')} placeholder="Postcode" />
+                <Input {...register('aflever_plaats')} placeholder="Plaats" />
+              </div>
+              {errors.aflever_plaats && <p className="text-sm text-destructive">{errors.aflever_plaats.message}</p>}
             </div>
           </div>
 
