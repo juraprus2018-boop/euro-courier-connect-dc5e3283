@@ -12,6 +12,16 @@ export function CountriesSection() {
         .select('*')
         .eq('actief', true)
         .order('naam');
+      return data;
+    },
+  });
+
+  // ISO-code -> emoji vlag
+  const isoToFlag = (iso?: string | null) => {
+    if (!iso || iso.length !== 2) return '🏳️';
+    const code = iso.toUpperCase();
+    return String.fromCodePoint(...[...code].map((c) => 0x1f1e6 - 65 + c.charCodeAt(0)));
+  };
       if (error) throw error;
       return data;
     },
