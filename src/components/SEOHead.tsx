@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet-async';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface SEOHeadProps {
   title?: string;
@@ -6,9 +8,41 @@ interface SEOHeadProps {
   landNaam?: string;
   canonicalPath?: string;
   noindex?: boolean;
+  /** Sleutel uit seo_paginas tabel voor admin-beheerde overrides */
+  pageKey?: string;
+  /** Variabelen om in templates te interpoleren, bv. { land: 'Frankrijk', stad: 'Parijs' } */
+  variables?: Record<string, string | number | undefined>;
 }
 
-export function SEOHead({ title, description, landNaam, canonicalPath, noindex }: SEOHeadProps) {
+function interpolate(template: string, vars: Record<string, string | number | undefined>) {
+  return template.replace(/\{(\w+)\}/g, (_, key) => {
+    const v = vars[key];
+    return v === undefined || v === null ? '' : String(v);
+  }).replace(/\s+/g, ' ').trim();
+}
+
+export function SEOHead({ title, description, landNaam, canonicalPath, noindex, pageKey, variables }: SEOHeadProps) {
+  const [override, setOverride] = useState<{ titel?: string; description?: string } | null>(null);
+
+  useEffect(() => {
+    if (!pageKey) return;
+    let cancelled = false;
+    supabase
+      .from('seo_paginas')
+      .select('titel_template, description_template')
+      .eq('pagina_key', pageKey)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (cancelled || !data) return;
+        const vars = { land: landNaam, ...(variables || {}) };
+        setOverride({
+          titel: data.titel_template ? interpolate(data.titel_template, vars) : undefined,
+          description: data.description_template ? interpolate(data.description_template, vars) : undefined,
+        });
+      });
+    return () => { cancelled = true; };
+  }, [pageKey, landNaam, JSON.stringify(variables)]);
+
   const siteNaam = landNaam ? `De ${landNaam} Koerier` : 'De Europa Koerier';
 
   const defaultTitle = landNaam
@@ -19,10 +53,10 @@ export function SEOHead({ title, description, landNaam, canonicalPath, noindex }
     ? `Spoedkoerier van Nederland naar ${landNaam}. Direct van A naar B, 24/7 beschikbaar. Vraag nu een offerte aan!`
     : 'Spoedkoerier door heel Europa. Direct transport van Nederland naar uw bestemming. 24/7 beschikbaar, dagelijks op pad.';
 
-  const finalTitle = title || defaultTitle;
-  const finalDescription = description || defaultDescription;
+  // Prio: prop > admin override > default
+  const finalTitle = title || override?.titel || defaultTitle;
+  const finalDescription = description || override?.description || defaultDescription;
 
-  // Build canonical URL based on current host
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const path = canonicalPath ?? (typeof window !== 'undefined' ? window.location.pathname : '/');
   const canonicalUrl = `${origin}${path}`;
