@@ -257,6 +257,45 @@ const LandPage = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-12">
+        <div className="container">
+          <div className="max-w-4xl mr-auto">
+            <h2 className="font-display text-xl md:text-2xl font-bold mb-6">
+              Veelgestelde vragen over een spoedkoerier naar {naam}
+            </h2>
+            <div className="space-y-4">
+              {[
+                {
+                  q: `Hoe snel kan een spoedkoerier naar ${naam} vertrekken?`,
+                  a: `Onze spoedkoerier naar ${naam} kan in de meeste gevallen binnen 60 minuten na uw aanvraag vertrekken vanuit Nederland. Wij zijn 24/7 bereikbaar, ook in het weekend en op feestdagen.`,
+                },
+                {
+                  q: `Wat is de leveringstijd naar ${naam}?`,
+                  a: `De rijtijd vanuit Nederland naar ${naam} bedraagt afhankelijk van de exacte bestemming circa 14 tot 18 uur directe rit. Wij rijden non-stop met twee chauffeurs wanneer dit nodig is, zodat uw zending zo snel mogelijk wordt afgeleverd.`,
+                },
+                {
+                  q: `Is mijn zending naar ${naam} verzekerd?`,
+                  a: `Ja. Iedere zending wordt standaard vervoerd onder de CMR-vervoersverzekering. Voor waardevolle goederen, kunst of medische zendingen kunnen wij op verzoek een aanvullende goederenverzekering afsluiten.`,
+                },
+                {
+                  q: `Wat moet ik aanleveren voor een rit naar ${naam}?`,
+                  a: `Voor een vlotte rit naar ${naam} ontvangen wij graag: het ophaal- en afleveradres met contactpersoon en telefoonnummer, afmetingen en gewicht van de zending, een korte omschrijving van de inhoud en eventuele douanedocumenten of CMR-vrachtbrief. Wij regelen de rest.`,
+                },
+              ].map((item, i) => (
+                <details key={i} className="group rounded-lg border border-border bg-card p-4">
+                  <summary className="cursor-pointer font-semibold text-foreground list-none flex items-center justify-between gap-2">
+                    <span>{item.q}</span>
+                    <span className="text-primary group-open:rotate-180 transition-transform">▾</span>
+                  </summary>
+                  <p className="mt-3 text-foreground/80 text-[16px] leading-relaxed">{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-16 bg-gradient-hero text-primary-foreground">
         <div className="container text-center">
