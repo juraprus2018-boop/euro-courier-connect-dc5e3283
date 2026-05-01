@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { QuoteForm } from '@/components/public/QuoteForm';
@@ -14,7 +14,7 @@ interface RouteDetail {
   afstand_km: number;
   geschatte_prijs: number;
   nl_plaats: { id: string; naam: string };
-  buitenland_stad: { id: string; naam: string; land: { id: string; naam: string } };
+  buitenland_stad: { id: string; naam: string; land: { id: string; naam: string; slug: string } };
 }
 
 const RouteDetailPage = () => {
