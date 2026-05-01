@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { useLand } from '@/hooks/useLand';
 import { AddressAutocomplete } from './AddressAutocomplete';
 
 const quoteSchema = z.object({
@@ -39,6 +40,14 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { land, isHoofdsite } = useLand();
+
+  // Ophaal = altijd Nederland. Aflever = land van domein, of alle landen op hoofdsite.
+  const ophaalCountries = 'nl';
+  const afleverCountries = !isHoofdsite && land?.iso_code ? land.iso_code : undefined;
+  const afleverPlaceholder = afleverCountries
+    ? `Adres in ${land?.naam}`
+    : 'Begin met typen...';
 
   const {
     register,
@@ -120,31 +129,37 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
           {/* Adressen met autocomplete */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="ophaal_adres">Ophaaladres *</Label>
+              <Label htmlFor="ophaal_adres">Ophaaladres in Nederland *</Label>
               <AddressAutocomplete
                 id="ophaal_adres"
                 value={ophaalAdres || ''}
+                countryCodes={ophaalCountries}
                 onChange={(v) => setValue('ophaal_adres', v, { shouldValidate: true })}
                 onSelect={(s) => {
                   if (s.postcode) setValue('ophaal_postcode', s.postcode);
-                  if (s.city) setValue('ophaal_plaats', s.city, { shouldValidate: true });
+                  const plaats = s.city || s.display_name.split(',')[1]?.trim() || '';
+                  if (plaats) setValue('ophaal_plaats', plaats, { shouldValidate: true });
                 }}
-                placeholder="Begin met typen..."
+                placeholder="Adres of plaats in Nederland"
               />
               {errors.ophaal_adres && <p className="text-sm text-destructive">{errors.ophaal_adres.message}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="aflever_adres">Afleveradres *</Label>
+              <Label htmlFor="aflever_adres">
+                Afleveradres {afleverCountries ? `in ${land?.naam}` : ''} *
+              </Label>
               <AddressAutocomplete
                 id="aflever_adres"
                 value={afleverAdres || ''}
+                countryCodes={afleverCountries}
                 onChange={(v) => setValue('aflever_adres', v, { shouldValidate: true })}
                 onSelect={(s) => {
                   if (s.postcode) setValue('aflever_postcode', s.postcode);
-                  if (s.city) setValue('aflever_plaats', s.city, { shouldValidate: true });
+                  const plaats = s.city || s.display_name.split(',')[1]?.trim() || '';
+                  if (plaats) setValue('aflever_plaats', plaats, { shouldValidate: true });
                 }}
-                placeholder="Begin met typen..."
+                placeholder={afleverPlaceholder}
               />
               {errors.aflever_adres && <p className="text-sm text-destructive">{errors.aflever_adres.message}</p>}
             </div>
