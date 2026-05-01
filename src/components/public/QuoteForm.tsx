@@ -40,6 +40,14 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { land, isHoofdsite } = useLand();
+
+  // Ophaal = altijd Nederland. Aflever = land van domein, of alle landen op hoofdsite.
+  const ophaalCountries = 'nl';
+  const afleverCountries = !isHoofdsite && land?.iso_code ? land.iso_code : undefined;
+  const afleverPlaceholder = afleverCountries
+    ? `Adres in ${land?.naam}`
+    : 'Begin met typen...';
 
   const {
     register,
