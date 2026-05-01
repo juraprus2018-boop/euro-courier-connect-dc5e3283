@@ -128,7 +128,7 @@ export function Header({ landNaam }: HeaderProps) {
             <a href={CONTACT.telefoonHref} className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2 text-sm font-semibold w-fit">
               <Phone className="h-4 w-4" /> {CONTACT.telefoon}
             </a>
-            <Button asChild className="w-full rounded-full bg-gradient-cta text-cta-foreground shadow-cta">
+            <Button asChild className="w-full rounded-full bg-gradient-cta text-cta-foreground shadow-cta animate-cta-pulse">
               <Link to="/offerte" onClick={() => setMobileMenuOpen(false)}>Offerte aanvragen</Link>
             </Button>
           </nav>

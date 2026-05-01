@@ -42,7 +42,7 @@ export function MainCTASection() {
           
           {/* CTAs */}
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-6" asChild>
+            <Button size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta animate-cta-pulse text-lg px-8 py-6" asChild>
               <Link to="/offerte">
                 Offerte aanvragen
                 <ArrowRight className="ml-2 h-5 w-5" />
