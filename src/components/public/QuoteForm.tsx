@@ -147,16 +147,17 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
                 countryCodes={ophaalCountries}
                 onChange={(v) => setValue('ophaal_adres', v, { shouldValidate: true })}
                 onSelect={(s) => {
-                  if (s.postcode) setValue('ophaal_postcode', s.postcode);
+                  if (s.postcode) setValue('ophaal_postcode', s.postcode, { shouldValidate: true });
                   const plaats = s.city || s.display_name.split(',')[1]?.trim() || '';
                   if (plaats) setValue('ophaal_plaats', plaats, { shouldValidate: true });
                 }}
                 placeholder="Adres of plaats in Nederland"
+                className={fieldClass('ophaal_adres')}
               />
               {errors.ophaal_adres && <p className="text-sm text-destructive">{errors.ophaal_adres.message}</p>}
               <div className="grid grid-cols-2 gap-2">
-                <Input {...register('ophaal_postcode')} placeholder="Postcode" />
-                <Input {...register('ophaal_plaats')} placeholder="Plaats" />
+                <Input {...register('ophaal_postcode')} placeholder="Postcode" className={fieldClass('ophaal_postcode')} />
+                <Input {...register('ophaal_plaats')} placeholder="Plaats" className={fieldClass('ophaal_plaats')} />
               </div>
               {errors.ophaal_plaats && <p className="text-sm text-destructive">{errors.ophaal_plaats.message}</p>}
             </div>
@@ -171,16 +172,17 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
                 countryCodes={afleverCountries}
                 onChange={(v) => setValue('aflever_adres', v, { shouldValidate: true })}
                 onSelect={(s) => {
-                  if (s.postcode) setValue('aflever_postcode', s.postcode);
+                  if (s.postcode) setValue('aflever_postcode', s.postcode, { shouldValidate: true });
                   const plaats = s.city || s.display_name.split(',')[1]?.trim() || '';
                   if (plaats) setValue('aflever_plaats', plaats, { shouldValidate: true });
                 }}
                 placeholder={afleverPlaceholder}
+                className={fieldClass('aflever_adres')}
               />
               {errors.aflever_adres && <p className="text-sm text-destructive">{errors.aflever_adres.message}</p>}
               <div className="grid grid-cols-2 gap-2">
-                <Input {...register('aflever_postcode')} placeholder="Postcode" />
-                <Input {...register('aflever_plaats')} placeholder="Plaats" />
+                <Input {...register('aflever_postcode')} placeholder="Postcode" className={fieldClass('aflever_postcode')} />
+                <Input {...register('aflever_plaats')} placeholder="Plaats" className={fieldClass('aflever_plaats')} />
               </div>
               {errors.aflever_plaats && <p className="text-sm text-destructive">{errors.aflever_plaats.message}</p>}
             </div>
@@ -190,7 +192,7 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="datum">Gewenste datum</Label>
-              <Input id="datum" type="date" {...register('datum')} />
+              <Input id="datum" type="date" {...register('datum')} className={fieldClass('datum')} />
             </div>
             <div className="md:col-span-2 space-y-2">
               <Label htmlFor="omschrijving">Wat wilt u versturen?</Label>
@@ -198,6 +200,7 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
                 id="omschrijving"
                 {...register('omschrijving')}
                 placeholder="Bijv. 1 pallet, 50kg"
+                className={fieldClass('omschrijving')}
               />
             </div>
           </div>
@@ -206,20 +209,21 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="contact_naam">Naam *</Label>
-              <Input id="contact_naam" {...register('contact_naam')} placeholder="Jan Jansen" />
+              <Input id="contact_naam" {...register('contact_naam')} placeholder="Jan Jansen" className={fieldClass('contact_naam')} />
               {errors.contact_naam && <p className="text-sm text-destructive">{errors.contact_naam.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact_email">E-mail *</Label>
-              <Input id="contact_email" type="email" {...register('contact_email')} placeholder="jan@bedrijf.nl" />
+              <Input id="contact_email" type="email" {...register('contact_email')} placeholder="jan@bedrijf.nl" className={fieldClass('contact_email', 5)} />
               {errors.contact_email && <p className="text-sm text-destructive">{errors.contact_email.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact_telefoon">Telefoon *</Label>
-              <Input id="contact_telefoon" {...register('contact_telefoon')} placeholder="+31 6 12345678" />
+              <Input id="contact_telefoon" {...register('contact_telefoon')} placeholder="+31 6 12345678" className={fieldClass('contact_telefoon')} />
               {errors.contact_telefoon && <p className="text-sm text-destructive">{errors.contact_telefoon.message}</p>}
             </div>
           </div>
+
 
           <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? (
