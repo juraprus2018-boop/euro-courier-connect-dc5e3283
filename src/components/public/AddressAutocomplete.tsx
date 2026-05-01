@@ -19,6 +19,8 @@ interface AddressAutocompleteProps {
   onSelect?: (suggestion: AddressSuggestion) => void;
   placeholder?: string;
   className?: string;
+  /** Comma-separated ISO country codes to limit results, e.g. "nl" or "fr,be" */
+  countryCodes?: string;
 }
 
 export function AddressAutocomplete({
@@ -28,6 +30,7 @@ export function AddressAutocomplete({
   onSelect,
   placeholder,
   className,
+  countryCodes,
 }: AddressAutocompleteProps) {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
@@ -47,7 +50,8 @@ export function AddressAutocomplete({
     debounceRef.current = window.setTimeout(async () => {
       setLoading(true);
       try {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&q=${encodeURIComponent(value)}`;
+        const cc = countryCodes ? `&countrycodes=${encodeURIComponent(countryCodes.toLowerCase())}` : '';
+        const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&q=${encodeURIComponent(value)}${cc}`;
         const res = await fetch(url, { headers: { 'Accept-Language': 'nl' } });
         const data = await res.json();
         setSuggestions(Array.isArray(data) ? data : []);
@@ -61,7 +65,7 @@ export function AddressAutocomplete({
     return () => {
       if (debounceRef.current) window.clearTimeout(debounceRef.current);
     };
-  }, [value]);
+  }, [value, countryCodes]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
