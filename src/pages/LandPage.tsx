@@ -236,6 +236,7 @@ const LandPage = () => {
               </Button>
             </div>
           )}
+          </div>
         </div>
       </section>
 
