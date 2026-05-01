@@ -5,8 +5,6 @@ import { LandThemeProvider } from '@/components/LandThemeProvider';
 import { SEOHead } from '@/components/SEOHead';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
-import { HeroSection } from '@/components/public/HeroSection';
-import { SearchRoutes } from '@/components/public/SearchRoutes';
 import { RouteCard } from '@/components/public/RouteCard';
 import { USPSection } from '@/components/public/USPSection';
 import { FAQSection } from '@/components/public/FAQSection';
