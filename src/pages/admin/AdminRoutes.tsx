@@ -102,9 +102,11 @@ const AdminRoutes = () => {
                 <TableBody>
                   {routes.map((route) => {
                     const domein = route.buitenland_stad?.land?.domein;
+                    const landSlug = route.buitenland_stad?.land?.slug;
+                    const path = `/spoed-koerier-${landSlug}/${route.slug}`;
                     const url = domein
-                      ? `https://${domein}/route/${route.slug}`
-                      : `/route/${route.slug}`;
+                      ? `https://${domein}${path}`
+                      : path;
                     return (
                       <TableRow key={route.id}>
                         <TableCell>
