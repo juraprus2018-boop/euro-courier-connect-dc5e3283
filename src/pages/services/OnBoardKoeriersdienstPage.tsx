@@ -15,7 +15,7 @@ const OnBoardKoeriersdienstPage = () => (
       { title: 'Maximale zekerheid', description: 'Uw zending wordt nooit uit het oog verloren. Geen overslag, geen risico op verlies.' },
       { title: 'Wereldwijd inzetbaar', description: 'Niet alleen Europa: onze OBC-koeriers vliegen ook intercontinentaal voor uw spoedzending.' },
       { title: 'Realtime updates', description: 'U ontvangt updates van vertrek, transfer en aankomst – stap voor stap.' },
-      { title: 'Hoogwaardige zendingen', description: 'Ideaal voor prototypes, monsters, juwelen, contracten en andere onmisbare goederen.' },
+      { title: 'Waardevolle zendingen', description: 'Geschikt voor prototypes, monsters, juwelen, contracten en andere onmisbare goederen.' },
     ]}
   >
     <h2>Wanneer kiest u voor On-Board Courier?</h2>
