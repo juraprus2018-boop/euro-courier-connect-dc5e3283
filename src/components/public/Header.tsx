@@ -72,9 +72,21 @@ export function Header({ landNaam }: HeaderProps) {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link to="/bestemmingen" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors flex items-center gap-1">
-            <MapPin className="h-4 w-4" /> Bestemmingen
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors outline-none">
+              <MapPin className="h-4 w-4" /> Bestemmingen <ChevronDown className="h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="bg-popover">
+              <DropdownMenuItem asChild>
+                <Link to="/bestemmingen" className="font-semibold">Alle bestemmingen</Link>
+              </DropdownMenuItem>
+              {landen.map((l) => (
+                <DropdownMenuItem key={l.slug} asChild>
+                  <Link to={`/spoedkoerier-naar-${l.slug}`}>Spoedkoerier naar {l.naam}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           
           <Link to="/contact" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link>
         </nav>
@@ -133,9 +145,26 @@ export function Header({ landNaam }: HeaderProps) {
                 ))}
               </div>
             </div>
-            <Link to="/bestemmingen" className="text-sm font-medium flex items-center gap-1 hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>
-              <MapPin className="h-4 w-4" /> Bestemmingen
-            </Link>
+            <div className="pt-2 border-t border-primary-foreground/15">
+              <p className="text-xs font-semibold uppercase tracking-wider mb-2 opacity-70 flex items-center gap-1">
+                <MapPin className="h-3 w-3" /> Bestemmingen
+              </p>
+              <div className="flex flex-col gap-2 pl-2">
+                <Link to="/bestemmingen" className="text-sm hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>
+                  Alle bestemmingen
+                </Link>
+                {landen.map((l) => (
+                  <Link
+                    key={l.slug}
+                    to={`/spoedkoerier-naar-${l.slug}`}
+                    className="text-sm hover:opacity-80"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Spoedkoerier naar {l.naam}
+                  </Link>
+                ))}
+              </div>
+            </div>
             
             <Link to="/contact" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
             <a href={CONTACT.telefoonHref} className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2 text-sm font-semibold w-fit">
