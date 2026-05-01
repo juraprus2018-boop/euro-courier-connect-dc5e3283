@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search, Users, Wallet, Zap } from 'lucide-react';
 import { useState } from 'react';
-import vanImage from '@/assets/citan.png';
+import vanImage from '@/assets/citan-transparent.png';
 
 interface SpoedHeroProps {
   bedrijfsNaam: string;
@@ -106,13 +106,18 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
 
           {/* RIGHT: van image + USPs */}
           <div className="relative">
-            <img
-              src={vanImage}
-              alt="Spoedkoerier bestelbus"
-              className="w-full max-w-xl mx-auto drop-shadow-2xl animate-fade-in"
-              width={1024}
-              height={1024}
-            />
+            <div className="group relative mx-auto w-full max-w-xl animate-fade-in cursor-pointer">
+              <img
+                src={vanImage}
+                alt="Spoedkoerier bestelbus"
+                className="w-full drop-shadow-2xl transition-transform duration-300 group-hover:-translate-x-2 group-hover:animate-van-drive"
+                width={1264}
+                height={848}
+              />
+              <span className="pointer-events-none absolute left-[12.5%] top-[67%] h-[12%] aspect-square rounded-full border-[3px] border-primary-foreground/80 border-t-cta opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-hover:animate-wheel-spin" />
+              <span className="pointer-events-none absolute left-[79.5%] top-[66%] h-[12%] aspect-square rounded-full border-[3px] border-primary-foreground/80 border-t-cta opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-hover:animate-wheel-spin" />
+              <span className="pointer-events-none absolute bottom-[8%] left-[6%] h-1 w-[88%] rounded-full bg-[linear-gradient(90deg,hsl(var(--primary-foreground)/0.7)_0_35%,transparent_35%_55%)] bg-[length:44px_4px] opacity-0 transition-opacity duration-200 group-hover:opacity-80 group-hover:animate-road-move" />
+            </div>
 
             <div className="mt-8 lg:mt-10 rounded-2xl bg-card text-card-foreground shadow-xl p-6 max-w-xl mx-auto">
               <ul className="space-y-4">
