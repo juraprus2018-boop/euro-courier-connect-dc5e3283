@@ -88,7 +88,7 @@ export function Header({ landNaam }: HeaderProps) {
           </a>
           <Button
             asChild
-            className="hidden sm:inline-flex rounded-full bg-gradient-cta text-cta-foreground hover:brightness-110 shadow-cta px-5"
+            className="hidden sm:inline-flex rounded-full bg-gradient-cta text-cta-foreground hover:brightness-110 shadow-cta animate-cta-pulse px-5"
           >
             <Link to="/offerte">
               Offerte <ArrowRight className="ml-1 h-4 w-4" />
