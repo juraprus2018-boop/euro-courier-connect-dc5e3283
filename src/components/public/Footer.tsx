@@ -12,36 +12,17 @@ export function Footer() {
       <div className="container py-12">
         <div className="pb-10 mb-10 border-b border-border">
           <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
-              { src: citan, alt: 'Bestelwagen Mercedes Citan van De Europa Koerier', label: 'Bestelwagen' },
+              { src: citan, alt: 'Bestelwagen van De Europa Koerier', label: 'Bestelwagen' },
               { src: bestelbus, alt: 'Bestelbus XL van De Europa Koerier', label: 'Bestelbus (XL)' },
               { src: bakwagen, alt: 'Bakwagen met laadklep van De Europa Koerier', label: 'Bakwagen met laadklep' },
             ].map((v) => (
-              <Link
-                key={v.label}
-                to="/laadcapaciteit"
-                className="group block text-center"
-              >
-                <div className="relative p-4 mb-3 flex items-end justify-center h-44 overflow-hidden">
-                  {/* Rijdende stippellijn (altijd zichtbaar) */}
-                  <div
-                    className="absolute left-0 right-0 bottom-4 h-[2px]"
-                    style={{
-                      backgroundImage:
-                        'repeating-linear-gradient(to right, hsl(var(--foreground)/0.35) 0 12px, transparent 12px 24px)',
-                      backgroundSize: '40px 2px',
-                      animation: 'road-move 0.8s linear infinite',
-                    }}
-                  />
-                  <img
-                    src={v.src}
-                    alt={v.alt}
-                    loading="lazy"
-                    className="relative z-10 max-h-36 w-auto object-contain drop-shadow-lg animate-van-drive transition-transform duration-500 group-hover:scale-105"
-                  />
+              <Link key={v.label} to="/laadcapaciteit" className="group block text-center">
+                <div className="bg-muted rounded-lg p-4 mb-2 flex items-center justify-center h-32 overflow-hidden">
+                  <img src={v.src} alt={v.alt} loading="lazy" className="max-h-full w-auto object-contain transition-transform group-hover:scale-105" />
                 </div>
-                <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
+                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
               </Link>
             ))}
           </div>
