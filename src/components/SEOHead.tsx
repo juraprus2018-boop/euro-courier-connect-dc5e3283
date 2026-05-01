@@ -16,8 +16,8 @@ export function SEOHead({ title, description, landNaam, canonicalPath, noindex }
     : 'Spoedkoerier Europa | De Europa Koerier - Snel & betrouwbaar';
 
   const defaultDescription = landNaam
-    ? `Spoedkoerier van Nederland naar ${landNaam}. Direct van A naar B, 24/7 beschikbaar, 100% verzekerd. Vraag nu een offerte aan!`
-    : 'Spoedkoerier door heel Europa. Direct transport van Nederland naar uw bestemming. 24/7 beschikbaar, 100% verzekerd, dagelijks op pad.';
+    ? `Spoedkoerier van Nederland naar ${landNaam}. Direct van A naar B, 24/7 beschikbaar. Vraag nu een offerte aan!`
+    : 'Spoedkoerier door heel Europa. Direct transport van Nederland naar uw bestemming. 24/7 beschikbaar, dagelijks op pad.';
 
   const finalTitle = title || defaultTitle;
   const finalDescription = description || defaultDescription;

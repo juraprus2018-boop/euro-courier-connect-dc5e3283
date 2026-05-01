@@ -12,7 +12,7 @@ const InternationaalTransportPage = () => (
     features={[
       { title: 'Direct van A naar B', description: 'Geen overslag of distributiecentra. Uw zending blijft van ophaal tot aflevering bij dezelfde koerier.' },
       { title: 'Heel Europa', description: 'België, Duitsland, Frankrijk, Spanje, Italië, Polen, Verenigd Koninkrijk en alle andere EU-landen.' },
-      { title: 'CMR verzekerd', description: 'Volledig verzekerd transport conform de internationale CMR-conventie voor wegvervoer.' },
+      
       { title: 'Eigen koeriers', description: 'Wij werken met vaste, ervaren chauffeurs die de internationale routes door en door kennen.' },
       { title: '24/7 beschikbaar', description: 'Spoedrit nodig in het weekend of midden in de nacht? Wij staan altijd voor u klaar.' },
       { title: 'Track & trace', description: 'Op verzoek houden wij u realtime op de hoogte van de status van uw zending.' },

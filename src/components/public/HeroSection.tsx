@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Truck, Clock, Shield } from 'lucide-react';
+import { ArrowRight, Truck, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface HeroSectionProps {
@@ -50,7 +50,7 @@ export function HeroSection({ landNaam, heroTitel, heroSubtitel }: HeroSectionPr
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
           <div className="flex items-center gap-4 rounded-xl bg-primary-foreground/10 p-6 backdrop-blur">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent">
               <Truck className="h-6 w-6 text-accent-foreground" />
@@ -72,16 +72,6 @@ export function HeroSection({ landNaam, heroTitel, heroSubtitel }: HeroSectionPr
             <div>
               <h3 className="font-display font-semibold text-primary-foreground">Snelle levering</h3>
               <p className="text-sm text-primary-foreground/70">Binnen 24-48 uur</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 rounded-xl bg-primary-foreground/10 p-6 backdrop-blur">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent">
-              <Shield className="h-6 w-6 text-accent-foreground" />
-            </div>
-            <div>
-              <h3 className="font-display font-semibold text-primary-foreground">100% verzekerd</h3>
-              <p className="text-sm text-primary-foreground/70">Volledige dekking</p>
             </div>
           </div>
         </div>

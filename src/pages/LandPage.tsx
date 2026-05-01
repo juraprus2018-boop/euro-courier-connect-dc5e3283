@@ -275,10 +275,6 @@ const LandPage = () => {
                   a: `De rijtijd vanuit Nederland naar ${naam} bedraagt afhankelijk van de exacte bestemming circa 14 tot 18 uur directe rit. Wij rijden non-stop met twee chauffeurs wanneer dit nodig is, zodat uw zending zo snel mogelijk wordt afgeleverd.`,
                 },
                 {
-                  q: `Is mijn zending naar ${naam} verzekerd?`,
-                  a: `Ja. Iedere zending wordt standaard vervoerd onder de CMR-vervoersverzekering. Voor waardevolle goederen, kunst of medische zendingen kunnen wij op verzoek een aanvullende goederenverzekering afsluiten.`,
-                },
-                {
                   q: `Wat moet ik aanleveren voor een rit naar ${naam}?`,
                   a: `Voor een vlotte rit naar ${naam} ontvangen wij graag: het ophaal- en afleveradres met contactpersoon en telefoonnummer, afmetingen en gewicht van de zending, een korte omschrijving van de inhoud en eventuele douanedocumenten of CMR-vrachtbrief. Wij regelen de rest.`,
                 },
