@@ -54,7 +54,7 @@ export function ServicePageLayout({
               <p className="mt-6 text-lg text-primary-foreground/85">{intro}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta" asChild>
+                <Button size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta animate-cta-pulse" asChild>
                   <Link to="/offerte">
                     Offerte aanvragen
                     <ArrowRight className="ml-2 h-5 w-5" />

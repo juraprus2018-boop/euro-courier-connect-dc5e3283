@@ -27,7 +27,7 @@ export function CTASection({ landNaam }: CTASectionProps) {
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button 
               size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90"
+              className="bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta animate-cta-pulse"
               asChild
             >
               <Link to="/offerte">

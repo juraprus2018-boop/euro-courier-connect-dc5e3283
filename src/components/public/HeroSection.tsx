@@ -38,7 +38,7 @@ export function HeroSection({ landNaam, heroTitel, heroSubtitel }: HeroSectionPr
           </p>
           
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+            <Button size="lg" className="bg-cta text-cta-foreground hover:bg-cta/90 shadow-cta animate-cta-pulse" asChild>
               <Link to="/offerte">
                 Offerte aanvragen
                 <ArrowRight className="ml-2 h-4 w-4" />
