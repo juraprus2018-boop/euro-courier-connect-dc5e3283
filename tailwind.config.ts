@@ -107,6 +107,20 @@ export default {
             transform: "scale(1.04)",
           },
         },
+        "van-drive": {
+          "0%, 100%": { transform: "translateX(0) translateY(0)" },
+          "25%": { transform: "translateX(2px) translateY(-1px)" },
+          "50%": { transform: "translateX(0) translateY(0)" },
+          "75%": { transform: "translateX(-2px) translateY(-1px)" },
+        },
+        "wheel-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
+        "road-move": {
+          from: { backgroundPosition: "0 0" },
+          to: { backgroundPosition: "-40px 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -114,6 +128,8 @@ export default {
         "fade-in": "fade-in 0.5s ease-out forwards",
         "slide-in": "slide-in 0.3s ease-out forwards",
         "cta-pulse": "cta-pulse 2.2s ease-in-out infinite",
+        "van-drive": "van-drive 1.6s ease-in-out infinite",
+        "road-move": "road-move 0.8s linear infinite",
       },
     },
   },
