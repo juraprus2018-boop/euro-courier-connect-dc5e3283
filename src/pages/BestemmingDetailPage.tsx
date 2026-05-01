@@ -151,7 +151,7 @@ const BestemmingDetailPage = () => {
                           {route.nl_plaats?.naam}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {route.afstand_km} km • vanaf €{route.geschatte_prijs}
+                          {route.afstand_km} km
                         </p>
                       </div>
                     </div>
