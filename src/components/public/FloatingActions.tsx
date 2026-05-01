@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { MessageCircle, Phone, FileText, PhoneCall } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { supabase } from '@/integrations/supabase/client';
@@ -7,6 +8,7 @@ import { TerugbelDialog } from './TerugbelDialog';
 const DEFAULT_WA = '+31407676704';
 
 export function FloatingActions() {
+  const location = useLocation();
   const [waNumber, setWaNumber] = useState<string>(DEFAULT_WA);
   const [terugbelOpen, setTerugbelOpen] = useState(false);
 
@@ -20,6 +22,9 @@ export function FloatingActions() {
         if (data?.waarde) setWaNumber(data.waarde);
       });
   }, []);
+
+  // Verberg op admin pagina's
+  if (location.pathname.startsWith('/admin')) return null;
 
   const waHref = `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
     'Hallo, ik heb een vraag over een spoedkoerier rit.'
