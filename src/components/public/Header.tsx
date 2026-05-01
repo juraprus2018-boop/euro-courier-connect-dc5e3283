@@ -62,7 +62,7 @@ export function Header({ landNaam }: HeaderProps) {
           <Link to="/bestemmingen" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors flex items-center gap-1">
             <MapPin className="h-4 w-4" /> Bestemmingen
           </Link>
-          <Link to="/routes" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Routes</Link>
+          
           <Link to="/contact" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link>
         </nav>
 
@@ -123,7 +123,7 @@ export function Header({ landNaam }: HeaderProps) {
             <Link to="/bestemmingen" className="text-sm font-medium flex items-center gap-1 hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>
               <MapPin className="h-4 w-4" /> Bestemmingen
             </Link>
-            <Link to="/routes" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Routes</Link>
+            
             <Link to="/contact" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
             <a href={CONTACT.telefoonHref} className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2 text-sm font-semibold w-fit">
               <Phone className="h-4 w-4" /> {CONTACT.telefoon}
