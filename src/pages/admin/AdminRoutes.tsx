@@ -3,8 +3,9 @@ import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Search, ArrowRight } from 'lucide-react';
+import { Loader2, Search, ArrowRight, ExternalLink } from 'lucide-react';
 
 interface RouteData {
   id: string;
@@ -12,7 +13,7 @@ interface RouteData {
   afstand_km: number;
   geschatte_prijs: number;
   nl_plaats: { naam: string };
-  buitenland_stad: { naam: string; land: { naam: string } };
+  buitenland_stad: { naam: string; land: { naam: string; domein: string | null } };
 }
 
 const AdminRoutes = () => {
@@ -32,7 +33,7 @@ const AdminRoutes = () => {
         afstand_km,
         geschatte_prijs,
         nl_plaats:nl_plaatsen(naam),
-        buitenland_stad:buitenland_steden(naam, land:landen(naam))
+        buitenland_stad:buitenland_steden(naam, land:landen(naam, domein))
       `, { count: 'exact' })
       .order('created_at', { ascending: false })
       .limit(100);
@@ -95,25 +96,40 @@ const AdminRoutes = () => {
                     <TableHead>Route</TableHead>
                     <TableHead>Land</TableHead>
                     <TableHead>Afstand</TableHead>
+                    <TableHead className="text-right">Acties</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {routes.map((route) => (
-                    <TableRow key={route.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{route.nl_plaats?.naam}</span>
-                          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                          <span className="font-medium">{route.buitenland_stad?.naam}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>{route.buitenland_stad?.land?.naam}</TableCell>
-                      <TableCell>{Number(route.afstand_km).toLocaleString('nl-NL')} km</TableCell>
-                    </TableRow>
-                  ))}
+                  {routes.map((route) => {
+                    const domein = route.buitenland_stad?.land?.domein;
+                    const url = domein
+                      ? `https://${domein}/route/${route.slug}`
+                      : `/route/${route.slug}`;
+                    return (
+                      <TableRow key={route.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{route.nl_plaats?.naam}</span>
+                            <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">{route.buitenland_stad?.naam}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{route.buitenland_stad?.land?.naam}</TableCell>
+                        <TableCell>{Number(route.afstand_km).toLocaleString('nl-NL')} km</TableCell>
+                        <TableCell className="text-right">
+                          <Button asChild size="sm" variant="outline">
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+                              Bekijken
+                            </a>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                   {routes.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={3} className="text-center py-8 text-muted-foreground">
+                      <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
                         {search ? 'Geen routes gevonden' : 'Nog geen routes gegenereerd'}
                       </TableCell>
                     </TableRow>
