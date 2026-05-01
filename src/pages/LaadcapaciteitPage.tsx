@@ -46,10 +46,7 @@ const voertuigen = [
 
 const LaadcapaciteitPage = () => (
   <HelmetProvider>
-    <SEOHead
-      title="Laadcapaciteit | De Europa Koerier"
-      description="Bestelwagens, bestelbussen en bakwagens met laadklep. Bekijk de laadvermogens en afmetingen van ons wagenpark."
-    />
+    <SEOHead pageKey="laadcapaciteit" />
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">

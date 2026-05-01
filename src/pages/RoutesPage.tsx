@@ -5,6 +5,7 @@ import { Footer } from '@/components/public/Footer';
 import { RouteCard } from '@/components/public/RouteCard';
 import { SearchRoutes } from '@/components/public/SearchRoutes';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
+import { SEOHead } from '@/components/SEOHead';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
 import { Loader2 } from 'lucide-react';
@@ -101,6 +102,7 @@ const RoutesPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead pageKey="routes" landNaam={land?.naam} variables={{ land: land?.naam || 'Europa' }} />
       <Header landNaam={land?.naam} />
       
       <main className="flex-1 py-12">

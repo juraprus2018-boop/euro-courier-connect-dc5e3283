@@ -55,10 +55,7 @@ const items = [
 const PrivacybeleidPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead
-        title="Privacybeleid | De Europa Koerier"
-        description="Lees hoe De Europa Koerier omgaat met uw persoons- en bedrijfsgegevens."
-      />
+      <SEOHead pageKey="privacybeleid" />
       <Header />
 
       <main className="flex-1 py-12">

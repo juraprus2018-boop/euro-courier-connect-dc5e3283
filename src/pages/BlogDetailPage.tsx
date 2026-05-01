@@ -68,8 +68,11 @@ const BlogDetailPage = () => {
   const content = (
     <div className="min-h-screen flex flex-col">
       <SEOHead
-        title={artikel?.meta_title || artikel?.titel || 'Artikel'}
-        description={artikel?.meta_description || artikel?.excerpt || undefined}
+        title={artikel?.meta_title || undefined}
+        description={artikel?.meta_description || undefined}
+        landNaam={land?.naam}
+        pageKey="blog_detail"
+        variables={{ titel: artikel?.titel || '', excerpt: artikel?.excerpt || '' }}
       />
       <Header landNaam={land?.naam} />
       <main className="flex-1 py-12">

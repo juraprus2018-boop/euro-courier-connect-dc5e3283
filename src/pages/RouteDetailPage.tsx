@@ -4,6 +4,7 @@ import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
+import { SEOHead } from '@/components/SEOHead';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
 import { Loader2, MapPin, ArrowRight, Truck, Clock } from 'lucide-react';
@@ -102,6 +103,11 @@ const RouteDetailPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        pageKey="route_detail"
+        landNaam={landNaam}
+        variables={{ nl_plaats: nlPlaats, buitenland_stad: buitenlandStad, land: landNaam, afstand: Math.round(Number(route.afstand_km)) }}
+      />
       <Header landNaam={landNaam} />
       
       <main className="flex-1">

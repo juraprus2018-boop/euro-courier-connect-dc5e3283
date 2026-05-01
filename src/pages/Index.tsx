@@ -85,6 +85,8 @@ const Index = () => {
             title={land.meta_title || undefined}
             description={land.meta_description || undefined}
             landNaam={land.naam}
+            pageKey="home_land"
+            variables={{ land: land.naam }}
           />
           <Header landNaam={land.naam} />
           
@@ -195,10 +197,7 @@ const Index = () => {
   // Main site (deeuropakoerier.nl) - Corporate landing page
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead 
-        title="De Europa Koerier | Spoedkoerier door heel Europa"
-        description="Spoedkoerier vanuit Nederland naar heel Europa. Eén chauffeur, één auto, rechtstreeks naar het afleveradres. Bel ons en we vertrekken meteen."
-      />
+      <SEOHead pageKey="home" />
       <Header />
       
       <main className="flex-1">

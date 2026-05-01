@@ -10,8 +10,9 @@ import { Button } from '@/components/ui/button';
 import { CONTACT } from '@/lib/contact';
 
 interface ServicePageLayoutProps {
-  metaTitle: string;
-  metaDescription: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  pageKey?: string;
   badge: string;
   title: string;
   intro: string;
@@ -23,6 +24,7 @@ interface ServicePageLayoutProps {
 export function ServicePageLayout({
   metaTitle,
   metaDescription,
+  pageKey,
   badge,
   title,
   intro,
@@ -32,7 +34,7 @@ export function ServicePageLayout({
 }: ServicePageLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead title={metaTitle} description={metaDescription} />
+      <SEOHead title={metaTitle} description={metaDescription} pageKey={pageKey} />
       <Header />
 
       <main className="flex-1">

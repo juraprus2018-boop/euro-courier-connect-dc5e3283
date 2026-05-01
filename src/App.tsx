@@ -35,6 +35,7 @@ import AdminPrijsberekeningen from "./pages/admin/AdminPrijsberekeningen";
 import AdminInstellingen from "./pages/admin/AdminInstellingen";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminTerugbel from "./pages/admin/AdminTerugbel";
+import AdminSeo from "./pages/admin/AdminSeo";
 import BlogIndexPage from "./pages/BlogIndexPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import { FloatingActions } from "./components/public/FloatingActions";
@@ -83,6 +84,7 @@ const App = () => (
           <Route path="/admin/instellingen" element={<AdminInstellingen />} />
           <Route path="/admin/blog" element={<AdminBlog />} />
           <Route path="/admin/terugbel" element={<AdminTerugbel />} />
+          <Route path="/admin/seo" element={<AdminSeo />} />
           <Route path="/blog" element={<BlogIndexPage />} />
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
           <Route path="*" element={<NotFound />} />

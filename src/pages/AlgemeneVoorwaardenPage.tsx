@@ -7,10 +7,7 @@ import { FileText } from 'lucide-react';
 const AlgemeneVoorwaardenPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead
-        title="Algemene voorwaarden | De Europa Koerier"
-        description="Lees de algemene voorwaarden van De Europa Koerier voor binnenlands en internationaal koerierstransport."
-      />
+      <SEOHead pageKey="algemene_voorwaarden" />
       <Header />
 
       <main className="flex-1 py-12">

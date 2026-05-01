@@ -9,7 +9,7 @@ import { SEOHead } from '@/components/SEOHead';
 const ContactPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead title="Contact | De Europa Koerier" description="Neem contact op met De Europa Koerier in Eindhoven. Bel 085 7602 999 of mail naar info@deeuropakoerier.nl." />
+      <SEOHead pageKey="contact" />
       <Header />
       
       <main className="flex-1 py-12">

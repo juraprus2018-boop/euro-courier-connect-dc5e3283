@@ -16,10 +16,7 @@ const PrijsBerekenenPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead
-        title="Spoedkoerier prijs berekenen | De Europa Koerier"
-        description="Bereken direct je transportkosten voor een spoedkoerier door heel Europa. Vul je laad- en losplaats in en ontvang een prijsindicatie."
-      />
+      <SEOHead pageKey="prijs_berekenen" />
       <Header />
 
       <main className="flex-1">

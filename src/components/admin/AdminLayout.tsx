@@ -17,7 +17,8 @@ import {
   Wifi,
   Calculator,
   BookOpen,
-  PhoneCall
+  PhoneCall,
+  Search
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -37,6 +38,7 @@ const navItems = [
   { path: '/admin/terugbel', label: 'Terugbelverzoeken', icon: PhoneCall },
   { path: '/admin/prijsberekeningen', label: 'Prijsberekeningen', icon: Calculator },
   { path: '/admin/blog', label: 'Blog & kennisbank', icon: BookOpen },
+  { path: '/admin/seo', label: 'SEO beheer', icon: Search },
   { path: '/admin/instellingen', label: 'Instellingen', icon: Settings },
 ];
 
