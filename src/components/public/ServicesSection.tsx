@@ -17,11 +17,6 @@ const services = [
     description: 'Vaste rijtijden naar populaire bestemmingen. Betrouwbaar en voorspelbaar transport.',
   },
   {
-    icon: Shield,
-    title: 'Verzekerd transport',
-    description: 'Al uw zendingen zijn volledig verzekerd. Rust en zekerheid voor waardevolle goederen.',
-  },
-  {
     icon: MapPin,
     title: 'Deur-tot-deur',
     description: 'Wij halen op en leveren af. Geen gedoe met depots of tussenstops.',
