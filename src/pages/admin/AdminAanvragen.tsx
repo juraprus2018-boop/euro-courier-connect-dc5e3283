@@ -58,7 +58,7 @@ const AdminAanvragen = () => {
     if (error) {
       console.error('Error fetching aanvragen:', error);
     } else {
-      setAanvragen(data || []);
+      setAanvragen((data as unknown as Aanvraag[]) || []);
     }
     setLoading(false);
   };
@@ -214,10 +214,60 @@ const AdminAanvragen = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-sm text-muted-foreground mb-2">Zending</h4>
-                  <p>Type: {selectedAanvraag.zending_type || '-'}</p>
-                  <p>Gewicht: {selectedAanvraag.gewicht_kg ? `${selectedAanvraag.gewicht_kg} kg` : '-'}</p>
+                  <p>Transport: {selectedAanvraag.transport_type || 'wegtransport'}</p>
+                  <p>Laaddatum: {selectedAanvraag.datum ? format(new Date(selectedAanvraag.datum), 'd MMM yyyy', { locale: nl }) : '-'}</p>
+                  <p>Totaalgewicht: {selectedAanvraag.gewicht_kg ? `${selectedAanvraag.gewicht_kg} kg` : '-'}</p>
                 </div>
               </div>
+
+              {selectedAanvraag.lading_items && selectedAanvraag.lading_items.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-sm text-muted-foreground mb-2">Lading</h4>
+                  <div className="rounded-lg border divide-y">
+                    {selectedAanvraag.lading_items.map((item, idx) => (
+                      <div key={idx} className="grid grid-cols-3 gap-2 p-3 text-sm">
+                        <div className="col-span-2"><span className="text-muted-foreground">Soort:</span> {item.soort}</div>
+                        <div><span className="text-muted-foreground">Aantal:</span> {item.aantal}</div>
+                        <div className="col-span-3 text-muted-foreground text-xs">Gewicht: {item.gewicht_kg} kg/stuk · Subtotaal: {item.aantal * item.gewicht_kg} kg</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {(selectedAanvraag.verwachte_prijs != null || selectedAanvraag.afstand_km != null) && (
+                <div className="rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
+                  <h4 className="font-semibold text-sm text-muted-foreground mb-2">Berekende offerte (op moment van aanvraag)</h4>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-xs text-muted-foreground">Verwachte prijs</p>
+                      <p className="text-xl font-bold text-primary">
+                        {selectedAanvraag.verwachte_prijs != null ? `€${selectedAanvraag.verwachte_prijs}` : '-'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Afstand</p>
+                      <p className="text-xl font-bold">
+                        {selectedAanvraag.afstand_km != null ? `${Math.round(selectedAanvraag.afstand_km)} km` : '-'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Looptijd</p>
+                      <p className="text-xl font-bold">
+                        {selectedAanvraag.verwachte_looptijd || '-'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {selectedAanvraag.omschrijving && (
+                <div>
+                  <h4 className="font-semibold text-sm text-muted-foreground mb-2">Omschrijving</h4>
+                  <p className="text-sm">{selectedAanvraag.omschrijving}</p>
+                </div>
+              )}
+
               {selectedAanvraag.opmerkingen && (
                 <div>
                   <h4 className="font-semibold text-sm text-muted-foreground mb-2">Opmerkingen</h4>
