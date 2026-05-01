@@ -38,7 +38,7 @@ export function Header({ landNaam }: HeaderProps) {
             <span className="font-display text-sm sm:text-base lg:text-lg font-bold text-primary-foreground">
               {siteNaam}
             </span>
-            <span className="hidden sm:block text-[11px] font-medium text-primary-foreground/80 uppercase tracking-wide">
+            <span className="block text-[10px] sm:text-[11px] font-medium text-primary-foreground/80 uppercase tracking-wide">
               {landNaam ? `Spoedkoerier naar ${landNaam}` : 'Spoedkoerier door heel Europa'}
             </span>
           </div>
