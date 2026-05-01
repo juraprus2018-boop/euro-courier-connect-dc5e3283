@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Truck, Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
-import citan from '@/assets/citan.webp';
+import citan from '@/assets/citan.png';
 import bestelbus from '@/assets/bestelbus.webp';
 import bakwagen from '@/assets/bakwagen.webp';
 
