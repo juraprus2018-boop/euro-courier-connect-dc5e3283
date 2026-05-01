@@ -80,8 +80,9 @@ export function ServicePageLayout({
 
         {/* Features */}
         <section className="py-16">
-          <div className="container max-w-5xl">
-            <h2 className="font-display text-3xl font-bold text-center">
+          <div className="container">
+            <div className="max-w-5xl mr-auto">
+            <h2 className="font-display text-3xl font-bold">
               Waarom kiezen voor onze {badge.toLowerCase()}?
             </h2>
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
