@@ -11,11 +11,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
+interface LadingItem {
+  soort: string;
+  aantal: number;
+  gewicht_kg: number;
+}
+
 interface Aanvraag {
   id: string;
   ophaal_adres: string;
+  ophaal_postcode: string | null;
   ophaal_plaats: string;
   aflever_adres: string;
+  aflever_postcode: string | null;
   aflever_plaats: string;
   contact_naam: string;
   contact_email: string;
@@ -25,6 +33,14 @@ interface Aanvraag {
   status: string;
   created_at: string;
   opmerkingen: string | null;
+  datum: string | null;
+  omschrijving: string | null;
+  lading_items: LadingItem[] | null;
+  verwachte_prijs: number | null;
+  verwachte_looptijd: string | null;
+  afstand_km: number | null;
+  rijtijd_minuten: number | null;
+  transport_type: string | null;
 }
 
 const AdminAanvragen = () => {
