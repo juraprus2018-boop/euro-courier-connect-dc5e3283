@@ -33,6 +33,11 @@ import AdminRoutes from "./pages/admin/AdminRoutes";
 import AdminAanvragen from "./pages/admin/AdminAanvragen";
 import AdminPrijsberekeningen from "./pages/admin/AdminPrijsberekeningen";
 import AdminInstellingen from "./pages/admin/AdminInstellingen";
+import AdminBlog from "./pages/admin/AdminBlog";
+import AdminTerugbel from "./pages/admin/AdminTerugbel";
+import BlogIndexPage from "./pages/BlogIndexPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
+import { FloatingActions } from "./components/public/FloatingActions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -76,8 +81,13 @@ const App = () => (
           <Route path="/admin/aanvragen" element={<AdminAanvragen />} />
           <Route path="/admin/prijsberekeningen" element={<AdminPrijsberekeningen />} />
           <Route path="/admin/instellingen" element={<AdminInstellingen />} />
+          <Route path="/admin/blog" element={<AdminBlog />} />
+          <Route path="/admin/terugbel" element={<AdminTerugbel />} />
+          <Route path="/blog" element={<BlogIndexPage />} />
+          <Route path="/blog/:slug" element={<BlogDetailPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <FloatingActions />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

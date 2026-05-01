@@ -15,7 +15,9 @@ import {
   X,
   Settings,
   Wifi,
-  Calculator
+  Calculator,
+  BookOpen,
+  PhoneCall
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -32,7 +34,9 @@ const navItems = [
   { path: '/admin/buitenland-steden', label: 'Buitenlandse Steden', icon: Building2 },
   { path: '/admin/routes', label: 'Routes', icon: Route },
   { path: '/admin/aanvragen', label: 'Aanvragen', icon: FileText },
+  { path: '/admin/terugbel', label: 'Terugbelverzoeken', icon: PhoneCall },
   { path: '/admin/prijsberekeningen', label: 'Prijsberekeningen', icon: Calculator },
+  { path: '/admin/blog', label: 'Blog & kennisbank', icon: BookOpen },
   { path: '/admin/instellingen', label: 'Instellingen', icon: Settings },
 ];
 
