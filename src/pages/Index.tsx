@@ -91,7 +91,6 @@ const Index = () => {
           <main className="flex-1">
             <SpoedHero
               bedrijfsNaam={`De ${land.naam} Koerier`}
-              tagline="Spoedkoerier · Sneller mag niet!"
               landNaam={land.naam}
             />
 
@@ -203,7 +202,7 @@ const Index = () => {
       <Header />
       
       <main className="flex-1">
-        <SpoedHero bedrijfsNaam="De Europa Koerier" tagline="Spoedkoerier · Sneller mag niet!" />
+        <SpoedHero bedrijfsNaam="De Europa Koerier" />
         <DriePuntenSection />
         <SpoedKoerierSection />
         <StatsSection />

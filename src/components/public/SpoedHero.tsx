@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search, Users, Wallet, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import vanImage from '@/assets/spoedkoerier-van.png';
+import vanImage from '@/assets/citan.webp';
 
 interface SpoedHeroProps {
   bedrijfsNaam: string;
@@ -18,7 +18,7 @@ const transportTypes: { id: TransportType; label: string; max: string }[] = [
   { id: 'bestelbus', label: 'Bestelbus', max: '12 items – max 150x100x100 cm – Max 300 kg' },
 ];
 
-export function SpoedHero({ bedrijfsNaam, tagline = 'Sneller mag niet!', landNaam }: SpoedHeroProps) {
+export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
   const [selected, setSelected] = useState<TransportType>('bestelauto');
   const [van, setVan] = useState('');
   const [naar, setNaar] = useState('');
@@ -56,9 +56,11 @@ export function SpoedHero({ bedrijfsNaam, tagline = 'Sneller mag niet!', landNaa
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
               {bedrijfsNaam}
             </h1>
-            <p className="mt-3 font-display text-2xl sm:text-3xl italic font-light text-primary-foreground/90">
-              {tagline}
-            </p>
+            {tagline && (
+              <p className="mt-3 font-display text-2xl sm:text-3xl italic font-light text-primary-foreground/90">
+                {tagline}
+              </p>
+            )}
 
             {/* Booking card */}
             <form
