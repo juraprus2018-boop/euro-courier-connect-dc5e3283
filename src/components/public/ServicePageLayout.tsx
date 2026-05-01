@@ -133,6 +133,7 @@ export function ServicePageLayout({
                 <Link to="/offerte">Offerte aanvragen</Link>
               </Button>
             </div>
+            </div>
           </div>
         </section>
       </main>
