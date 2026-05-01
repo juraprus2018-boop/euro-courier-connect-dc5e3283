@@ -53,9 +53,26 @@ const BestemmingenPage = () => {
           <h1 className="font-display text-3xl font-bold mb-2">
             {land ? `Bestemmingen in ${land.naam}` : 'Alle bestemmingen'}
           </h1>
-          <p className="text-muted-foreground mb-8">
-            Kies een stad om de beschikbare routes te bekijken
+          <p className="text-muted-foreground mb-4">
+            Kies een stad om de beschikbare routes te bekijken.
           </p>
+
+          <div className="mb-10 rounded-2xl border border-primary/20 bg-primary/5 p-6 lg:p-8">
+            <h2 className="font-display text-xl lg:text-2xl font-bold text-primary">
+              Dit zijn niet alle bestemmingen
+            </h2>
+            <p className="mt-2 text-muted-foreground max-w-3xl">
+              Onderstaande steden zijn een selectie van populaire bestemmingen. <strong>Wij rijden naar elke plaats binnen heel Europa</strong> — van klein dorp tot grote stad. Staat uw bestemming er niet tussen? Vraag gewoon een vrijblijvende offerte aan, wij regelen het.
+            </p>
+            <div className="mt-5">
+              <Button asChild size="lg">
+                <Link to="/offerte">
+                  <Send className="mr-2 h-4 w-4" />
+                  Offerte aanvragen
+                </Link>
+              </Button>
+            </div>
+          </div>
 
           {isLoading ? (
             <div className="flex items-center justify-center py-20">
