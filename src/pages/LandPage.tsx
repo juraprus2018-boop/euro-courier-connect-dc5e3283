@@ -9,6 +9,7 @@ import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
+import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
 
 const LandPage = () => {
   const { landSlug } = useParams<{ landSlug: string }>();
@@ -152,6 +153,23 @@ const LandPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Animated route map */}
+      {(() => {
+        const target = steden?.find((s) => s.latitude != null && s.longitude != null);
+        if (!target) return null;
+        return (
+          <section className="py-12 bg-background">
+            <div className="container">
+              <AnimatedRouteMap
+                toName={target.naam}
+                toLat={Number(target.latitude)}
+                toLng={Number(target.longitude)}
+              />
+            </div>
+          </section>
+        );
+      })()}
 
       {/* SEO content */}
       <section className="py-12 bg-muted/30">
