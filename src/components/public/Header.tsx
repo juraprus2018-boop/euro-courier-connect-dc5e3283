@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Truck, Phone, MapPin, Menu, X, ChevronDown } from 'lucide-react';
+import { Truck, Phone, Mail, MapPin, Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import { CONTACT } from '@/lib/contact';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,35 +23,33 @@ interface HeaderProps {
 
 export function Header({ landNaam }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // Generate site name based on country
+
   const siteNaam = landNaam ? `De ${landNaam} Koerier` : 'De Europa Koerier';
-  
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-primary shadow-md">
+    <header className="sticky top-0 z-50 w-full bg-gradient-hero text-primary-foreground">
+      <div className="container flex h-20 items-center justify-between gap-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3 shrink-0">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/15 backdrop-blur">
             <Truck className="h-6 w-6 text-primary-foreground" />
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="font-display text-base sm:text-lg font-bold text-foreground">
+          <div className="hidden sm:flex flex-col leading-tight">
+            <span className="font-display text-base lg:text-lg font-bold">
               {siteNaam}
             </span>
-            <span className="text-[11px] sm:text-xs font-medium text-accent uppercase tracking-wide">
+            <span className="text-[11px] font-medium text-primary-foreground/80 uppercase tracking-wide">
               {landNaam ? `Spoedkoerier naar ${landNaam}` : 'Spoedkoerier door heel Europa'}
             </span>
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Home
-          </Link>
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
+          <Link to="/" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Home</Link>
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 outline-none">
-              Diensten
-              <ChevronDown className="h-4 w-4" />
+            <DropdownMenuTrigger className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors outline-none">
+              Diensten <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="bg-popover">
               {services.map((s) => (
@@ -60,30 +59,44 @@ export function Header({ landNaam }: HeaderProps) {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link to="/bestemmingen" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-            <MapPin className="h-4 w-4" />
-            Bestemmingen
+          <Link to="/bestemmingen" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors flex items-center gap-1">
+            <MapPin className="h-4 w-4" /> Bestemmingen
           </Link>
-          <Link to="/routes" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Routes
-          </Link>
-          <Link to="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Contact
-          </Link>
+          <Link to="/routes" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Routes</Link>
+          <Link to="/contact" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link>
         </nav>
 
-        <div className="flex items-center gap-4">
-          <a href="tel:+31857602999" className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-            <Phone className="h-4 w-4" />
-            <span>085 7602 999</span>
+        {/* Pill CTAs */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href={CONTACT.telefoonHref}
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all"
+          >
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10">
+              <Phone className="h-3.5 w-3.5" />
+            </span>
+            Bel: {CONTACT.telefoon}
           </a>
-          <Button asChild className="hidden sm:inline-flex">
-            <Link to="/offerte">Offerte aanvragen</Link>
+          <a
+            href={CONTACT.emailHref}
+            className="hidden xl:inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all"
+          >
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10">
+              <Mail className="h-3.5 w-3.5" />
+            </span>
+            Mail: {CONTACT.email}
+          </a>
+          <Button
+            asChild
+            className="hidden sm:inline-flex rounded-full bg-gradient-cta text-cta-foreground hover:brightness-110 shadow-cta px-5"
+          >
+            <Link to="/offerte">
+              Offerte <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
           </Button>
-          
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden p-2" 
+
+          <button
+            className="lg:hidden p-2 text-primary-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Menu"
           >
@@ -91,59 +104,32 @@ export function Header({ landNaam }: HeaderProps) {
           </button>
         </div>
       </div>
-      
+
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-card">
-          <nav className="container py-4 flex flex-col gap-4">
-            <Link 
-              to="/" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <div className="pt-2 border-t border-border">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Diensten</p>
+        <div className="lg:hidden border-t border-primary-foreground/15 bg-primary-deep">
+          <nav className="container py-4 flex flex-col gap-4 text-primary-foreground">
+            <Link to="/" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <div className="pt-2 border-t border-primary-foreground/15">
+              <p className="text-xs font-semibold uppercase tracking-wider mb-2 opacity-70">Diensten</p>
               <div className="flex flex-col gap-2 pl-2">
                 {services.map((s) => (
-                  <Link
-                    key={s.to}
-                    to={s.to}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
+                  <Link key={s.to} to={s.to} className="text-sm hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>
                     {s.label}
                   </Link>
                 ))}
               </div>
             </div>
-            <Link 
-              to="/bestemmingen" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <MapPin className="h-4 w-4" />
-              Bestemmingen
+            <Link to="/bestemmingen" className="text-sm font-medium flex items-center gap-1 hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>
+              <MapPin className="h-4 w-4" /> Bestemmingen
             </Link>
-            <Link 
-              to="/routes" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Routes
-            </Link>
-            <Link 
-              to="/contact" 
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Contact
-            </Link>
-            <Button asChild className="w-full">
-              <Link to="/offerte" onClick={() => setMobileMenuOpen(false)}>
-                Offerte aanvragen
-              </Link>
+            <Link to="/routes" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Routes</Link>
+            <Link to="/contact" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+            <a href={CONTACT.telefoonHref} className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2 text-sm font-semibold w-fit">
+              <Phone className="h-4 w-4" /> {CONTACT.telefoon}
+            </a>
+            <Button asChild className="w-full rounded-full bg-gradient-cta text-cta-foreground shadow-cta">
+              <Link to="/offerte" onClick={() => setMobileMenuOpen(false)}>Offerte aanvragen</Link>
             </Button>
           </nav>
         </div>
