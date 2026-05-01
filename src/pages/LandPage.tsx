@@ -181,22 +181,58 @@ const LandPage = () => {
           </h2>
           <div className="prose prose-slate max-w-none text-foreground">
             <p>
-              Onze koeriers rijden dagelijks vanuit Nederland naar {naam}. Of het nu gaat
-              om een <strong>spoedkoerier naar {naam}</strong>, een geplande zakelijke levering
-              of een gevoelig medisch transport: wij regelen het direct. Met onze ervaren
-              chauffeurs en een eigen wagenpark bent u verzekerd van een snelle, veilige
-              en directe rit zonder tussenstops.
+              Heeft u op korte termijn een <strong>spoedkoerier naar {naam}</strong> nodig?
+              De Europa Koerier rijdt dagelijks vanuit Nederland naar {naam} en is gespecialiseerd
+              in directe, exclusieve ritten zonder overslag. Of het nu gaat om een gepland
+              transport of een <strong>koerier met spoed naar {naam}</strong> die binnen het uur
+              moet vertrekken: wij staan 24/7 voor u klaar.
             </p>
             <p>
-              Een <strong>koerier naar {naam}</strong> boeken via De Europa Koerier betekent:
-              één vast contactpersoon, transparante kilometerprijs en realtime track & trace.
+              Een <strong>koerier naar {naam}</strong> boeken via ons betekent één vast
+              contactpersoon, een transparante kilometerprijs en realtime track & trace.
               U weet exact waar uw zending zich bevindt, vanaf het moment van ophalen tot
-              aflevering op de eindbestemming in {naam}.
+              aflevering op de eindbestemming in {naam}. Onze ervaren chauffeurs rijden met
+              eigen bestelwagens, zodat uw goederen veilig en zonder tussenstops worden
+              afgeleverd.
+            </p>
+
+            <h3 className="font-display text-xl font-semibold mt-8 mb-3">
+              Wanneer kiest u voor een spoedkoerier naar {naam}?
+            </h3>
+            <p>
+              Veel klanten kiezen voor onze <strong>spoeddienst naar {naam}</strong> wanneer
+              elke minuut telt. Denk aan dringende reserveonderdelen voor productielijnen,
+              prototypes voor beurzen, juridische documenten, medische monsters of
+              temperatuurgevoelige goederen. Een <strong>koerier met spoed naar {naam}</strong>
+              voorkomt productiestilstand, gemiste deadlines en financiële schade.
             </p>
             <p>
-              Veel klanten kiezen voor onze <strong>spoeddienst naar {naam}</strong> voor
-              dringende reserveonderdelen, prototypes, juridische documenten of medische
-              monsters. Wij vervoeren ook kunst, machines en temperatuurgevoelige goederen.
+              Wij vervoeren naar {naam} onder andere:
+            </p>
+            <ul>
+              <li>Reserveonderdelen en machines</li>
+              <li>Medische monsters en farmaceutische zendingen</li>
+              <li>Juridische en zakelijke documenten</li>
+              <li>Kunst, antiek en waardevolle goederen</li>
+              <li>Prototypes, beursmateriaal en showroommodellen</li>
+              <li>Temperatuurgevoelige producten</li>
+            </ul>
+
+            <h3 className="font-display text-xl font-semibold mt-8 mb-3">
+              Waarom De Europa Koerier voor uw transport naar {naam}?
+            </h3>
+            <p>
+              Als specialist in internationaal spoedtransport bieden wij een
+              <strong> spoedkoerier naar {naam}</strong> met de volgende voordelen:
+              vaste prijs vooraf, geen verrassingen achteraf, een eigen wagenpark zonder
+              onderaannemers, volledige goederenverzekering en directe levering van deur tot deur.
+              Een <strong>koerier naar {naam}</strong> die binnen 60 minuten kan vertrekken
+              maakt het verschil tussen op tijd leveren en te laat zijn.
+            </p>
+            <p>
+              Vraag direct uw offerte aan voor een <strong>koerier met spoed naar {naam}</strong>
+              of bel ons voor persoonlijk advies. Wij denken graag mee over de snelste en
+              meest efficiënte route voor uw zending.
             </p>
           </div>
 
