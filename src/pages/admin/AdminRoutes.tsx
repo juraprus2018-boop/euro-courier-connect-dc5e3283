@@ -13,7 +13,7 @@ interface RouteData {
   afstand_km: number;
   geschatte_prijs: number;
   nl_plaats: { naam: string };
-  buitenland_stad: { naam: string; land: { naam: string; domein: string | null } };
+  buitenland_stad: { naam: string; land: { naam: string; slug: string; domein: string | null } };
 }
 
 const AdminRoutes = () => {
@@ -33,7 +33,7 @@ const AdminRoutes = () => {
         afstand_km,
         geschatte_prijs,
         nl_plaats:nl_plaatsen(naam),
-        buitenland_stad:buitenland_steden(naam, land:landen(naam, domein))
+        buitenland_stad:buitenland_steden(naam, land:landen(naam, slug, domein))
       `, { count: 'exact' })
       .order('created_at', { ascending: false })
       .limit(100);
@@ -102,9 +102,11 @@ const AdminRoutes = () => {
                 <TableBody>
                   {routes.map((route) => {
                     const domein = route.buitenland_stad?.land?.domein;
+                    const landSlug = route.buitenland_stad?.land?.slug;
+                    const path = `/spoed-koerier-${landSlug}/${route.slug}`;
                     const url = domein
-                      ? `https://${domein}/route/${route.slug}`
-                      : `/route/${route.slug}`;
+                      ? `https://${domein}${path}`
+                      : path;
                     return (
                       <TableRow key={route.id}>
                         <TableCell>

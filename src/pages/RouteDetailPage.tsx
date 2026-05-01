@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { QuoteForm } from '@/components/public/QuoteForm';
@@ -14,11 +14,11 @@ interface RouteDetail {
   afstand_km: number;
   geschatte_prijs: number;
   nl_plaats: { id: string; naam: string };
-  buitenland_stad: { id: string; naam: string; land: { id: string; naam: string } };
+  buitenland_stad: { id: string; naam: string; land: { id: string; naam: string; slug: string } };
 }
 
 const RouteDetailPage = () => {
-  const { slug } = useParams();
+  const { slug, landSlug } = useParams();
   const { land, loading: landLoading } = useLand();
   const [route, setRoute] = useState<RouteDetail | null>(null);
   const [kmTarief, setKmTarief] = useState<number>(0.85);
@@ -36,7 +36,7 @@ const RouteDetailPage = () => {
             afstand_km,
             geschatte_prijs,
             nl_plaats:nl_plaatsen(id, naam),
-            buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam))
+            buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam, slug))
           `)
           .eq('slug', slug)
           .maybeSingle(),
@@ -69,6 +69,12 @@ const RouteDetailPage = () => {
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
+  }
+
+  // Canonical URL: /spoed-koerier-{landSlug}/{routeSlug}
+  const canonicalLandSlug = route?.buitenland_stad?.land?.slug;
+  if (route && canonicalLandSlug && landSlug !== canonicalLandSlug) {
+    return <Navigate to={`/spoed-koerier-${canonicalLandSlug}/${slug}`} replace />;
   }
 
   // On a country-specific site, only show routes that go to that country

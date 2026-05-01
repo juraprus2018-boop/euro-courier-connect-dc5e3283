@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
           );
         routes?.forEach((r: any) => {
           urls.push({
-            loc: `${baseUrl}/route/${r.slug}`,
+            loc: `${baseUrl}/spoed-koerier-${land.slug}/${r.slug}`,
             priority: "0.7",
             changefreq: "monthly",
           });
@@ -111,11 +111,13 @@ Deno.serve(async (req) => {
 
       const { data: routes } = await supabase
         .from("routes")
-        .select("slug")
+        .select("slug, buitenland_stad:buitenland_steden(land:landen(slug))")
         .limit(2000);
       routes?.forEach((r: any) => {
+        const landSlug = r.buitenland_stad?.land?.slug;
+        if (!landSlug) return;
         urls.push({
-          loc: `${baseUrl}/route/${r.slug}`,
+          loc: `${baseUrl}/spoed-koerier-${landSlug}/${r.slug}`,
           priority: "0.5",
           changefreq: "monthly",
         });

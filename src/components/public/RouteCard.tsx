@@ -8,11 +8,13 @@ interface RouteCardProps {
   afstandKm: number;
   prijs: number;
   slug: string;
+  landSlug?: string;
 }
 
-export function RouteCard({ nlPlaats, buitenlandStad, afstandKm, prijs, slug }: RouteCardProps) {
+export function RouteCard({ nlPlaats, buitenlandStad, afstandKm, prijs, slug, landSlug }: RouteCardProps) {
+  const to = landSlug ? `/spoed-koerier-${landSlug}/${slug}` : `/route/${slug}`;
   return (
-    <Link to={`/route/${slug}`}>
+    <Link to={to}>
       <Card className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
