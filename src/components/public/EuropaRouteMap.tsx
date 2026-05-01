@@ -1,28 +1,30 @@
 import { MapPin, Truck, Zap } from 'lucide-react';
+import { EUROPE_PATH } from './europePath';
 
 /**
- * Geanimeerde Europa-kaart met pijlen vanuit Nederland naar diverse landen.
- * Pure SVG — geen externe assets, schaalt scherp op elk scherm.
+ * Echte Europa-kaart (vereenvoudigde GeoJSON) met geanimeerde
+ * spoedkoerier-routes vanuit Nederland naar belangrijke steden.
  */
 export function EuropaRouteMap() {
-  // Coordinaten in viewBox 0 0 500 600. NL = vertrekpunt.
-  const NL = { x: 235, y: 235 };
+  // ViewBox 0 0 500 600, equirectangular projectie (lon -12..35, lat 35..62)
+  const NL = { x: 183.9, y: 219.3 };
 
   const destinations = [
-    { name: 'Parijs', x: 200, y: 320, delay: 0 },
-    { name: 'Berlijn', x: 305, y: 235, delay: 0.4 },
-    { name: 'Brussel', x: 220, y: 270, delay: 0.8 },
-    { name: 'Wenen', x: 320, y: 310, delay: 1.2 },
-    { name: 'Rome', x: 295, y: 430, delay: 1.6 },
-    { name: 'Madrid', x: 130, y: 440, delay: 2.0 },
-    { name: 'Warschau', x: 365, y: 220, delay: 2.4 },
-    { name: 'Zagreb', x: 330, y: 360, delay: 2.8 },
+    { name: 'Parijs', x: 152.7, y: 292.2, delay: 0 },
+    { name: 'Berlijn', x: 270.2, y: 210.7, delay: 0.35 },
+    { name: 'Brussel', x: 173.9, y: 247.8, delay: 0.7 },
+    { name: 'Wenen', x: 301.8, y: 306.4, delay: 1.05 },
+    { name: 'Rome', x: 260.5, y: 446.7, delay: 1.4 },
+    { name: 'Madrid', x: 88.3, y: 479.6, delay: 1.75 },
+    { name: 'Warschau', x: 351.2, y: 217.1, delay: 2.1 },
+    { name: 'Zagreb', x: 297.7, y: 359.8, delay: 2.45 },
+    { name: 'Kopenhagen', x: 261.4, y: 140.4, delay: 2.8 },
   ];
 
   return (
     <div className="relative h-full w-full overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-background to-accent/5 border shadow-sm">
       {/* Floating badges */}
-      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-background/90 backdrop-blur px-3 py-1.5 text-xs font-semibold shadow-sm border">
+      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 rounded-full bg-background/95 backdrop-blur px-3 py-1.5 text-xs font-semibold shadow-sm border">
         <Zap className="h-3.5 w-3.5 text-primary" />
         Spoedkoerier door heel Europa
       </div>
@@ -36,91 +38,59 @@ export function EuropaRouteMap() {
         className="h-full w-full"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Spoedkoerier routes vanuit Nederland naar Europa"
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          <marker
-            id="arrowhead"
-            markerWidth="6"
-            markerHeight="6"
-            refX="5"
-            refY="3"
-            orient="auto"
-          >
+          <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
             <polygon points="0 0, 6 3, 0 6" fill="hsl(var(--primary))" />
           </marker>
           <radialGradient id="nlGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.6" />
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.55" />
             <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
           </radialGradient>
+          <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.04" />
+            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.10" />
+          </linearGradient>
         </defs>
 
-        {/* Vereenvoudigd Europa silhouet */}
+        {/* Zee achtergrond */}
+        <rect width="500" height="600" fill="url(#seaGrad)" />
+
+        {/* Echte Europa-landen */}
         <path
-          d="M 60 180 Q 80 140 130 130 L 180 110 Q 230 100 280 115 L 340 130 Q 400 145 430 200 L 445 270 Q 450 340 420 400 L 380 470 Q 330 510 270 505 L 200 500 Q 140 490 100 440 L 70 380 Q 50 320 55 250 Z"
+          d={EUROPE_PATH}
           fill="hsl(var(--muted))"
-          fillOpacity="0.5"
+          fillOpacity="0.85"
           stroke="hsl(var(--border))"
-          strokeWidth="1"
-        />
-        {/* UK */}
-        <path
-          d="M 130 220 Q 140 200 165 205 L 175 240 Q 170 270 150 275 Q 130 270 125 250 Z"
-          fill="hsl(var(--muted))"
-          fillOpacity="0.5"
-          stroke="hsl(var(--border))"
-          strokeWidth="1"
-        />
-        {/* Scandinavie */}
-        <path
-          d="M 280 60 Q 320 50 350 70 L 360 130 Q 340 150 310 145 L 285 110 Z"
-          fill="hsl(var(--muted))"
-          fillOpacity="0.5"
-          stroke="hsl(var(--border))"
-          strokeWidth="1"
+          strokeWidth="0.5"
+          strokeLinejoin="round"
         />
 
         {/* Pulserende glow op NL */}
         <circle cx={NL.x} cy={NL.y} r="40" fill="url(#nlGlow)">
-          <animate
-            attributeName="r"
-            values="20;45;20"
-            dur="2.5s"
-            repeatCount="indefinite"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.8;0.1;0.8"
-            dur="2.5s"
-            repeatCount="indefinite"
-          />
+          <animate attributeName="r" values="18;42;18" dur="2.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.9;0.1;0.9" dur="2.5s" repeatCount="indefinite" />
         </circle>
 
         {/* Routes */}
-        {destinations.map((d, i) => {
-          // Curved path met control point
+        {destinations.map((d) => {
           const mx = (NL.x + d.x) / 2;
-          const my = (NL.y + d.y) / 2 - 30;
+          const my = (NL.y + d.y) / 2 - 25;
           const path = `M ${NL.x} ${NL.y} Q ${mx} ${my} ${d.x} ${d.y}`;
           return (
             <g key={d.name}>
-              {/* Statische lijn */}
               <path
                 d={path}
                 fill="none"
                 stroke="hsl(var(--primary))"
-                strokeOpacity="0.25"
-                strokeWidth="1.5"
+                strokeOpacity="0.35"
+                strokeWidth="1.4"
                 strokeDasharray="4 3"
                 markerEnd="url(#arrowhead)"
               />
-              {/* Animerende puls */}
               <circle r="3.5" fill="hsl(var(--primary))">
-                <animateMotion
-                  dur="3s"
-                  repeatCount="indefinite"
-                  begin={`${d.delay}s`}
-                  path={path}
-                />
+                <animateMotion dur="3s" repeatCount="indefinite" begin={`${d.delay}s`} path={path} />
                 <animate
                   attributeName="opacity"
                   values="0;1;1;0"
@@ -129,20 +99,18 @@ export function EuropaRouteMap() {
                   repeatCount="indefinite"
                 />
               </circle>
-
-              {/* Bestemming pin */}
               <circle
                 cx={d.x}
                 cy={d.y}
-                r="4"
+                r="3.5"
                 fill="hsl(var(--primary))"
                 stroke="hsl(var(--background))"
                 strokeWidth="1.5"
               />
               <text
-                x={d.x + 8}
-                y={d.y + 4}
-                fontSize="11"
+                x={d.x + 7}
+                y={d.y + 3.5}
+                fontSize="10.5"
                 fontWeight="600"
                 fill="hsl(var(--foreground))"
                 style={{ paintOrder: 'stroke', stroke: 'hsl(var(--background))', strokeWidth: 3 }}
@@ -157,15 +125,15 @@ export function EuropaRouteMap() {
         <circle
           cx={NL.x}
           cy={NL.y}
-          r="7"
+          r="6"
           fill="hsl(var(--primary))"
           stroke="hsl(var(--background))"
           strokeWidth="2"
         />
         <text
-          x={NL.x - 4}
-          y={NL.y - 12}
-          fontSize="12"
+          x={NL.x}
+          y={NL.y - 11}
+          fontSize="11"
           fontWeight="700"
           fill="hsl(var(--foreground))"
           textAnchor="middle"
@@ -175,9 +143,8 @@ export function EuropaRouteMap() {
         </text>
       </svg>
 
-      {/* Onder-info */}
       <div className="absolute bottom-4 left-4 z-10 max-w-[60%]">
-        <div className="flex items-start gap-2 rounded-lg bg-background/90 backdrop-blur px-3 py-2 text-xs shadow-sm border">
+        <div className="flex items-start gap-2 rounded-lg bg-background/95 backdrop-blur px-3 py-2 text-xs shadow-sm border">
           <MapPin className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
           <div>
             <div className="font-semibold">24/7 beschikbaar</div>
