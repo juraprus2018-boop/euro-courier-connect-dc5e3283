@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
           );
         routes?.forEach((r: any) => {
           urls.push({
-            loc: `${baseUrl}/route/${r.slug}`,
+            loc: `${baseUrl}/spoed-koerier-${land.slug}/${r.slug}`,
             priority: "0.7",
             changefreq: "monthly",
           });
