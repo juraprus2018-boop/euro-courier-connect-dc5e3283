@@ -73,6 +73,7 @@ export function Footer() {
               <li><Link to="/offerte" className="hover:text-foreground transition-colors">Offerte aanvragen</Link></li>
               <li><Link to="/prijs-berekenen" className="hover:text-foreground transition-colors">Prijs berekenen</Link></li>
               <li><Link to="/laadcapaciteit" className="hover:text-foreground transition-colors">Laadcapaciteit</Link></li>
+              <li><Link to="/blog" className="hover:text-foreground transition-colors">Blog & kennisbank</Link></li>
               <li><Link to="/faq" className="hover:text-foreground transition-colors">Veelgestelde vragen</Link></li>
               <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link></li>
             </ul>
