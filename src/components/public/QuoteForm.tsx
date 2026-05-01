@@ -65,8 +65,19 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
     },
   });
 
-  const ophaalAdres = watch('ophaal_adres');
-  const afleverAdres = watch('aflever_adres');
+  const values = watch();
+  const ophaalAdres = values.ophaal_adres;
+  const afleverAdres = values.aflever_adres;
+
+  // Groene styling voor velden die ingevuld zijn (en geen fout hebben)
+  const filled = (name: keyof QuoteFormData, minLen = 1) => {
+    const v = values[name];
+    return typeof v === 'string' && v.trim().length >= minLen && !errors[name];
+  };
+  const fieldClass = (name: keyof QuoteFormData, minLen = 1) =>
+    filled(name, minLen)
+      ? 'border-success bg-success/5 focus-visible:ring-success/40'
+      : '';
 
   const onSubmit = async (data: QuoteFormData) => {
     setIsSubmitting(true);
