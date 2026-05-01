@@ -114,8 +114,6 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                 width={1264}
                 height={848}
               />
-              <span className="pointer-events-none absolute left-[12.5%] top-[67%] h-[12%] aspect-square rounded-full border-[3px] border-primary-foreground/80 border-t-cta opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-hover:animate-wheel-spin" />
-              <span className="pointer-events-none absolute left-[79.5%] top-[66%] h-[12%] aspect-square rounded-full border-[3px] border-primary-foreground/80 border-t-cta opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-hover:animate-wheel-spin" />
               <span className="pointer-events-none absolute bottom-[8%] left-[6%] h-1 w-[88%] rounded-full bg-[linear-gradient(90deg,hsl(var(--primary-foreground)/0.7)_0_35%,transparent_35%_55%)] bg-[length:44px_4px] opacity-0 transition-opacity duration-200 group-hover:opacity-80 group-hover:animate-road-move" />
             </div>
 
