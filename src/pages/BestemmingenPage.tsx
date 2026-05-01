@@ -5,6 +5,7 @@ import { useLand } from '@/hooks/useLand';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
+import { SEOHead } from '@/components/SEOHead';
 import { Loader2, MapPin, ArrowRight, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -45,6 +46,7 @@ const BestemmingenPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead pageKey="bestemmingen" landNaam={land?.naam} variables={{ land: land?.naam || 'Europa' }} />
       <Header landNaam={land?.naam} />
       
       <main className="flex-1 py-12">

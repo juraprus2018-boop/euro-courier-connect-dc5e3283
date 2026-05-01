@@ -5,6 +5,7 @@ import { useLand } from '@/hooks/useLand';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
+import { SEOHead } from '@/components/SEOHead';
 import { Loader2, MapPin, ArrowRight, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -82,6 +83,7 @@ const BestemmingDetailPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead pageKey="bestemming_detail" landNaam={landNaam || undefined} variables={{ stad: stad.naam, land: landNaam || '' }} />
       <Header landNaam={land?.naam} />
       
       <main className="flex-1 py-12">
