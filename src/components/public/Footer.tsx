@@ -10,6 +10,24 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="container py-12">
+        <div className="pb-10 mb-10 border-b border-border">
+          <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              { src: citan, alt: 'Bestelwagen van De Europa Koerier', label: 'Bestelwagen' },
+              { src: bestelbus, alt: 'Bestelbus XL van De Europa Koerier', label: 'Bestelbus (XL)' },
+              { src: bakwagen, alt: 'Bakwagen met laadklep van De Europa Koerier', label: 'Bakwagen met laadklep' },
+            ].map((v) => (
+              <Link key={v.label} to="/laadcapaciteit" className="group block text-center">
+                <div className="bg-muted rounded-lg p-4 mb-2 flex items-center justify-center h-32 overflow-hidden">
+                  <img src={v.src} alt={v.alt} loading="lazy" className="max-h-full w-auto object-contain transition-transform group-hover:scale-105" />
+                </div>
+                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -113,24 +131,6 @@ export function Footer() {
               <li>Za: 09:00 - 14:00</li>
               <li>Zo: Gesloten</li>
             </ul>
-          </div>
-        </div>
-
-        <div className="mt-10 pt-8 border-t border-border">
-          <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              { src: citan, alt: 'Bestelwagen van De Europa Koerier', label: 'Bestelwagen' },
-              { src: bestelbus, alt: 'Bestelbus XL van De Europa Koerier', label: 'Bestelbus (XL)' },
-              { src: bakwagen, alt: 'Bakwagen met laadklep van De Europa Koerier', label: 'Bakwagen met laadklep' },
-            ].map((v) => (
-              <Link key={v.label} to="/laadcapaciteit" className="group block text-center">
-                <div className="bg-muted rounded-lg p-4 mb-2 flex items-center justify-center h-32 overflow-hidden">
-                  <img src={v.src} alt={v.alt} loading="lazy" className="max-h-full w-auto object-contain transition-transform group-hover:scale-105" />
-                </div>
-                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
-              </Link>
-            ))}
           </div>
         </div>
 
