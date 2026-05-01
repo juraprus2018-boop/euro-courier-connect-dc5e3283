@@ -17,6 +17,13 @@ export function CountriesSection() {
     },
   });
 
+  // ISO-code -> emoji vlag
+  const isoToFlag = (iso?: string | null) => {
+    if (!iso || iso.length !== 2) return '🏳️';
+    const code = iso.toUpperCase();
+    return String.fromCodePoint(...[...code].map((c) => 0x1f1e6 - 65 + c.charCodeAt(0)));
+  };
+
   if (!landen || landen.length === 0) return null;
 
   return (
@@ -44,12 +51,15 @@ export function CountriesSection() {
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary transition-colors duration-300">
-                    <MapPin className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 text-3xl leading-none">
+                    <span aria-hidden>{isoToFlag(land.iso_code)}</span>
                   </div>
                   <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
                 </div>
-                <h3 className="font-display text-xl font-bold">{land.naam}</h3>
+                <h3 className="font-display text-xl font-bold flex items-center gap-2">
+                  <span aria-hidden className="text-2xl leading-none">{isoToFlag(land.iso_code)}</span>
+                  {land.naam}
+                </h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Bekijk routes en prijzen
                 </p>
