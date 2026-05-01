@@ -44,17 +44,17 @@ export function ServicePageLayout({
                 { label: 'Diensten' },
                 { label: title },
               ]}
-              className="mb-6 text-primary-foreground/80 [&_a:hover]:text-primary-foreground [&_[aria-current]]:text-primary-foreground [&_svg]:text-primary-foreground/60"
+              className="mb-6 text-primary-foreground/90 [&_a]:text-primary-foreground/80 [&_a:hover]:text-primary-foreground [&_[aria-current]]:text-primary-foreground [&_[aria-current]]:font-semibold [&_svg]:text-primary-foreground/60"
             />
             <div className="max-w-3xl">
-              <span className="inline-block text-accent font-semibold uppercase tracking-widest text-sm">
+              <span className="inline-block text-primary-foreground/80 font-semibold uppercase tracking-widest text-sm">
                 {badge}
               </span>
-              <h1 className="font-display text-4xl lg:text-5xl font-bold mt-3">{title}</h1>
-              <p className="mt-6 text-lg text-primary-foreground/80">{intro}</p>
+              <h1 className="font-display text-4xl lg:text-5xl font-bold mt-3 text-primary-foreground">{title}</h1>
+              <p className="mt-6 text-lg text-primary-foreground/85">{intro}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+                <Button size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
                   <Link to="/offerte">
                     Offerte aanvragen
                     <ArrowRight className="ml-2 h-5 w-5" />
