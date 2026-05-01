@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Truck, Phone, Mail, MapPin, Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CONTACT } from '@/lib/contact';
+import { supabase } from '@/integrations/supabase/client';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +24,18 @@ interface HeaderProps {
 
 export function Header({ landNaam }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [landen, setLanden] = useState<Array<{ naam: string; slug: string }>>([]);
+
+  useEffect(() => {
+    supabase
+      .from('landen')
+      .select('naam, slug')
+      .eq('actief', true)
+      .order('naam')
+      .then(({ data }) => {
+        if (data) setLanden(data);
+      });
+  }, []);
 
   const siteNaam = landNaam ? `De ${landNaam} Koerier` : 'De Europa Koerier';
 
