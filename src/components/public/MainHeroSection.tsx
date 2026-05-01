@@ -25,12 +25,10 @@ export function MainHeroSection() {
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-background leading-tight animate-fade-in">
             Spoedkoerier door
             <span className="block text-accent">heel Europa</span>
-            uw betrouwbare partner
           </h1>
           
           <p className="mt-6 text-lg sm:text-xl text-background/80 max-w-2xl animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            Al meer dan 15 jaar verzorgen wij professionele koeriersdiensten van Nederland naar alle hoeken van Europa. 
-            Snel, betrouwbaar en met persoonlijke service.
+            Sinds 2009 rijden wij vanuit Nederland naar elk Europees land. Eén chauffeur, één auto, rechtstreeks naar het afleveradres.
           </p>
           
           {/* CTAs */}
