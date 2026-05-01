@@ -36,7 +36,7 @@ const RouteDetailPage = () => {
             afstand_km,
             geschatte_prijs,
             nl_plaats:nl_plaatsen(id, naam),
-            buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam))
+            buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam, slug))
           `)
           .eq('slug', slug)
           .maybeSingle(),
