@@ -1,9 +1,14 @@
+import { useSearchParams } from 'react-router-dom';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 
 const QuotePage = () => {
+  const [searchParams] = useSearchParams();
+  const van = searchParams.get('van') || undefined;
+  const naar = searchParams.get('naar') || undefined;
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -18,7 +23,7 @@ const QuotePage = () => {
             </p>
           </div>
 
-          <QuoteForm />
+          <QuoteForm defaultOphaalPlaats={van} defaultAfleverPlaats={naar} />
         </div>
       </main>
 
@@ -28,3 +33,4 @@ const QuotePage = () => {
 };
 
 export default QuotePage;
+
