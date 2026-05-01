@@ -89,7 +89,14 @@ export function AddressAutocomplete({
       road: addr.road,
       house_number: addr.house_number,
       postcode: addr.postcode,
-      city: addr.city || addr.town || addr.village || addr.municipality,
+      city:
+        addr.city ||
+        addr.town ||
+        addr.village ||
+        addr.municipality ||
+        addr.hamlet ||
+        addr.suburb ||
+        addr.county,
       country: addr.country,
     });
   };
