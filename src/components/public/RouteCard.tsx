@@ -29,8 +29,7 @@ export function RouteCard({ nlPlaats, buitenlandStad, afstandKm, prijs, slug }: 
             </div>
             
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">{afstandKm} km</p>
-              <p className="font-display font-bold text-lg text-primary">€{prijs.toFixed(0)}</p>
+              <p className="font-display font-bold text-lg text-primary">{afstandKm} km</p>
             </div>
           </div>
         </CardContent>
