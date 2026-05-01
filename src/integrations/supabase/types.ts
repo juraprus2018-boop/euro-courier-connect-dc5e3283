@@ -19,6 +19,7 @@ export type Database = {
           aflever_adres: string
           aflever_plaats: string
           aflever_postcode: string | null
+          afstand_km: number | null
           breedte_cm: number | null
           contact_bedrijf: string | null
           contact_email: string
@@ -29,6 +30,7 @@ export type Database = {
           gewicht_kg: number | null
           hoogte_cm: number | null
           id: string
+          lading_items: Json | null
           land_id: string | null
           lengte_cm: number | null
           omschrijving: string | null
@@ -36,16 +38,21 @@ export type Database = {
           ophaal_plaats: string
           ophaal_postcode: string | null
           opmerkingen: string | null
+          rijtijd_minuten: number | null
           route_id: string | null
           status: string
           tijd_voorkeur: string | null
+          transport_type: string | null
           updated_at: string
+          verwachte_looptijd: string | null
+          verwachte_prijs: number | null
           zending_type: string | null
         }
         Insert: {
           aflever_adres: string
           aflever_plaats: string
           aflever_postcode?: string | null
+          afstand_km?: number | null
           breedte_cm?: number | null
           contact_bedrijf?: string | null
           contact_email: string
@@ -56,6 +63,7 @@ export type Database = {
           gewicht_kg?: number | null
           hoogte_cm?: number | null
           id?: string
+          lading_items?: Json | null
           land_id?: string | null
           lengte_cm?: number | null
           omschrijving?: string | null
@@ -63,16 +71,21 @@ export type Database = {
           ophaal_plaats: string
           ophaal_postcode?: string | null
           opmerkingen?: string | null
+          rijtijd_minuten?: number | null
           route_id?: string | null
           status?: string
           tijd_voorkeur?: string | null
+          transport_type?: string | null
           updated_at?: string
+          verwachte_looptijd?: string | null
+          verwachte_prijs?: number | null
           zending_type?: string | null
         }
         Update: {
           aflever_adres?: string
           aflever_plaats?: string
           aflever_postcode?: string | null
+          afstand_km?: number | null
           breedte_cm?: number | null
           contact_bedrijf?: string | null
           contact_email?: string
@@ -83,6 +96,7 @@ export type Database = {
           gewicht_kg?: number | null
           hoogte_cm?: number | null
           id?: string
+          lading_items?: Json | null
           land_id?: string | null
           lengte_cm?: number | null
           omschrijving?: string | null
@@ -90,10 +104,14 @@ export type Database = {
           ophaal_plaats?: string
           ophaal_postcode?: string | null
           opmerkingen?: string | null
+          rijtijd_minuten?: number | null
           route_id?: string | null
           status?: string
           tijd_voorkeur?: string | null
+          transport_type?: string | null
           updated_at?: string
+          verwachte_looptijd?: string | null
+          verwachte_prijs?: number | null
           zending_type?: string | null
         }
         Relationships: [
