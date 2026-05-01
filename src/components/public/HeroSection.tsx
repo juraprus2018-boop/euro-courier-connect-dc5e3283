@@ -16,8 +16,8 @@ export function HeroSection({ landNaam, heroTitel, heroSubtitel }: HeroSectionPr
     : 'Spoedkoerier door heel Europa');
 
   const subtitle = heroSubtitel || (landNaam
-    ? `Dagelijkse spoedkoeriersdienst van Nederland naar ${landNaam}. Direct van A naar B, 24/7 beschikbaar.`
-    : 'Professionele spoedkoerier van Nederland naar heel Europa. Dagelijks op pad voor uw zendingen.');
+    ? `Wij rijden dagelijks vanuit Nederland naar ${landNaam}. Bel ons en wij vertrekken meteen.`
+    : 'Wij rijden vanuit Nederland naar heel Europa. Bel ons en wij vertrekken meteen.');
 
   return (
     <section className="relative overflow-hidden bg-gradient-dark py-20 lg:py-32">
