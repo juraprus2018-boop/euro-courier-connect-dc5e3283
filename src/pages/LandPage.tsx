@@ -140,8 +140,8 @@ const LandPage = () => {
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-cta text-cta-foreground hover:brightness-110 shadow-cta animate-cta-pulse">
-              <Link to="/prijs-berekenen">
-                Prijs berekenen <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/offerte">
+                Offerte aanvragen <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
@@ -249,8 +249,8 @@ const LandPage = () => {
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Button asChild size="lg" className="bg-cta text-cta-foreground hover:brightness-110 shadow-cta animate-cta-pulse">
-              <Link to="/prijs-berekenen">
-                Prijs berekenen <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/offerte">
+                Offerte aanvragen <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
