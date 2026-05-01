@@ -152,6 +152,62 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_artikelen: {
+        Row: {
+          cover_afbeelding_url: string | null
+          created_at: string
+          excerpt: string | null
+          gepubliceerd: boolean
+          gepubliceerd_op: string | null
+          id: string
+          inhoud: string
+          land_id: string | null
+          meta_description: string | null
+          meta_title: string | null
+          slug: string
+          titel: string
+          updated_at: string
+        }
+        Insert: {
+          cover_afbeelding_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          gepubliceerd?: boolean
+          gepubliceerd_op?: string | null
+          id?: string
+          inhoud?: string
+          land_id?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          slug: string
+          titel: string
+          updated_at?: string
+        }
+        Update: {
+          cover_afbeelding_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          gepubliceerd?: boolean
+          gepubliceerd_op?: string | null
+          id?: string
+          inhoud?: string
+          land_id?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          slug?: string
+          titel?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_artikelen_land_id_fkey"
+            columns: ["land_id"]
+            isOneToOne: false
+            referencedRelation: "landen"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       buitenland_steden: {
         Row: {
           created_at: string
@@ -493,6 +549,53 @@ export type Database = {
             columns: ["nl_plaats_id"]
             isOneToOne: false
             referencedRelation: "nl_plaatsen"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      terugbel_verzoeken: {
+        Row: {
+          created_at: string
+          host: string | null
+          id: string
+          land_id: string | null
+          naam: string
+          opmerking: string | null
+          status: string
+          telefoon: string
+          tijdslot: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          host?: string | null
+          id?: string
+          land_id?: string | null
+          naam: string
+          opmerking?: string | null
+          status?: string
+          telefoon: string
+          tijdslot?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          host?: string | null
+          id?: string
+          land_id?: string | null
+          naam?: string
+          opmerking?: string | null
+          status?: string
+          telefoon?: string
+          tijdslot?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "terugbel_verzoeken_land_id_fkey"
+            columns: ["land_id"]
+            isOneToOne: false
+            referencedRelation: "landen"
             referencedColumns: ["id"]
           },
         ]
