@@ -82,7 +82,7 @@ export function Header({ landNaam }: HeaderProps) {
               </DropdownMenuItem>
               {landen.map((l) => (
                 <DropdownMenuItem key={l.slug} asChild>
-                  <Link to={`/spoedkoerier-naar-${l.slug}`}>Spoedkoerier naar {l.naam}</Link>
+                  <Link to={`/spoedkoerier-naar/${l.slug}`}>Spoedkoerier naar {l.naam}</Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -156,7 +156,7 @@ export function Header({ landNaam }: HeaderProps) {
                 {landen.map((l) => (
                   <Link
                     key={l.slug}
-                    to={`/spoedkoerier-naar-${l.slug}`}
+                    to={`/spoedkoerier-naar/${l.slug}`}
                     className="text-sm hover:opacity-80"
                     onClick={() => setMobileMenuOpen(false)}
                   >
