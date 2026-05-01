@@ -13,9 +13,9 @@ const ContactPage = () => {
       <Header />
       
       <main className="flex-1 py-12">
-        <div className="container max-w-4xl">
+        <div className="container">
           <PageBreadcrumb items={[{ label: 'Contact' }]} className="mb-6" />
-          <div className="text-center mb-12">
+          <div className="mb-12">
             <h1 className="font-display text-3xl font-bold">Contact</h1>
             <p className="mt-2 text-muted-foreground">
               Neem contact met ons op voor vragen of een persoonlijk advies.
