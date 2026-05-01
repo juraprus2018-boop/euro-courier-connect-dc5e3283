@@ -48,7 +48,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/routes" element={<Navigate to="/bestemmingen" replace />} />
           <Route path="/route/:slug" element={<RouteDetailPage />} />
-          <Route path="/spoed-koerier-:landSlug/:slug" element={<RouteDetailPage />} />
+          <Route path="/:landPrefix/:slug" element={<RouteDetailPage />} />
           <Route path="/bestemmingen" element={<BestemmingenPage />} />
           <Route path="/bestemming/:slug" element={<BestemmingDetailPage />} />
           <Route path="/spoedkoerier-naar/:landSlug" element={<LandPage />} />
