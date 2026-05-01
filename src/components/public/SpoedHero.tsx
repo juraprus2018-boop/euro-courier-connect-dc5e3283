@@ -54,10 +54,15 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
           {/* LEFT: title + booking card */}
           <div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
-              {bedrijfsNaam}
+              Spoedkoerier {landNaam ? `naar ${landNaam}` : 'door heel Europa'}
             </h1>
+            <p className="mt-4 text-lg sm:text-xl text-primary-foreground/90 leading-relaxed max-w-xl">
+              Wij zijn <strong>{bedrijfsNaam}</strong> en rijden jouw zending met spoed
+              direct van A naar B. Bijvoorbeeld rechtstreeks van Amsterdam naar
+              {landNaam ? ` ${landNaam}` : ' Parijs'} – één chauffeur, één auto, geen overslag.
+            </p>
             {tagline && (
-              <p className="mt-3 font-display text-2xl sm:text-3xl italic font-light text-primary-foreground/90">
+              <p className="mt-3 font-display text-xl sm:text-2xl italic font-light text-primary-foreground/80">
                 {tagline}
               </p>
             )}
