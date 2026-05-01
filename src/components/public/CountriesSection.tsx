@@ -12,6 +12,7 @@ export function CountriesSection() {
         .select('*')
         .eq('actief', true)
         .order('naam');
+      if (error) throw error;
       return data;
     },
   });
@@ -22,10 +23,6 @@ export function CountriesSection() {
     const code = iso.toUpperCase();
     return String.fromCodePoint(...[...code].map((c) => 0x1f1e6 - 65 + c.charCodeAt(0)));
   };
-      if (error) throw error;
-      return data;
-    },
-  });
 
   if (!landen || landen.length === 0) return null;
 
