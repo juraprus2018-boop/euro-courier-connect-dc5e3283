@@ -20,14 +20,13 @@ const KunsttransportPage = () => (
   >
     <h2>Van galerie tot expositie</h2>
     <p className="text-muted-foreground">
-      Of u nu een schilderij naar een veilinghuis in Londen wilt brengen of een sculptuur naar een
-      expositie in Berlijn – wij zorgen dat het kunstwerk in perfecte staat aankomt. Wij rijden
-      direct, zonder overslag, en zorgen dat het kunstwerk altijd onder toezicht blijft van
-      dezelfde koerier.
+      Schilderij naar een veilinghuis in Londen? Sculptuur naar een expositie in Berlijn? Wij rijden
+      direct, zonder overslag, en het kunstwerk blijft de hele rit onder toezicht van dezelfde
+      chauffeur.
     </p>
     <p className="text-muted-foreground">
-      Op verzoek leveren wij maatwerk verpakkingen, kratten en kunstdekens. Ook discrete ophaal en
-      aflevering buiten openingstijden behoort tot de mogelijkheden.
+      Op verzoek regelen wij maatwerk verpakkingen, kratten en kunstdekens. Ophalen en afleveren
+      buiten openingstijden kan ook.
     </p>
   </ServicePageLayout>
 );
