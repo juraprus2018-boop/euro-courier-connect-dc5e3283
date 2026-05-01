@@ -127,11 +127,23 @@
     background-image: var(--gradient-accent);
   }
 
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
+  }
+
+  .bg-gradient-cta {
+    background-image: var(--gradient-cta);
+  }
+
   .bg-gradient-dark {
     background-image: var(--gradient-dark);
   }
 
   .shadow-glow {
     box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-cta {
+    box-shadow: var(--shadow-cta);
   }
 }
