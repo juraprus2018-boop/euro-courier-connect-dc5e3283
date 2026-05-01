@@ -34,11 +34,11 @@ export function Header({ landNaam }: HeaderProps) {
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/15 backdrop-blur">
             <Truck className="h-6 w-6 text-primary-foreground" />
           </div>
-          <div className="hidden sm:flex flex-col leading-tight">
-            <span className="font-display text-base lg:text-lg font-bold">
+          <div className="flex flex-col leading-tight text-primary-foreground">
+            <span className="font-display text-sm sm:text-base lg:text-lg font-bold text-primary-foreground">
               {siteNaam}
             </span>
-            <span className="text-[11px] font-medium text-primary-foreground/80 uppercase tracking-wide">
+            <span className="hidden sm:block text-[11px] font-medium text-primary-foreground/80 uppercase tracking-wide">
               {landNaam ? `Spoedkoerier naar ${landNaam}` : 'Spoedkoerier door heel Europa'}
             </span>
           </div>
