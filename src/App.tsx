@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import RouteDetailPage from "./pages/RouteDetailPage";
 import BestemmingenPage from "./pages/BestemmingenPage";
 import BestemmingDetailPage from "./pages/BestemmingDetailPage";
+import LandPage from "./pages/LandPage";
 import QuotePage from "./pages/QuotePage";
 import PrijsBerekenenPage from "./pages/PrijsBerekenenPage";
 import ContactPage from "./pages/ContactPage";
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/route/:slug" element={<RouteDetailPage />} />
           <Route path="/bestemmingen" element={<BestemmingenPage />} />
           <Route path="/bestemming/:slug" element={<BestemmingDetailPage />} />
+          <Route path="/spoedkoerier-naar-:landSlug" element={<LandPage />} />
           <Route path="/offerte" element={<QuotePage />} />
           <Route path="/prijs-berekenen" element={<PrijsBerekenenPage />} />
           <Route path="/contact" element={<ContactPage />} />
