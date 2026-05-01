@@ -1,4 +1,4 @@
-import { Truck, Clock, Shield, MapPin, Phone, Euro } from 'lucide-react';
+import { Truck, Clock, MapPin, Phone, Euro } from 'lucide-react';
 
 interface USPSectionProps {
   landNaam?: string;
@@ -17,11 +17,6 @@ export function USPSection({ landNaam }: USPSectionProps) {
       icon: Clock,
       title: 'Snelle levering',
       description: 'Bezorging binnen 24-48 uur'
-    },
-    {
-      icon: Shield,
-      title: '100% verzekerd',
-      description: 'Volledige transportverzekering'
     },
     {
       icon: MapPin,

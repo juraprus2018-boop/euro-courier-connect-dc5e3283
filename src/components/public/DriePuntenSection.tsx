@@ -1,4 +1,4 @@
-import { Truck, Sparkles, Wallet, Clock } from 'lucide-react';
+import { Truck, Wallet, Clock } from 'lucide-react';
 
 interface DriePuntenSectionProps {
   landNaam?: string;
@@ -64,15 +64,6 @@ export function DriePuntenSection({ landNaam }: DriePuntenSectionProps) {
                 <div>
                   <h3 className="font-display font-semibold">Vanaf €0,50 per kilometer</h3>
                   <p className="text-sm text-muted-foreground">Eerlijke kilometerprijs zonder verrassingen achteraf.</p>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
-                  <Sparkles className="h-6 w-6 text-primary" />
-                </span>
-                <div>
-                  <h3 className="font-display font-semibold">Verzekerd vervoer</h3>
-                  <p className="text-sm text-muted-foreground">Jouw zending is altijd CMR-verzekerd onderweg.</p>
                 </div>
               </li>
             </ul>

@@ -25,10 +25,6 @@ const DEFAULT_FAQ: FAQItem[] = [
     antwoord: 'De prijs hangt af van de afstand en het formaat van uw zending. Gebruik onze routecalculator voor een directe prijsindicatie, of vraag een offerte aan voor een exact tarief.'
   },
   {
-    vraag: 'Zijn mijn goederen verzekerd tijdens transport?',
-    antwoord: 'Ja, al onze transporten zijn volledig verzekerd. Wij bieden standaard transportverzekering en op verzoek aanvullende verzekering voor waardevolle zendingen.'
-  },
-  {
     vraag: 'Kan ik mijn zending volgen?',
     antwoord: 'Ja, u ontvangt een track & trace code waarmee u uw zending realtime kunt volgen. Wij houden u ook proactief op de hoogte van de status.'
   },

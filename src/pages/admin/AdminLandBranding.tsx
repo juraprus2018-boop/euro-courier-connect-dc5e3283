@@ -381,7 +381,7 @@ const AdminLandBranding = () => {
                     id="meta_description"
                     value={formData.meta_description}
                     onChange={(e) => setFormData({ ...formData, meta_description: e.target.value })}
-                    placeholder={`Professionele koeriersdienst van Nederland naar ${land.naam}. Dagelijks op pad, snelle levering, 100% verzekerd.`}
+                    placeholder={`Professionele koeriersdienst van Nederland naar ${land.naam}. Dagelijks op pad, snelle levering.`}
                     rows={3}
                   />
                   <p className="text-xs text-muted-foreground">
