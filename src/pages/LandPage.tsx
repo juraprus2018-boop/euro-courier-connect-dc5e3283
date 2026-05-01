@@ -177,9 +177,9 @@ const LandPage = () => {
               afgeleverd.
             </p>
 
-            <h3 className="font-display text-xl font-semibold mt-8 mb-3">
+            <h2 className="font-display font-semibold mt-8 mb-3">
               Wanneer kiest u voor een spoedkoerier naar {naam}?
-            </h3>
+            </h2>
             <p>
               Veel klanten kiezen voor onze <strong>spoeddienst naar {naam}</strong> wanneer
               elke minuut telt. Denk aan dringende reserveonderdelen voor productielijnen,
@@ -199,9 +199,9 @@ const LandPage = () => {
               <li>Temperatuurgevoelige producten</li>
             </ul>
 
-            <h3 className="font-display text-xl font-semibold mt-8 mb-3">
+            <h2 className="font-display font-semibold mt-8 mb-3">
               Waarom De Europa Koerier voor uw transport naar {naam}?
-            </h3>
+            </h2>
             <p>
               Als specialist in internationaal spoedtransport bieden wij een
               <strong> spoedkoerier naar {naam}</strong> met de volgende voordelen:
@@ -220,9 +220,9 @@ const LandPage = () => {
           {/* Steden */}
           {steden && steden.length > 0 && (
             <div className="mt-10">
-              <h3 className="font-display text-xl font-semibold mb-4">
+              <h2 className="font-display font-semibold mb-4">
                 Bestemmingen in {naam}
-              </h3>
+              </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {steden.map((s) => (
                   <Link
@@ -240,9 +240,9 @@ const LandPage = () => {
 
           {externalUrl && isHoofdsite && (
             <div className="mt-10 p-6 rounded-xl border border-primary/20 bg-primary/5">
-              <h3 className="font-display text-lg font-semibold mb-2">
+              <h2 className="font-display font-semibold mb-2">
                 Specialist voor {naam}: {land.domein}
-              </h3>
+              </h2>
               <p className="text-muted-foreground text-sm mb-4">
                 Bezoek onze specialistische website voor {naam} met lokale tarieven en routes.
               </p>
