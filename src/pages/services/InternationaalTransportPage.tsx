@@ -18,16 +18,16 @@ const InternationaalTransportPage = () => (
       { title: 'Track & trace', description: 'Op verzoek houden wij u realtime op de hoogte van de status van uw zending.' },
     ]}
   >
-    <h2>Internationaal vervoer met persoonlijke service</h2>
+    <h2>Internationaal vervoer met vast aanspreekpunt</h2>
     <p className="text-muted-foreground">
-      Bij internationaal transport gaat snelheid en betrouwbaarheid hand in hand. Onze koeriers
-      rijden dagelijks vaste routes door Europa en kennen elke douaneprocedure. U krijgt één vast
-      aanspreekpunt en de zekerheid dat uw zending door dezelfde chauffeur wordt afgeleverd.
+      Bij een rit naar het buitenland telt elk uur. Onze chauffeurs rijden vaste routes door
+      Europa en weten hoe het werkt aan de grens. U heeft één vast aanspreekpunt en dezelfde
+      chauffeur die de zending ophaalt, levert hem ook af.
     </p>
     <p className="text-muted-foreground">
-      Of het nu gaat om een spoedrit naar Parijs, een zending naar Madrid of een transport naar
-      Warschau – wij regelen het. Onze bestelwagens en bakwagens met laadklep zijn uitgerust met
-      GPS-tracking en geschikt voor zendingen tot enkele honderden kilo's.
+      Spoedrit naar Parijs, zending naar Madrid of transport naar Warschau – we plannen het in
+      en vertrekken zo snel mogelijk. Onze bestelwagens en bakwagens met laadklep hebben
+      GPS-tracking en zijn geschikt voor zendingen tot enkele honderden kilo's.
     </p>
   </ServicePageLayout>
 );
