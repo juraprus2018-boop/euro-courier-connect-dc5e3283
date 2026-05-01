@@ -71,6 +71,12 @@ const RouteDetailPage = () => {
     );
   }
 
+  // Canonical URL: /spoed-koerier-{landSlug}/{routeSlug}
+  const canonicalLandSlug = route?.buitenland_stad?.land?.slug;
+  if (route && canonicalLandSlug && landSlug !== canonicalLandSlug) {
+    return <Navigate to={`/spoed-koerier-${canonicalLandSlug}/${slug}`} replace />;
+  }
+
   // On a country-specific site, only show routes that go to that country
   const wrongLand = land && route && route.buitenland_stad?.land?.id !== land.id;
 
