@@ -4,6 +4,7 @@ import { Footer } from '@/components/public/Footer';
 import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { EuropaRouteMap } from '@/components/public/EuropaRouteMap';
+import { SEOHead } from '@/components/SEOHead';
 
 const QuotePage = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ const QuotePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead pageKey="quote" />
       <Header />
 
       <main className="flex-1 py-12">
