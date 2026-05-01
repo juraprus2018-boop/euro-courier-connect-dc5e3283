@@ -5,7 +5,8 @@ import { useLand } from '@/hooks/useLand';
 import { Header } from '@/components/public/Header';
 import { Footer } from '@/components/public/Footer';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
-import { Loader2, MapPin, ArrowRight } from 'lucide-react';
+import { Loader2, MapPin, ArrowRight, Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const BestemmingenPage = () => {
   const { land, isHoofdsite, loading: landLoading } = useLand();
