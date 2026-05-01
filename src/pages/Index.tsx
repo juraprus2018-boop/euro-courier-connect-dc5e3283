@@ -91,16 +91,18 @@ const Index = () => {
           <Header landNaam={land.naam} />
           
           <main className="flex-1">
-            <HeroSection 
+            <SpoedHero
+              bedrijfsNaam={`De ${land.naam} Koerier`}
+              tagline="Spoedkoerier · Sneller mag niet!"
               landNaam={land.naam}
-              heroTitel={land.hero_titel}
-              heroSubtitel={land.hero_subtitel}
             />
 
+            <DriePuntenSection landNaam={land.naam} />
+
             <SpoedKoerierSection landNaam={land.naam} />
-            
+
             {/* Price Calculator */}
-            <PriceCalculator 
+            <PriceCalculator
               landNaam={land.naam}
               kmTarief={land.km_tarief}
               restrictToCountry={land.iso_code || undefined}
@@ -203,7 +205,8 @@ const Index = () => {
       <Header />
       
       <main className="flex-1">
-        <MainHeroSection />
+        <SpoedHero bedrijfsNaam="De Europa Koerier" tagline="Spoedkoerier · Sneller mag niet!" />
+        <DriePuntenSection />
         <SpoedKoerierSection />
         <StatsSection />
         <PriceCalculator />
