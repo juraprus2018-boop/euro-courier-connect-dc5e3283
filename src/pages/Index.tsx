@@ -196,8 +196,8 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead 
-        title="De Europa Koerier | Betrouwbare koeriersdiensten door heel Europa"
-        description="Al meer dan 15 jaar uw betrouwbare koerierspartner voor transport van Nederland naar heel Europa. Dagelijkse ritten, persoonlijke service, 100% verzekerd."
+        title="De Europa Koerier | Spoedkoerier door heel Europa"
+        description="Spoedkoerier vanuit Nederland naar heel Europa. Eén chauffeur, één auto, rechtstreeks naar het afleveradres. Bel ons en we vertrekken meteen."
       />
       <Header />
       
