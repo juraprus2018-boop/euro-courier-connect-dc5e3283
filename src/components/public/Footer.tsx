@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { Truck, Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
-import citan from '@/assets/citan-transparent.png';
-import bestelbus from '@/assets/bestelbus-transparent.png';
-import bakwagen from '@/assets/bakwagen-transparent.png';
+import citan from '@/assets/vehicle-citan-vector.png';
+import bestelbus from '@/assets/vehicle-bestelbus-vector.png';
+import bakwagen from '@/assets/vehicle-bakwagen-vector.png';
 
 export function Footer() {
   return (
