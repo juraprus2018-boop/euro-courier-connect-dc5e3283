@@ -99,26 +99,30 @@ export function ServicePageLayout({
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </section>
 
         {/* Extra content */}
         {children && (
           <section className="py-16 bg-muted/40">
-            <div className="container max-w-3xl prose prose-neutral">
-              {children}
+            <div className="container">
+              <div className="max-w-3xl mr-auto prose prose-neutral">
+                {children}
+              </div>
             </div>
           </section>
         )}
 
         {/* Final CTA */}
         <section className="py-16">
-          <div className="container max-w-3xl text-center">
+          <div className="container">
+            <div className="max-w-3xl mr-auto">
             <h2 className="font-display text-3xl font-bold">Direct contact?</h2>
             <p className="mt-3 text-muted-foreground">
               Bel of mail ons voor een passende offerte op maat.
             </p>
-            <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+            <div className="mt-6 flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild>
                 <a href={CONTACT.telefoonHref}>
                   <Phone className="mr-2 h-5 w-5" />
