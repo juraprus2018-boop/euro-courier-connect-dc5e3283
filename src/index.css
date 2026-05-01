@@ -106,32 +106,35 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
   }
 
   p {
-    font-weight: 500;
+    font-weight: 400;
+    line-height: 1.625; /* ~26px op 16px */
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   h1 {
-    font-size: 1.833rem; /* mobile: 2.75rem * 0.667 */
-    line-height: 1.1;
+    font-size: 2rem; /* mobile 32px */
+    line-height: 1.2;
   }
   @media (min-width: 768px) {
-    h1 { font-size: 2.75rem; } /* text-5xl bij transheroes */
+    h1 { font-size: 3rem; line-height: 58px; } /* 48px */
   }
 
   h2 {
-    font-size: 1.333rem; /* mobile: 2rem * 0.667 */
-    line-height: 1.15;
+    font-size: 1.5rem; /* mobile 24px */
+    line-height: 1.25;
   }
   @media (min-width: 768px) {
-    h2 { font-size: 2rem; } /* text-4xl bij transheroes */
+    h2 { font-size: 2rem; line-height: 42px; } /* 32px */
   }
 }
 
