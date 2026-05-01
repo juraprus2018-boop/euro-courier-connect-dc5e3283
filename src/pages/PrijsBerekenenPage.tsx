@@ -24,7 +24,7 @@ const PrijsBerekenenPage = () => {
 
       <main className="flex-1">
         <section className="bg-gradient-dark text-primary-foreground py-16 lg:py-20">
-          <div className="container max-w-7xl">
+          <div className="container">
             <PageBreadcrumb
               items={[{ label: 'Prijs berekenen' }]}
               className="mb-6 text-primary-foreground/70"
@@ -98,7 +98,7 @@ const PrijsBerekenenPage = () => {
         </section>
 
         <section id="bereken" className="py-16 bg-muted/30">
-          <div className="container max-w-5xl">
+          <div className="container">
             <div className="text-center mb-10">
               <span className="text-accent font-semibold uppercase tracking-wider text-sm">
                 Prijs berekenen
@@ -115,7 +115,7 @@ const PrijsBerekenenPage = () => {
         </section>
 
         <section className="py-16">
-          <div className="container max-w-6xl">
+          <div className="container">
             <div className="text-center mb-10">
               <h2 className="font-display text-3xl md:text-4xl font-bold">
                 Offerte voor zee-, lucht- en railtransport
@@ -169,7 +169,7 @@ const PrijsBerekenenPage = () => {
         </section>
 
         <section className="py-16 bg-muted/30">
-          <div className="container max-w-5xl">
+          <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h2 className="font-display text-2xl md:text-3xl font-bold">

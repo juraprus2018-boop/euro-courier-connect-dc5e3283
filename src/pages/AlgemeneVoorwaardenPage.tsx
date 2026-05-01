@@ -14,7 +14,7 @@ const AlgemeneVoorwaardenPage = () => {
       <Header />
 
       <main className="flex-1 py-12">
-        <div className="container max-w-3xl">
+        <div className="container">
           <PageBreadcrumb items={[{ label: 'Algemene voorwaarden' }]} className="mb-6" />
           <h1 className="font-display text-3xl font-bold mb-8">Algemene voorwaarden</h1>
 

@@ -15,7 +15,7 @@ const QuotePage = () => {
       <Header />
 
       <main className="flex-1 py-12">
-        <div className="container max-w-7xl">
+        <div className="container">
           <PageBreadcrumb items={[{ label: 'Offerte aanvragen' }]} className="mb-6" />
           <div className="mb-8">
             <h1 className="font-display text-3xl md:text-4xl font-bold">Offerte spoedkoerier aanvragen</h1>

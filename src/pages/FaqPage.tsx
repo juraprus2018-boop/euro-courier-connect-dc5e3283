@@ -56,7 +56,7 @@ const FaqPage = () => {
       <Header />
 
       <main className="flex-1 py-12">
-        <div className="container max-w-3xl">
+        <div className="container">
           <PageBreadcrumb items={[{ label: 'Veelgestelde vragen' }]} className="mb-6" />
           <div className="text-center mb-10">
             <h1 className="font-display text-3xl font-bold">Veelgestelde vragen</h1>
