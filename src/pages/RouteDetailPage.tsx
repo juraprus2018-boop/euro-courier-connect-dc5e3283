@@ -21,30 +21,42 @@ const RouteDetailPage = () => {
   const { slug } = useParams();
   const { land, loading: landLoading } = useLand();
   const [route, setRoute] = useState<RouteDetail | null>(null);
+  const [kmTarief, setKmTarief] = useState<number>(0.85);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRoute = async () => {
       if (!slug) return;
 
-      const { data, error } = await supabase
-        .from('routes')
-        .select(`
-          id,
-          afstand_km,
-          geschatte_prijs,
-          nl_plaats:nl_plaatsen(id, naam),
-          buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam))
-        `)
-        .eq('slug', slug)
-        .maybeSingle();
+      const [{ data, error }, tariefRes] = await Promise.all([
+        supabase
+          .from('routes')
+          .select(`
+            id,
+            afstand_km,
+            geschatte_prijs,
+            nl_plaats:nl_plaatsen(id, naam),
+            buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam))
+          `)
+          .eq('slug', slug)
+          .maybeSingle(),
+        supabase
+          .from('instellingen')
+          .select('waarde')
+          .eq('sleutel', 'km_tarief')
+          .maybeSingle(),
+      ]);
 
       if (error) {
         console.error('Error fetching route:', error);
       } else {
         setRoute(data as unknown as RouteDetail);
       }
-      
+      if (tariefRes.data?.waarde) {
+        const n = parseFloat(String(tariefRes.data.waarde));
+        if (!isNaN(n)) setKmTarief(n);
+      }
+
       setLoading(false);
     };
 
@@ -151,37 +163,118 @@ const RouteDetailPage = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
-              <div>
-                <h2 className="font-display text-2xl font-bold mb-4">
-                  Over deze route
+              <div className="space-y-6">
+                <h2 className="font-display text-2xl font-bold">
+                  Koerier van {nlPlaats} naar {buitenlandStad}, {landNaam}
                 </h2>
-                <div className="prose prose-muted max-w-none">
-                  <p>
-                    Heeft u een zending van {nlPlaats} naar {buitenlandStad}? Wij rijden de rit
-                    rechtstreeks – één chauffeur, één auto, geen overslag. Pakket, pallet of meerdere
-                    colli: bel ons en we plannen het in.
+                <p className="text-muted-foreground">
+                  U heeft een zending die met spoed van {nlPlaats} naar {buitenlandStad} in {landNaam} moet,
+                  of juist van {buitenlandStad} naar {nlPlaats}. Ontspan! Wij nemen al uw zorgen weg.
+                  Wij komen de zending direct bij u ophalen en brengen die zonder omwegen direct naar
+                  uw bestemming in {buitenlandStad} – {landNaam}. Een snellere optie zult u niet vinden.
+                </p>
+
+                {(() => {
+                  const km = Number(route.afstand_km) || 0;
+                  const prijsBestelwagen = Math.round(km * kmTarief);
+                  const prijsBestelbus = Math.round(prijsBestelwagen * 1.154);
+                  const prijsBakwagen = Math.round(prijsBestelwagen * 1.308);
+                  const fmt = (n: number) => `€ ${n.toLocaleString('nl-NL')}`;
+
+                  return (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-display text-xl font-bold mb-2">
+                          Prijsindicatie bestelwagen: {fmt(prijsBestelwagen)} excl. BTW
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Voor het vervoer van een enveloppe, doosje of 1 pallet, gebruiken wij een
+                          Mercedes Citan. Deze bestelwagen van Mercedes heeft een laadruimte van
+                          200cm x 145cm x 115cm (L/B/H). De zending mag maximaal 618 kg wegen.
+                          Voldoet uw zending aan bovenstaande maten en gewichten, bestel dan nu uw
+                          bestelwagen van {nlPlaats} naar {buitenlandStad} in {landNaam}.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-display text-xl font-bold mb-2">
+                          Prijsindicatie bestelbus: {fmt(prijsBestelbus)} excl. BTW
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Voor een wat grotere zendingen zetten wij een Volkswagen Crafter in. Deze
+                          verlengde en verhoogde bus heeft een laadruimte van 325cm x 170cm x 185cm
+                          (L/B/H) en kan een gewicht van maximaal 1369 kg vervoeren. Verder heeft de
+                          bus een imperiaal die tot en met 6 meter lengte kan vervoeren met een
+                          maximaal gewicht van 150 kg. Voldoet uw zending aan bovenstaande maten en
+                          gewichten, bestel dan nu uw bestelbus van {nlPlaats} naar {buitenlandStad} – {landNaam}.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-display text-xl font-bold mb-2">
+                          Prijsindicatie bakwagen: {fmt(prijsBakwagen)} excl. BTW
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Voor het transport van groter formaat, zetten wij een bakwagen in. Deze
+                          bakwagen met laadklep kan maximaal 8 europallets vervoeren waarbij het
+                          gewicht maximaal 870 kg mag zijn. De laadruimte is 440cm x 215cm x 208cm
+                          (L/B/H). Voldoet uw zending aan bovenstaande maten en gewichten, bestel
+                          dan nu uw bakwagen van {nlPlaats} naar {buitenlandStad} – {landNaam}.
+                        </p>
+                      </div>
+
+                      <p className="text-xs text-muted-foreground italic">
+                        Aan deze berekening kunnen geen rechten worden ontleend. Prijzen zijn
+                        exclusief 21% BTW en eventuele tol en veerdiensten.
+                      </p>
+                    </div>
+                  );
+                })()}
+
+                <div>
+                  <h3 className="font-display text-xl font-bold mb-2">
+                    Directe levering zonder omwegen naar {buitenlandStad}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Bij De {landNaam} Koerier begrijpen we dat tijd cruciaal is. Daarom bieden wij
+                    directe leveringen van deur tot deur – zonder tussenstops of overladen. Uw
+                    zending wordt met de hoogste prioriteit behandeld en rechtstreeks van {nlPlaats}
+                    naar {buitenlandStad} vervoerd. Snel, veilig en betrouwbaar – precies zoals u
+                    mag verwachten van een specialist in spoedtransport.
                   </p>
-                  <p>
-                    De rit is ongeveer {Number(route.afstand_km).toLocaleString('nl-NL')} kilometer.
-                    De chauffeur kent de route en levert af op het opgegeven adres. Heeft u haast?
-                    Geef het door, dan vertrekken we zo snel mogelijk.
+                </div>
+
+                <div>
+                  <h3 className="font-display text-xl font-bold mb-2">Spoedtransport 24/7</h3>
+                  <p className="text-muted-foreground">
+                    Voor al uw spoedtransport van {nlPlaats} naar {buitenlandStad} bent u dus bij
+                    De {landNaam} Koerier aan het juiste adres. 365 dagen per jaar staat ons geheel
+                    wagenpark dag en nacht voor al uw spoedtransporten klaar!
                   </p>
-                  <h3>Wat we vervoeren</h3>
-                  <ul>
-                    <li>Pakketten en dozen</li>
-                    <li>Pallets en stellingen</li>
-                    <li>Meubels en apparatuur</li>
-                    <li>Auto-onderdelen</li>
-                    <li>Documenten en monsters</li>
-                  </ul>
-                  <h3>Onze service</h3>
-                  <ul>
-                    <li>Ophalen aan huis of bedrijf</li>
-                    <li>Track & trace systeem</li>
-                    <li>100% transportverzekering</li>
-                    <li>Flexibele aflevertijden</li>
-                    <li>Persoonlijke service</li>
-                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-display text-xl font-bold mb-2">Koeriersdiensten</h3>
+                  <p className="text-muted-foreground">
+                    Wij bieden verschillende koeriersdiensten van {nlPlaats} naar {buitenlandStad}.
+                    Een belangrijk document in een bestelwagen, lange rollen of maximaal 4 pallets
+                    in onze bestelbussen en 8 pallets in onze bakwagens met laadklep. Al onze
+                    koeriersdiensten zijn dedicated en direct vervoer. Dit wil zeggen dat wij alleen
+                    met uw zending direct van A naar B rijden zonder dat er zendingen van andere
+                    klanten in de wagens aanwezig zijn.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-display text-xl font-bold mb-2">
+                    Spoedkoerier met ADR boven de 1000 punten
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Ook voor uw vervoer van gevaarlijke stoffen boven de 1000 punten van {nlPlaats}
+                    naar {buitenlandStad} bent u bij ons aan het juiste adres. Al onze wagens zijn
+                    ADR ingericht en natuurlijk beschikken wij over de juiste papieren voor het
+                    vervoer van gevaarlijke stoffen.
+                  </p>
                 </div>
               </div>
 
