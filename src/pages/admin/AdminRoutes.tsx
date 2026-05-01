@@ -95,7 +95,6 @@ const AdminRoutes = () => {
                     <TableHead>Route</TableHead>
                     <TableHead>Land</TableHead>
                     <TableHead>Afstand</TableHead>
-                    <TableHead>Prijs</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
