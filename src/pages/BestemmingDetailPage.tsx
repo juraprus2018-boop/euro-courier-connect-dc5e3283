@@ -139,7 +139,7 @@ const BestemmingDetailPage = () => {
                 {routes.map((route) => (
                   <Link
                     key={route.id}
-                    to={`/route/${route.slug}`}
+                    to={`/spoed-koerier-${stad.land?.slug}/${route.slug}`}
                     className="group flex items-center justify-between p-4 rounded-xl border border-border bg-card hover:border-primary hover:shadow-md transition-all"
                   >
                     <div className="flex items-center gap-3">
