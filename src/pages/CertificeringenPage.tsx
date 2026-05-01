@@ -11,10 +11,7 @@ import niwoLogo from '@/assets/niwo-eurovergunning.png';
 
 const CertificeringenPage = () => (
   <HelmetProvider>
-    <SEOHead
-      title="Certificeringen | De Europa Koerier"
-      description="NIWO Eurovergunning en ADR-gecertificeerde chauffeurs. Erkend transport door heel Europa, ook voor gevaarlijke stoffen."
-    />
+    <SEOHead pageKey="certificeringen" />
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">

@@ -36,10 +36,7 @@ const BlogIndexPage = () => {
 
   const content = (
     <div className="min-h-screen flex flex-col">
-      <SEOHead
-        title={`Spoedkoerier kennisbank & blog${land ? ` | ${land.naam}` : ''}`}
-        description="Praktische tips, prijsinformatie en veelgestelde vragen over spoedkoeriersdiensten door Europa."
-      />
+      <SEOHead pageKey="blog_index" landNaam={land?.naam} />
       <Header landNaam={land?.naam} />
       <main className="flex-1 py-12">
         <div className="container">

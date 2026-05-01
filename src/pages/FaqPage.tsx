@@ -49,10 +49,7 @@ const faq = [
 const FaqPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead
-        title="Veelgestelde vragen | De Europa Koerier"
-        description="Antwoorden op de meest gestelde vragen over De Europa Koerier: zendingen, landen, voertuigen, prijzen en meer."
-      />
+      <SEOHead pageKey="faq" />
       <Header />
 
       <main className="flex-1 py-12">
