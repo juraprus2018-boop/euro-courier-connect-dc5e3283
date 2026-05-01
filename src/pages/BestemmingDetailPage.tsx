@@ -110,8 +110,8 @@ const BestemmingDetailPage = () => {
               </div>
             </div>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Wij verzorgen betrouwbare koeriersdiensten van Nederland naar {stad.naam}. 
-              Kies hieronder uw vertrekplaats voor een directe offerte.
+              Heeft u een zending naar {stad.naam}? Wij rijden vanuit verschillende plaatsen
+              in Nederland. Kies hieronder uw vertrekplaats of vraag direct een offerte aan.
             </p>
           </div>
 

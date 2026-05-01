@@ -45,12 +45,12 @@ export function USPSection({ landNaam }: USPSectionProps) {
       <div className="container">
         <div className="text-center mb-10">
           <h2 className="font-display text-3xl font-bold">
-            Waarom kiezen voor ons?
+            Waarom wij?
           </h2>
           <p className="mt-2 text-muted-foreground">
             {landNaam 
-              ? `Uw betrouwbare partner voor transport naar ${landNaam}`
-              : 'Uw betrouwbare partner voor Europees transport'
+              ? `Wat klanten van ons mogen verwachten bij ritten naar ${landNaam}.`
+              : 'Wat klanten van ons mogen verwachten bij Europees transport.'
             }
           </p>
         </div>

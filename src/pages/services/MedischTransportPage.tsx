@@ -20,15 +20,14 @@ const MedischTransportPage = () => (
   >
     <h2>Voor ziekenhuizen, laboratoria en apotheken</h2>
     <p className="text-muted-foreground">
-      Of het nu gaat om een spoedlevering van een geneesmiddel, het transport van bloed- of
-      weefselmonsters tussen laboratoria, of een vervangend onderdeel voor medische apparatuur –
-      wij zorgen dat het op tijd is. Onze koeriers worden getraind in de zorgvuldige omgang met
-      medische zendingen en respecteren strikte privacy- en hygiëneprotocollen.
+      Spoedlevering van een geneesmiddel, transport van bloed- of weefselmonsters tussen
+      laboratoria, of een vervangend onderdeel voor medische apparatuur: wij zorgen dat het op
+      tijd is. Onze chauffeurs zijn getraind in de omgang met medische zendingen en houden zich
+      aan de privacy- en hygiëneprotocollen.
     </p>
     <p className="text-muted-foreground">
-      Wij rijden direct, zonder overslag of distributiecentra, zodat uw zending zo snel mogelijk
-      bij de patiënt of het lab is. Bel ons direct voor een spoedrit – ook 's nachts en in het
-      weekend zijn wij bereikbaar.
+      Wij rijden direct, zonder overslag, zodat uw zending zo snel mogelijk bij de patiënt of het
+      lab is. Bel ons voor een spoedrit – ook 's nachts en in het weekend zijn wij bereikbaar.
     </p>
   </ServicePageLayout>
 );

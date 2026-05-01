@@ -16,7 +16,7 @@ export function Footer() {
               <span className="font-display text-lg font-bold">De Europa Koerier</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Betrouwbare koeriersdiensten door heel Europa. Snel, veilig en betaalbaar.
+              Koeriersritten vanuit Nederland naar heel Europa. Direct van A naar B.
             </p>
             <div className="pt-2">
               <img

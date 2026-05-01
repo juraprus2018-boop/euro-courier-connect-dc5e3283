@@ -112,8 +112,7 @@ const RouteDetailPage = () => {
               Koerier van {nlPlaats} naar {buitenlandStad}
             </h1>
             <p className="mt-4 text-primary-foreground/80 max-w-2xl">
-              Betrouwbare koeriersdienst van {nlPlaats} naar {buitenlandStad}, {landNaam}. 
-              Dagelijks op pad voor snelle en veilige leveringen.
+              Spoedkoerier van {nlPlaats} naar {buitenlandStad} ({landNaam}). Eén chauffeur, één auto, rechtstreeks naar het afleveradres.
             </p>
           </div>
         </section>
@@ -158,15 +157,14 @@ const RouteDetailPage = () => {
                 </h2>
                 <div className="prose prose-muted max-w-none">
                   <p>
-                    Onze koeriersdienst van {nlPlaats} naar {buitenlandStad} biedt u een betrouwbare 
-                    en snelle oplossing voor al uw transportbehoeften. Of u nu een enkel pakket, 
-                    pallets of grotere zendingen wilt versturen, wij zorgen voor een veilige en 
-                    tijdige levering.
+                    Heeft u een zending van {nlPlaats} naar {buitenlandStad}? Wij rijden de rit
+                    rechtstreeks – één chauffeur, één auto, geen overslag. Pakket, pallet of meerdere
+                    colli: bel ons en we plannen het in.
                   </p>
                   <p>
-                    Met een afstand van {Number(route.afstand_km).toLocaleString('nl-NL')} kilometer 
-                    bieden wij deze route dagelijks aan tegen scherpe tarieven. Onze ervaren 
-                    chauffeurs kennen de weg en zorgen ervoor dat uw zending in perfecte staat aankomt.
+                    De rit is ongeveer {Number(route.afstand_km).toLocaleString('nl-NL')} kilometer.
+                    De chauffeur kent de route en levert af op het opgegeven adres. Heeft u haast?
+                    Geef het door, dan vertrekken we zo snel mogelijk.
                   </p>
                   <h3>Wat we vervoeren</h3>
                   <ul>

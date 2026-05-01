@@ -21,12 +21,11 @@ export function SpoedKoerierSection({ landNaam }: SpoedKoerierSectionProps) {
               Spoedkoerier
             </span>
             <h2 className="font-display text-3xl lg:text-4xl font-bold mt-2">
-              SPOED KOERIER – wij rijden direct van A naar B
+              Spoed nodig? Wij rijden direct van A naar B
             </h2>
             <p className="mt-3 text-lg text-muted-foreground">
-              Geen tussenstops, geen overslag, geen vertraging. Onze koerier vertrekt
-              direct na uw boeking en rijdt rechtstreeks naar{' '}
-              {landNaam ? landNaam : 'de bestemming'}. 24/7 beschikbaar.
+              Geen tussenstops, geen overslag. De chauffeur vertrekt na uw boeking en
+              rijdt rechtstreeks naar {landNaam ? landNaam : 'de bestemming'}. Ook 's avonds en in het weekend.
             </p>
           </div>
 
