@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { Truck, Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
+import citan from '@/assets/citan.webp';
+import bestelbus from '@/assets/bestelbus.webp';
+import bakwagen from '@/assets/bakwagen.webp';
 
 export function Footer() {
   return (
@@ -64,6 +67,7 @@ export function Footer() {
               <li><Link to="/kunsttransport" className="hover:text-foreground transition-colors">Kunsttransport</Link></li>
               <li><Link to="/medisch-transport" className="hover:text-foreground transition-colors">Medisch transport</Link></li>
               <li><Link to="/on-board-koeriersdienst" className="hover:text-foreground transition-colors">On-Board Koeriersdienst</Link></li>
+              <li><Link to="/laadcapaciteit" className="hover:text-foreground transition-colors">Laadcapaciteit</Link></li>
             </ul>
             <h4 className="font-display font-semibold pt-2">Navigatie</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -108,6 +112,24 @@ export function Footer() {
               <li>Za: 09:00 - 14:00</li>
               <li>Zo: Gesloten</li>
             </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-border">
+          <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              { src: citan, alt: 'Bestelwagen van De Europa Koerier', label: 'Bestelwagen' },
+              { src: bestelbus, alt: 'Bestelbus XL van De Europa Koerier', label: 'Bestelbus (XL)' },
+              { src: bakwagen, alt: 'Bakwagen met laadklep van De Europa Koerier', label: 'Bakwagen met laadklep' },
+            ].map((v) => (
+              <Link key={v.label} to="/laadcapaciteit" className="group block text-center">
+                <div className="bg-muted rounded-lg p-4 mb-2 flex items-center justify-center h-32 overflow-hidden">
+                  <img src={v.src} alt={v.alt} loading="lazy" className="max-h-full w-auto object-contain transition-transform group-hover:scale-105" />
+                </div>
+                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{v.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
 
