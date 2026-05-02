@@ -12,6 +12,8 @@ interface SEOHeadProps {
   pageKey?: string;
   /** Variabelen om in templates te interpoleren, bv. { land: 'Frankrijk', stad: 'Parijs' } */
   variables?: Record<string, string | number | undefined>;
+  /** Extra JSON-LD schema's (FAQPage, BreadcrumbList, Service, etc.) */
+  jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
 function interpolate(template: string, vars: Record<string, string | number | undefined>) {
@@ -21,7 +23,7 @@ function interpolate(template: string, vars: Record<string, string | number | un
   }).replace(/\s+/g, ' ').trim();
 }
 
-export function SEOHead({ title, description, landNaam, canonicalPath, noindex, pageKey, variables }: SEOHeadProps) {
+export function SEOHead({ title, description, landNaam, canonicalPath, noindex, pageKey, variables, jsonLd }: SEOHeadProps) {
   const [override, setOverride] = useState<{ titel?: string; description?: string } | null>(null);
 
   useEffect(() => {
@@ -61,6 +63,34 @@ export function SEOHead({ title, description, landNaam, canonicalPath, noindex, 
   const path = canonicalPath ?? (typeof window !== 'undefined' ? window.location.pathname : '/');
   const canonicalUrl = `${origin}${path}`;
 
+  // LocalBusiness JSON-LD (altijd aanwezig)
+  const localBusinessLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MovingCompany',
+    name: siteNaam,
+    description: finalDescription,
+    url: origin,
+    telephone: '+31857602999',
+    email: 'info@deeuropakoerier.nl',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'NL',
+      addressLocality: 'Eindhoven',
+      postalCode: '5658',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 51.4386732,
+      longitude: 5.5223595,
+    },
+    areaServed: 'Europa',
+    openingHours: 'Mo-Su 00:00-23:59',
+    priceRange: '€€',
+  };
+
+  const extraLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+  const allLd = [localBusinessLd, ...extraLd];
+
   return (
     <Helmet>
       <html lang="nl" />
@@ -77,6 +107,9 @@ export function SEOHead({ title, description, landNaam, canonicalPath, noindex, 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDescription} />
+      {allLd.map((ld, i) => (
+        <script key={i} type="application/ld+json">{JSON.stringify(ld)}</script>
+      ))}
     </Helmet>
   );
 }
