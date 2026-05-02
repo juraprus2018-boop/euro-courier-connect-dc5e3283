@@ -322,6 +322,17 @@ const RouteDetailPage = () => {
             </div>
           </div>
         </section>
+
+        <RouteFAQ faq={faq} />
+
+        <RelatedRoutes
+          currentRouteId={route.id}
+          nlPlaatsId={route.nl_plaats?.id || ''}
+          nlPlaatsNaam={nlPlaats}
+          landId={route.buitenland_stad?.land?.id || ''}
+          landNaam={landNaam}
+          landSlug={canonicalSlug}
+        />
       </main>
 
       <Footer />
