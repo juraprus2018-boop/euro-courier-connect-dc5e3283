@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, MapPin, Navigation, Euro, Truck, ArrowRight, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { SmartCTA } from './SmartCTA';
 
 const RouteMap = lazy(() => import('./RouteMap'));
 
@@ -248,12 +249,12 @@ export function PriceCalculator({ landNaam, kmTarief = 0.85, restrictToCountry }
                     De definitieve prijs kan afwijken op basis van gewicht, afmetingen en specifieke wensen.
                   </p>
 
-                  <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" size="lg">
-                    <Link to="/offerte">
-                      Direct offerte aanvragen
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
+                  <SmartCTA
+                    afstandKm={distance}
+                    rijtijdMinuten={duration ?? undefined}
+                    prijsVanaf={calculatedPrice}
+                    variant="wide"
+                  />
                 </div>
               )}
             </CardContent>
