@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
+import { SmartCTA } from '@/components/public/SmartCTA';
 
 const LandPage = () => {
   const { landSlug } = useParams<{ landSlug: string }>();
@@ -40,6 +41,27 @@ const LandPage = () => {
         .order('naam');
       if (error) throw error;
       return data;
+    },
+    enabled: !!land?.id,
+  });
+
+  // Gemiddelde afstand/prijs van populaire routes naar dit land — voor SmartCTA
+  const { data: routeStats } = useQuery({
+    queryKey: ['land-route-stats', land?.id],
+    queryFn: async () => {
+      const { data: stedenIds } = await supabase
+        .from('buitenland_steden')
+        .select('id')
+        .eq('land_id', land!.id);
+      if (!stedenIds?.length) return null;
+      const { data: routes } = await supabase
+        .from('routes')
+        .select('afstand_km, geschatte_prijs')
+        .in('buitenland_stad_id', stedenIds.map((s) => s.id));
+      if (!routes?.length) return null;
+      const avgKm = routes.reduce((a, r) => a + Number(r.afstand_km || 0), 0) / routes.length;
+      const minPrijs = Math.min(...routes.map((r) => Number(r.geschatte_prijs || 0)).filter((n) => n > 0));
+      return { avgKm, minPrijs: isFinite(minPrijs) ? minPrijs : undefined };
     },
     enabled: !!land?.id,
   });
