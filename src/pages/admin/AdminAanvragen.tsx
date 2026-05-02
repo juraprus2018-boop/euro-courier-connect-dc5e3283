@@ -1,15 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Eye, Trash2 } from 'lucide-react';
+import { Loader2, Eye, Trash2, CheckCircle2, Circle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
+
+const STATUS_FLOW = [
+  { key: 'nieuw', label: 'Nieuw', color: 'bg-primary/10 text-primary' },
+  { key: 'contact', label: 'Contact opgenomen', color: 'bg-warning/10 text-warning' },
+  { key: 'offerte_verzonden', label: 'Offerte verstuurd', color: 'bg-accent/10 text-accent' },
+  { key: 'geboekt', label: 'Geboekt', color: 'bg-success/10 text-success' },
+  { key: 'afgerond', label: 'Afgerond', color: 'bg-muted text-muted-foreground' },
+  { key: 'afgewezen', label: 'Afgewezen', color: 'bg-destructive/10 text-destructive' },
+];
+
+const STATUS_MAP: Record<string, { label: string; color: string }> = Object.fromEntries(
+  STATUS_FLOW.map((s) => [s.key, { label: s.label, color: s.color }])
+);
+
+// Backwards compatibility aliases
+const STATUS_ALIAS: Record<string, string> = {
+  in_behandeling: 'contact',
+  akkoord: 'geboekt',
+};
 
 interface LadingItem {
   soort: string;
@@ -47,7 +67,10 @@ const AdminAanvragen = () => {
   const [aanvragen, setAanvragen] = useState<Aanvraag[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAanvraag, setSelectedAanvraag] = useState<Aanvraag | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string>('all');
   const { toast } = useToast();
+
+  const normStatus = (s: string) => STATUS_ALIAS[s] || s;
 
   const fetchAanvragen = async () => {
     const { data, error } = await supabase
@@ -91,18 +114,55 @@ const AdminAanvragen = () => {
     }
   };
 
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { all: aanvragen.length };
+    STATUS_FLOW.forEach((s) => (c[s.key] = 0));
+    aanvragen.forEach((a) => {
+      const s = normStatus(a.status);
+      c[s] = (c[s] || 0) + 1;
+    });
+    return c;
+  }, [aanvragen]);
+
+  const filtered = useMemo(() => {
+    if (filterStatus === 'all') return aanvragen;
+    return aanvragen.filter((a) => normStatus(a.status) === filterStatus);
+  }, [aanvragen, filterStatus]);
+
   const getStatusBadge = (status: string) => {
-    const styles = {
-      nieuw: 'bg-primary/10 text-primary',
-      in_behandeling: 'bg-warning/10 text-warning',
-      offerte_verzonden: 'bg-accent/10 text-accent',
-      akkoord: 'bg-success/10 text-success',
-      afgewezen: 'bg-destructive/10 text-destructive',
-    };
+    const norm = normStatus(status);
+    const meta = STATUS_MAP[norm] || STATUS_MAP.nieuw;
     return (
-      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${styles[status as keyof typeof styles] || styles.nieuw}`}>
-        {status.replace('_', ' ')}
+      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${meta.color}`}>
+        {meta.label}
       </span>
+    );
+  };
+
+  const Stepper = ({ status }: { status: string }) => {
+    const norm = normStatus(status);
+    const flow = STATUS_FLOW.filter((s) => s.key !== 'afgewezen');
+    const idx = flow.findIndex((s) => s.key === norm);
+    const isAfgewezen = norm === 'afgewezen';
+    return (
+      <div className="flex items-center gap-2 flex-wrap">
+        {flow.map((s, i) => {
+          const done = !isAfgewezen && i <= idx;
+          const current = !isAfgewezen && i === idx;
+          return (
+            <div key={s.key} className="flex items-center gap-2">
+              <div className={`flex items-center gap-1.5 ${current ? 'font-semibold text-primary' : done ? 'text-foreground' : 'text-muted-foreground'}`}>
+                {done ? <CheckCircle2 className="h-4 w-4 text-success" /> : <Circle className="h-4 w-4" />}
+                <span className="text-xs">{s.label}</span>
+              </div>
+              {i < flow.length - 1 && <div className={`h-px w-6 ${i < idx ? 'bg-success' : 'bg-border'}`} />}
+            </div>
+          );
+        })}
+        {isAfgewezen && (
+          <span className="ml-2 text-xs font-medium text-destructive">Afgewezen</span>
+        )}
+      </div>
     );
   };
 
@@ -113,6 +173,17 @@ const AdminAanvragen = () => {
           <h1 className="font-display text-3xl font-bold">Aanvragen</h1>
           <p className="text-muted-foreground mt-1">Beheer binnenkomende offerteaanvragen.</p>
         </div>
+
+        <Tabs value={filterStatus} onValueChange={setFilterStatus}>
+          <TabsList className="flex flex-wrap h-auto">
+            <TabsTrigger value="all">Alle ({counts.all})</TabsTrigger>
+            {STATUS_FLOW.map((s) => (
+              <TabsTrigger key={s.key} value={s.key}>
+                {s.label} ({counts[s.key] || 0})
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
 
         <Card>
           <CardContent className="p-0">
@@ -132,7 +203,7 @@ const AdminAanvragen = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {aanvragen.map((aanvraag) => (
+                  {filtered.map((aanvraag) => (
                     <TableRow key={aanvraag.id}>
                       <TableCell className="text-sm text-muted-foreground">
                         {format(new Date(aanvraag.created_at), 'd MMM yyyy', { locale: nl })}
@@ -147,16 +218,14 @@ const AdminAanvragen = () => {
                         <p className="text-sm">{aanvraag.ophaal_plaats} → {aanvraag.aflever_plaats}</p>
                       </TableCell>
                       <TableCell>
-                        <Select value={aanvraag.status} onValueChange={(value) => updateStatus(aanvraag.id, value)}>
-                          <SelectTrigger className="w-[160px]">
+                        <Select value={normStatus(aanvraag.status)} onValueChange={(value) => updateStatus(aanvraag.id, value)}>
+                          <SelectTrigger className="w-[180px]">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="nieuw">Nieuw</SelectItem>
-                            <SelectItem value="in_behandeling">In behandeling</SelectItem>
-                            <SelectItem value="offerte_verzonden">Offerte verzonden</SelectItem>
-                            <SelectItem value="akkoord">Akkoord</SelectItem>
-                            <SelectItem value="afgewezen">Afgewezen</SelectItem>
+                            {STATUS_FLOW.map((s) => (
+                              <SelectItem key={s.key} value={s.key}>{s.label}</SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </TableCell>
@@ -172,10 +241,10 @@ const AdminAanvragen = () => {
                       </TableCell>
                     </TableRow>
                   ))}
-                  {aanvragen.length === 0 && (
+                  {filtered.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                        Nog geen aanvragen ontvangen
+                        Geen aanvragen in deze categorie
                       </TableCell>
                     </TableRow>
                   )}
@@ -193,6 +262,28 @@ const AdminAanvragen = () => {
           </DialogHeader>
           {selectedAanvraag && (
             <div className="space-y-6">
+              <div className="rounded-lg border p-4 bg-muted/30">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3">Workflow status</h4>
+                <Stepper status={selectedAanvraag.status} />
+                <div className="mt-4">
+                  <Select
+                    value={normStatus(selectedAanvraag.status)}
+                    onValueChange={(value) => {
+                      updateStatus(selectedAanvraag.id, value);
+                      setSelectedAanvraag({ ...selectedAanvraag, status: value });
+                    }}
+                  >
+                    <SelectTrigger className="w-[220px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATUS_FLOW.map((s) => (
+                        <SelectItem key={s.key} value={s.key}>{s.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-sm text-muted-foreground mb-2">Ophaaladres</h4>

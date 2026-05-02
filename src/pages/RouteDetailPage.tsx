@@ -5,6 +5,9 @@ import { Footer } from '@/components/public/Footer';
 import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { SEOHead } from '@/components/SEOHead';
+import { RouteFAQ } from '@/components/public/RouteFAQ';
+import { RelatedRoutes } from '@/components/public/RelatedRoutes';
+import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
 import { Loader2, MapPin, ArrowRight, Truck, Clock } from 'lucide-react';
@@ -100,13 +103,30 @@ const RouteDetailPage = () => {
   const nlPlaats = route.nl_plaats?.naam || '';
   const buitenlandStad = route.buitenland_stad?.naam || '';
   const landNaam = route.buitenland_stad?.land?.naam || '';
+  const canonicalSlug = route.buitenland_stad?.land?.slug || '';
+
+  const km = Number(route.afstand_km) || 0;
+  const prijsBestelwagen = Math.round(km * kmTarief);
+  const faq = buildRouteFaq({ nlPlaats, buitenlandStad, landNaam, afstandKm: km, prijsBestelwagen });
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const pagePath = `/spoed-koerier-${canonicalSlug}/${slug}`;
+  const ldArr = [
+    faqJsonLd(faq),
+    breadcrumbJsonLd([
+      { name: 'Home', url: `${origin}/` },
+      { name: 'Routes', url: `${origin}/bestemmingen` },
+      { name: `${nlPlaats} → ${buitenlandStad}`, url: `${origin}${pagePath}` },
+    ]),
+    serviceJsonLd({ nlPlaats, buitenlandStad, landNaam, prijsVanaf: prijsBestelwagen, url: `${origin}${pagePath}` }),
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
         pageKey="route_detail"
         landNaam={landNaam}
-        variables={{ nl_plaats: nlPlaats, buitenland_stad: buitenlandStad, land: landNaam, afstand: Math.round(Number(route.afstand_km)) }}
+        variables={{ nl_plaats: nlPlaats, buitenland_stad: buitenlandStad, land: landNaam, afstand: Math.round(km) }}
+        jsonLd={ldArr}
       />
       <Header landNaam={landNaam} />
       
@@ -302,6 +322,17 @@ const RouteDetailPage = () => {
             </div>
           </div>
         </section>
+
+        <RouteFAQ faq={faq} />
+
+        <RelatedRoutes
+          currentRouteId={route.id}
+          nlPlaatsId={route.nl_plaats?.id || ''}
+          nlPlaatsNaam={nlPlaats}
+          landId={route.buitenland_stad?.land?.id || ''}
+          landNaam={landNaam}
+          landSlug={canonicalSlug}
+        />
       </main>
 
       <Footer />
