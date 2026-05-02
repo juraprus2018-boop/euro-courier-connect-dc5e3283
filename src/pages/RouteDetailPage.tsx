@@ -312,7 +312,14 @@ const RouteDetailPage = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="space-y-6">
+                <SmartCTA
+                  afstandKm={km}
+                  prijsVanaf={prijsBestelwagen}
+                  bestemming={buitenlandStad}
+                  vertrek={nlPlaats}
+                  variant="compact"
+                />
                 <QuoteForm 
                   routeId={route.id}
                   landId={route.buitenland_stad?.land?.id}
