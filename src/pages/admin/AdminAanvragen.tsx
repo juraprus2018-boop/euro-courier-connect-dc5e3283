@@ -174,6 +174,17 @@ const AdminAanvragen = () => {
           <p className="text-muted-foreground mt-1">Beheer binnenkomende offerteaanvragen.</p>
         </div>
 
+        <Tabs value={filterStatus} onValueChange={setFilterStatus}>
+          <TabsList className="flex flex-wrap h-auto">
+            <TabsTrigger value="all">Alle ({counts.all})</TabsTrigger>
+            {STATUS_FLOW.map((s) => (
+              <TabsTrigger key={s.key} value={s.key}>
+                {s.label} ({counts[s.key] || 0})
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+
         <Card>
           <CardContent className="p-0">
             {loading ? (
@@ -192,7 +203,7 @@ const AdminAanvragen = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {aanvragen.map((aanvraag) => (
+                  {filtered.map((aanvraag) => (
                     <TableRow key={aanvraag.id}>
                       <TableCell className="text-sm text-muted-foreground">
                         {format(new Date(aanvraag.created_at), 'd MMM yyyy', { locale: nl })}
@@ -207,16 +218,14 @@ const AdminAanvragen = () => {
                         <p className="text-sm">{aanvraag.ophaal_plaats} → {aanvraag.aflever_plaats}</p>
                       </TableCell>
                       <TableCell>
-                        <Select value={aanvraag.status} onValueChange={(value) => updateStatus(aanvraag.id, value)}>
-                          <SelectTrigger className="w-[160px]">
+                        <Select value={normStatus(aanvraag.status)} onValueChange={(value) => updateStatus(aanvraag.id, value)}>
+                          <SelectTrigger className="w-[180px]">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="nieuw">Nieuw</SelectItem>
-                            <SelectItem value="in_behandeling">In behandeling</SelectItem>
-                            <SelectItem value="offerte_verzonden">Offerte verzonden</SelectItem>
-                            <SelectItem value="akkoord">Akkoord</SelectItem>
-                            <SelectItem value="afgewezen">Afgewezen</SelectItem>
+                            {STATUS_FLOW.map((s) => (
+                              <SelectItem key={s.key} value={s.key}>{s.label}</SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </TableCell>
@@ -232,10 +241,10 @@ const AdminAanvragen = () => {
                       </TableCell>
                     </TableRow>
                   ))}
-                  {aanvragen.length === 0 && (
+                  {filtered.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                        Nog geen aanvragen ontvangen
+                        Geen aanvragen in deze categorie
                       </TableCell>
                     </TableRow>
                   )}
