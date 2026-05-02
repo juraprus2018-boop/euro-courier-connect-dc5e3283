@@ -10,6 +10,14 @@ const QuotePage = () => {
   const [searchParams] = useSearchParams();
   const van = searchParams.get('van') || undefined;
   const naar = searchParams.get('naar') || undefined;
+  const afstandStr = searchParams.get('afstand');
+  const afstandKm = afstandStr ? Number(afstandStr) : undefined;
+  const urgentieLabel = searchParams.get('urgentie_label') || undefined;
+
+  // Bouw een prefilled omschrijving als context bekend is
+  const omschrijving = van && naar
+    ? `Spoedrit van ${van} naar ${naar}${urgentieLabel ? ` (${urgentieLabel.toLowerCase()})` : ''}`
+    : undefined;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -22,13 +30,21 @@ const QuotePage = () => {
           <div className="mb-8">
             <h1 className="font-display text-3xl md:text-4xl font-bold">Offerte spoedkoerier aanvragen</h1>
             <p className="mt-2 text-muted-foreground">
-              Vul het formulier in en ontvang binnen 1 uur een vrijblijvende offerte.
+              {urgentieLabel
+                ? `Uw selectie is overgenomen — controleer en verstuur. Wij reageren binnen 1 uur.`
+                : `Vul het formulier in en ontvang binnen 1 uur een vrijblijvende offerte.`}
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
             <div className="lg:col-span-3">
-              <QuoteForm defaultOphaalPlaats={van} defaultAfleverPlaats={naar} />
+              <QuoteForm
+                defaultOphaalPlaats={van}
+                defaultAfleverPlaats={naar}
+                defaultOmschrijving={omschrijving}
+                urgentieLabel={urgentieLabel}
+                afstandKm={afstandKm}
+              />
             </div>
             <aside className="lg:col-span-2 lg:sticky lg:top-24">
               <div className="aspect-[4/5] w-full">
