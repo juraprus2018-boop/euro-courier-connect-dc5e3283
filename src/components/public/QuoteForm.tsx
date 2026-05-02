@@ -155,6 +155,22 @@ export function QuoteForm({
   return (
     <Card>
       <CardContent className="p-6">
+        {(urgentieLabel || afstandKm) && (
+          <div className="mb-5 rounded-lg border-2 border-primary/30 bg-primary/5 p-4 flex flex-wrap items-center gap-3">
+            <span className="text-sm font-semibold text-primary">Uw selectie:</span>
+            {urgentieLabel && (
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary text-primary-foreground">
+                {urgentieLabel}
+              </span>
+            )}
+            {afstandKm && (
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-card border border-border">
+                ± {Math.round(afstandKm)} km
+              </span>
+            )}
+            <span className="text-xs text-muted-foreground ml-auto">Vooraf ingevuld — vul aan en verstuur</span>
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
