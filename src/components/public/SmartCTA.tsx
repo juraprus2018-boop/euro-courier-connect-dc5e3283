@@ -130,6 +130,17 @@ export function SmartCTA({
   const waMsg = encodeURIComponent(tier.whatsapp(bestemming, vertrek));
   const waHref = `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}?text=${waMsg}`;
 
+  // Bouw offerte-link met alle context als query params
+  const offerteParams = new URLSearchParams();
+  if (vertrek) offerteParams.set('van', vertrek);
+  if (bestemming) offerteParams.set('naar', bestemming);
+  if (afstandKm) offerteParams.set('afstand', String(Math.round(afstandKm)));
+  if (eff > 0) offerteParams.set('rijtijd', String(Math.round(eff)));
+  if (prijsVanaf) offerteParams.set('prijs', String(Math.round(prijsVanaf)));
+  offerteParams.set('urgentie', tier.key);
+  offerteParams.set('urgentie_label', tier.badge);
+  const offerteFullHref = `${offerteHref}?${offerteParams.toString()}`;
+
   const buttons = {
     bel: (
       <a
@@ -151,7 +162,7 @@ export function SmartCTA({
     ),
     offerte: (
       <Link
-        to={offerteHref}
+        to={offerteFullHref}
         className="inline-flex items-center justify-center gap-2 rounded-md bg-cta text-cta-foreground font-semibold px-5 py-3 hover:opacity-90 transition"
       >
         <FileText className="h-5 w-5" /> Vraag offerte aan
