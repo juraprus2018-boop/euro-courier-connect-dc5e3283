@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
+import { SmartCTA } from '@/components/public/SmartCTA';
 
 const LandPage = () => {
   const { landSlug } = useParams<{ landSlug: string }>();
@@ -40,6 +41,27 @@ const LandPage = () => {
         .order('naam');
       if (error) throw error;
       return data;
+    },
+    enabled: !!land?.id,
+  });
+
+  // Gemiddelde afstand/prijs van populaire routes naar dit land — voor SmartCTA
+  const { data: routeStats } = useQuery({
+    queryKey: ['land-route-stats', land?.id],
+    queryFn: async () => {
+      const { data: stedenIds } = await supabase
+        .from('buitenland_steden')
+        .select('id')
+        .eq('land_id', land!.id);
+      if (!stedenIds?.length) return null;
+      const { data: routes } = await supabase
+        .from('routes')
+        .select('afstand_km, geschatte_prijs')
+        .in('buitenland_stad_id', stedenIds.map((s) => s.id));
+      if (!routes?.length) return null;
+      const avgKm = routes.reduce((a, r) => a + Number(r.afstand_km || 0), 0) / routes.length;
+      const minPrijs = Math.min(...routes.map((r) => Number(r.geschatte_prijs || 0)).filter((n) => n > 0));
+      return { avgKm, minPrijs: isFinite(minPrijs) ? minPrijs : undefined };
     },
     enabled: !!land?.id,
   });
@@ -310,27 +332,15 @@ const LandPage = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-gradient-hero text-primary-foreground">
-        <div className="container text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">
-            Direct een spoedkoerier naar {naam} regelen?
-          </h2>
-          <p className="text-primary-foreground/90 mb-6 max-w-2xl mx-auto">
-            Bereken in minder dan een minuut uw prijs of bel ons direct.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Button asChild size="lg" className="bg-cta text-cta-foreground hover:brightness-110 shadow-cta animate-cta-pulse">
-              <Link to="/offerte">
-                Offerte aanvragen <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-              <a href={CONTACT.telefoonHref}>
-                <Phone className="mr-2 h-4 w-4" /> Bel direct
-              </a>
-            </Button>
-          </div>
+      {/* Smart, gepersonaliseerde CTA op basis van populaire routes naar dit land */}
+      <section className="py-12">
+        <div className="container">
+          <SmartCTA
+            afstandKm={routeStats?.avgKm}
+            prijsVanaf={routeStats?.minPrijs}
+            bestemming={naam}
+            variant="wide"
+          />
         </div>
       </section>
 
