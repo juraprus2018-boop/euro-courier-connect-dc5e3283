@@ -33,9 +33,22 @@ interface QuoteFormProps {
   landId?: string;
   defaultOphaalPlaats?: string;
   defaultAfleverPlaats?: string;
+  defaultOmschrijving?: string;
+  /** Korte urgentie-omschrijving (bv. "Binnen 2 uur ter plaatse") wordt opgeslagen in opmerkingen */
+  urgentieLabel?: string;
+  /** Vooraf berekende afstand (km) */
+  afstandKm?: number;
 }
 
-export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAfleverPlaats }: QuoteFormProps) {
+export function QuoteForm({
+  routeId,
+  landId,
+  defaultOphaalPlaats,
+  defaultAfleverPlaats,
+  defaultOmschrijving,
+  urgentieLabel,
+  afstandKm,
+}: QuoteFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -60,6 +73,7 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
       aflever_plaats: defaultAfleverPlaats || '',
       ophaal_adres: defaultOphaalPlaats || '',
       aflever_adres: defaultAfleverPlaats || '',
+      omschrijving: defaultOmschrijving || '',
     },
   });
 
@@ -79,6 +93,12 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
   const onSubmit = async (data: QuoteFormData) => {
     setIsSubmitting(true);
     try {
+      const opmerkingenParts = [
+        urgentieLabel ? `Gewenste urgentie: ${urgentieLabel}` : null,
+        afstandKm ? `Vooraf berekende afstand: ${Math.round(afstandKm)} km` : null,
+      ].filter(Boolean);
+      const opmerkingen = opmerkingenParts.length ? opmerkingenParts.join(' · ') : null;
+
       const { error } = await supabase.from('aanvragen').insert({
         route_id: routeId || null,
         land_id: landId || null,
@@ -93,6 +113,8 @@ export function QuoteForm({ routeId, landId, defaultOphaalPlaats, defaultAflever
         contact_naam: data.contact_naam,
         contact_email: data.contact_email,
         contact_telefoon: data.contact_telefoon || null,
+        afstand_km: afstandKm || null,
+        opmerkingen,
       });
 
       if (error) throw error;
