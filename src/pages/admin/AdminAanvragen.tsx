@@ -1,15 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Eye, Trash2 } from 'lucide-react';
+import { Loader2, Eye, Trash2, CheckCircle2, Circle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
+
+const STATUS_FLOW = [
+  { key: 'nieuw', label: 'Nieuw', color: 'bg-primary/10 text-primary' },
+  { key: 'contact', label: 'Contact opgenomen', color: 'bg-warning/10 text-warning' },
+  { key: 'offerte_verzonden', label: 'Offerte verstuurd', color: 'bg-accent/10 text-accent' },
+  { key: 'geboekt', label: 'Geboekt', color: 'bg-success/10 text-success' },
+  { key: 'afgerond', label: 'Afgerond', color: 'bg-muted text-muted-foreground' },
+  { key: 'afgewezen', label: 'Afgewezen', color: 'bg-destructive/10 text-destructive' },
+];
+
+const STATUS_MAP: Record<string, { label: string; color: string }> = Object.fromEntries(
+  STATUS_FLOW.map((s) => [s.key, { label: s.label, color: s.color }])
+);
+
+// Backwards compatibility aliases
+const STATUS_ALIAS: Record<string, string> = {
+  in_behandeling: 'contact',
+  akkoord: 'geboekt',
+};
 
 interface LadingItem {
   soort: string;
@@ -47,7 +67,10 @@ const AdminAanvragen = () => {
   const [aanvragen, setAanvragen] = useState<Aanvraag[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAanvraag, setSelectedAanvraag] = useState<Aanvraag | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string>('all');
   const { toast } = useToast();
+
+  const normStatus = (s: string) => STATUS_ALIAS[s] || s;
 
   const fetchAanvragen = async () => {
     const { data, error } = await supabase
@@ -91,18 +114,55 @@ const AdminAanvragen = () => {
     }
   };
 
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { all: aanvragen.length };
+    STATUS_FLOW.forEach((s) => (c[s.key] = 0));
+    aanvragen.forEach((a) => {
+      const s = normStatus(a.status);
+      c[s] = (c[s] || 0) + 1;
+    });
+    return c;
+  }, [aanvragen]);
+
+  const filtered = useMemo(() => {
+    if (filterStatus === 'all') return aanvragen;
+    return aanvragen.filter((a) => normStatus(a.status) === filterStatus);
+  }, [aanvragen, filterStatus]);
+
   const getStatusBadge = (status: string) => {
-    const styles = {
-      nieuw: 'bg-primary/10 text-primary',
-      in_behandeling: 'bg-warning/10 text-warning',
-      offerte_verzonden: 'bg-accent/10 text-accent',
-      akkoord: 'bg-success/10 text-success',
-      afgewezen: 'bg-destructive/10 text-destructive',
-    };
+    const norm = normStatus(status);
+    const meta = STATUS_MAP[norm] || STATUS_MAP.nieuw;
     return (
-      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${styles[status as keyof typeof styles] || styles.nieuw}`}>
-        {status.replace('_', ' ')}
+      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${meta.color}`}>
+        {meta.label}
       </span>
+    );
+  };
+
+  const Stepper = ({ status }: { status: string }) => {
+    const norm = normStatus(status);
+    const flow = STATUS_FLOW.filter((s) => s.key !== 'afgewezen');
+    const idx = flow.findIndex((s) => s.key === norm);
+    const isAfgewezen = norm === 'afgewezen';
+    return (
+      <div className="flex items-center gap-2 flex-wrap">
+        {flow.map((s, i) => {
+          const done = !isAfgewezen && i <= idx;
+          const current = !isAfgewezen && i === idx;
+          return (
+            <div key={s.key} className="flex items-center gap-2">
+              <div className={`flex items-center gap-1.5 ${current ? 'font-semibold text-primary' : done ? 'text-foreground' : 'text-muted-foreground'}`}>
+                {done ? <CheckCircle2 className="h-4 w-4 text-success" /> : <Circle className="h-4 w-4" />}
+                <span className="text-xs">{s.label}</span>
+              </div>
+              {i < flow.length - 1 && <div className={`h-px w-6 ${i < idx ? 'bg-success' : 'bg-border'}`} />}
+            </div>
+          );
+        })}
+        {isAfgewezen && (
+          <span className="ml-2 text-xs font-medium text-destructive">Afgewezen</span>
+        )}
+      </div>
     );
   };
 
