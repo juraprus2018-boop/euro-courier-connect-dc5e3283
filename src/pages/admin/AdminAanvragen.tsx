@@ -262,6 +262,28 @@ const AdminAanvragen = () => {
           </DialogHeader>
           {selectedAanvraag && (
             <div className="space-y-6">
+              <div className="rounded-lg border p-4 bg-muted/30">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3">Workflow status</h4>
+                <Stepper status={selectedAanvraag.status} />
+                <div className="mt-4">
+                  <Select
+                    value={normStatus(selectedAanvraag.status)}
+                    onValueChange={(value) => {
+                      updateStatus(selectedAanvraag.id, value);
+                      setSelectedAanvraag({ ...selectedAanvraag, status: value });
+                    }}
+                  >
+                    <SelectTrigger className="w-[220px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATUS_FLOW.map((s) => (
+                        <SelectItem key={s.key} value={s.key}>{s.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-sm text-muted-foreground mb-2">Ophaaladres</h4>
