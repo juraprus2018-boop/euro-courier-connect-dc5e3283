@@ -7,6 +7,7 @@ import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { SEOHead } from '@/components/SEOHead';
 import { RouteFAQ } from '@/components/public/RouteFAQ';
 import { RelatedRoutes } from '@/components/public/RelatedRoutes';
+import { SmartCTA } from '@/components/public/SmartCTA';
 import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
@@ -311,7 +312,14 @@ const RouteDetailPage = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="space-y-6">
+                <SmartCTA
+                  afstandKm={km}
+                  prijsVanaf={prijsBestelwagen}
+                  bestemming={buitenlandStad}
+                  vertrek={nlPlaats}
+                  variant="compact"
+                />
                 <QuoteForm 
                   routeId={route.id}
                   landId={route.buitenland_stad?.land?.id}
