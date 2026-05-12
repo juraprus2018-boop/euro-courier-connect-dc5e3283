@@ -147,6 +147,7 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
               </Link>
             </div>
           </div>
+        </div>
       </div>
     </section>
   );
