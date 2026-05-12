@@ -43,9 +43,10 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
               Spoedkoerier {landNaam ? `naar ${landNaam}` : 'door heel Europa'}
             </h1>
             <p className="mt-4 text-lg sm:text-xl text-primary-foreground/90 leading-relaxed max-w-xl">
-              Wij zijn <strong>{bedrijfsNaam}</strong> en rijden jouw zending met spoed
-              direct van A naar B. Bijvoorbeeld rechtstreeks van Amsterdam naar
-              {landNaam ? ` ${landNaam}` : ' Parijs'} – één chauffeur, één auto, geen overslag.
+              Wij zijn <strong>{bedrijfsNaam}</strong> en rijden jouw spoedzending
+              rechtstreeks van A naar B – bijvoorbeeld direct van Amsterdam naar
+              {landNaam ? ` ${landNaam}` : ' Parijs'}. Eén chauffeur, één bus, geen overslag.
+              Ook 's avonds en in het weekend.
             </p>
             {tagline && (
               <p className="mt-3 font-display text-xl sm:text-2xl italic font-light text-primary-foreground/80">
@@ -103,27 +104,29 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
             </form>
           </div>
 
-          {/* RIGHT: van image + USPs */}
+          {/* RIGHT: USPs card */}
           <div className="relative">
-            <div className="group relative mx-auto w-full max-w-xl animate-fade-in cursor-pointer">
-              <img
-                src={vanImage}
-                alt="Spoedkoerier bestelbus"
-                className="w-full drop-shadow-2xl transition-transform duration-300 group-hover:-translate-x-2 group-hover:animate-van-drive"
-                width={1264}
-                height={848}
-              />
-              <span className="pointer-events-none absolute bottom-[8%] left-[6%] h-1 w-[88%] rounded-full bg-[linear-gradient(90deg,hsl(var(--primary-foreground)/0.7)_0_35%,transparent_35%_55%)] bg-[length:44px_4px] opacity-0 transition-opacity duration-200 group-hover:opacity-80 group-hover:animate-road-move" />
-            </div>
-
-            <div className="mt-8 lg:mt-10 rounded-2xl bg-card text-card-foreground shadow-xl p-6 max-w-xl mx-auto">
-              <ul className="space-y-4">
+            <div className="rounded-2xl bg-card text-card-foreground shadow-xl p-6 sm:p-8 max-w-xl mx-auto animate-fade-in">
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">
+                Waarom {bedrijfsNaam}
+              </p>
+              <ul className="space-y-5">
                 <li className="flex gap-3">
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
-                    <Users className="h-5 w-5 text-primary" />
+                    <Zap className="h-5 w-5 text-primary" />
                   </span>
                   <span className="text-sm">
-                    <strong>Meer dan 250 aangesloten koeriers.</strong>
+                    <strong className="block">Binnen 60 minuten ophalen</strong>
+                    <span className="text-muted-foreground">Bij spoed staan wij direct klaar – 7 dagen per week.</span>
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
+                    <ShieldCheck className="h-5 w-5 text-primary" />
+                  </span>
+                  <span className="text-sm">
+                    <strong className="block">Eigen ervaren chauffeurs</strong>
+                    <span className="text-muted-foreground">Geen onderaannemers, geen overslag. Persoonlijk contact met de chauffeur.</span>
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -131,27 +134,19 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                     <Wallet className="h-5 w-5 text-primary" />
                   </span>
                   <span className="text-sm">
-                    <strong>Boek direct voor de laagste prijs!</strong> Al vanaf €0,50 per km.
-                  </span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
-                    <Zap className="h-5 w-5 text-primary" />
-                  </span>
-                  <span className="text-sm">
-                    <strong>Jouw zending al binnen 60 minuten</strong> bij je opgehaald.
+                    <strong className="block">Transparante kilometerprijs</strong>
+                    <span className="text-muted-foreground">Vooraf duidelijk, geen verrassingen achteraf.</span>
                   </span>
                 </li>
               </ul>
               <Link
                 to="/offerte"
-                className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
               >
                 Direct offerte aanvragen <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
-        </div>
       </div>
     </section>
   );
