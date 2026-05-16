@@ -110,7 +110,7 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="pt-2 text-xs text-muted-foreground space-y-1">
+            <div className="pt-2 text-sm text-muted-foreground space-y-1">
               <p>Openingstijden: Ma–Vr 08:00–18:00 · Za 09:00–14:00</p>
               <p>BTW: {CONTACT.btw} · KvK: {CONTACT.kvk}</p>
             </div>
@@ -118,10 +118,6 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-border text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} {CONTACT.bedrijf}. Alle rechten voorbehouden.</p>
-        </div>
-
-        <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} {CONTACT.bedrijf}. Alle rechten voorbehouden.</p>
         </div>
       </div>
