@@ -101,6 +101,15 @@ const AdminLandBranding = () => {
         meta_title: data.meta_title || '',
         meta_description: data.meta_description || '',
         faq: Array.isArray(data.faq) ? (data.faq as unknown as FAQItem[]) : [],
+        bedrijf_naam: (data as any).bedrijf_naam || '',
+        adres: (data as any).adres || '',
+        postcode: (data as any).postcode || '',
+        plaats: (data as any).plaats || '',
+        telefoon: (data as any).telefoon || '',
+        email: (data as any).email || '',
+        kvk: (data as any).kvk || '',
+        btw: (data as any).btw || '',
+        openingstijden: (data as any).openingstijden || '',
       });
       setLoading(false);
     };
