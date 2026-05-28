@@ -99,25 +99,35 @@ export function QuoteForm({
       ].filter(Boolean);
       const opmerkingen = opmerkingenParts.length ? opmerkingenParts.join(' · ') : null;
 
-      const { error } = await supabase.from('aanvragen').insert({
-        route_id: routeId || null,
-        land_id: landId || null,
-        ophaal_adres: data.ophaal_adres,
-        ophaal_postcode: data.ophaal_postcode || null,
-        ophaal_plaats: data.ophaal_plaats,
-        aflever_adres: data.aflever_adres,
-        aflever_postcode: data.aflever_postcode || null,
-        aflever_plaats: data.aflever_plaats,
-        datum: data.datum || null,
-        omschrijving: data.omschrijving || null,
-        contact_naam: data.contact_naam,
-        contact_email: data.contact_email,
-        contact_telefoon: data.contact_telefoon || null,
-        afstand_km: afstandKm || null,
-        opmerkingen,
-      });
+      const { data: inserted, error } = await supabase
+        .from('aanvragen')
+        .insert({
+          route_id: routeId || null,
+          land_id: landId || null,
+          ophaal_adres: data.ophaal_adres,
+          ophaal_postcode: data.ophaal_postcode || null,
+          ophaal_plaats: data.ophaal_plaats,
+          aflever_adres: data.aflever_adres,
+          aflever_postcode: data.aflever_postcode || null,
+          aflever_plaats: data.aflever_plaats,
+          datum: data.datum || null,
+          omschrijving: data.omschrijving || null,
+          contact_naam: data.contact_naam,
+          contact_email: data.contact_email,
+          contact_telefoon: data.contact_telefoon || null,
+          afstand_km: afstandKm || null,
+          opmerkingen,
+        })
+        .select('public_token')
+        .single();
 
       if (error) throw error;
+
+      const token = inserted?.public_token as string | undefined;
+      const statusUrl = token && typeof window !== 'undefined'
+        ? `${window.location.origin}/offerte-status/${token}`
+        : undefined;
+      if (token) setStatusToken(token);
 
       // Verstuur notificatie + bevestiging via SMTP (mag niet blokkeren bij fout)
       supabase.functions
@@ -141,6 +151,7 @@ export function QuoteForm({
               afstand_km: afstandKm ? Math.round(afstandKm) : undefined,
               urgentie: urgentieLabel,
               opmerkingen,
+              status_url: statusUrl,
             },
           },
         })
@@ -175,10 +186,19 @@ export function QuoteForm({
           <p className="mt-2 text-muted-foreground">
             We hebben uw offerteaanvraag ontvangen en nemen binnen 1 uur contact met u op.
           </p>
+          {statusToken && (
+            <a
+              href={`/offerte-status/${statusToken}`}
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary text-primary-foreground px-5 py-2.5 font-semibold hover:brightness-110 transition"
+            >
+              Volg de status van uw aanvraag →
+            </a>
+          )}
         </CardContent>
       </Card>
     );
   }
+
 
   return (
     <Card>
