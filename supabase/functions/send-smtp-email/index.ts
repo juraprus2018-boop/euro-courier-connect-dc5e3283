@@ -146,7 +146,7 @@ function renderSection(title: string, rows: [string, unknown][]): string {
         `<tr><td style="padding:10px 14px;border-bottom:1px solid #eef2f7;color:#6b7280;font-size:13px;width:40%;vertical-align:top">${escapeHtml(LABELS[k] ?? k)}</td><td style="padding:10px 14px;border-bottom:1px solid #eef2f7;color:#111827;font-size:14px;font-weight:500">${escapeHtml(v)}</td></tr>`,
     )
     .join("");
-  return `<tr><td style="padding:18px 0 6px 0"><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--p);font-weight:700">${escapeHtml(title)}</div></td></tr><tr><td><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #eef2f7;border-radius:8px;overflow:hidden;background:#ffffff">${trs}</table></td></tr>`;
+  return `<tr><td style="padding:14px 0 0 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #eef2f7;border-radius:8px;overflow:hidden;background:#ffffff"><tr><td colspan="2" style="background:#f9fafb;padding:10px 14px;border-bottom:1px solid #eef2f7;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--p);font-weight:700">${escapeHtml(title)}</td></tr>${trs}</table></td></tr>`;
 }
 
 function renderSections(type: "offerte" | "terugbel", data: Record<string, unknown>): string {
