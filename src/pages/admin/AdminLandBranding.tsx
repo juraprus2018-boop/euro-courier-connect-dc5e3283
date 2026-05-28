@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Loader2, Plus, Trash2, Palette, FileText, Search, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Loader2, Plus, Trash2, Palette, FileText, Search, HelpCircle, Building2 } from 'lucide-react';
 
 interface FAQItem {
   vraag: string;
