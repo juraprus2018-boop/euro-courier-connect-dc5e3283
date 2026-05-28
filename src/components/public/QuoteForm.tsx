@@ -144,23 +144,8 @@ export function QuoteForm({
         })
         .catch((e) => console.error('SMTP send failed:', e));
 
-        ophaal_postcode: data.ophaal_postcode || null,
-        ophaal_plaats: data.ophaal_plaats,
-        aflever_adres: data.aflever_adres,
-        aflever_postcode: data.aflever_postcode || null,
-        aflever_plaats: data.aflever_plaats,
-        datum: data.datum || null,
-        omschrijving: data.omschrijving || null,
-        contact_naam: data.contact_naam,
-        contact_email: data.contact_email,
-        contact_telefoon: data.contact_telefoon || null,
-        afstand_km: afstandKm || null,
-        opmerkingen,
-      });
-
-      if (error) throw error;
-
       setIsSubmitted(true);
+
       toast({
         title: 'Aanvraag verzonden!',
         description: 'We nemen zo snel mogelijk contact met u op.',
