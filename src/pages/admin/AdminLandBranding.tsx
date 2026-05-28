@@ -133,7 +133,16 @@ const AdminLandBranding = () => {
         meta_title: formData.meta_title || null,
         meta_description: formData.meta_description || null,
         faq: formData.faq.length > 0 ? JSON.parse(JSON.stringify(formData.faq)) : null,
-      })
+        bedrijf_naam: formData.bedrijf_naam || null,
+        adres: formData.adres || null,
+        postcode: formData.postcode || null,
+        plaats: formData.plaats || null,
+        telefoon: formData.telefoon || null,
+        email: formData.email || null,
+        kvk: formData.kvk || null,
+        btw: formData.btw || null,
+        openingstijden: formData.openingstijden || null,
+      } as any)
       .eq('id', land.id);
 
     if (error) {
