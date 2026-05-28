@@ -11,6 +11,8 @@ import BestemmingenPage from "./pages/BestemmingenPage";
 import BestemmingDetailPage from "./pages/BestemmingDetailPage";
 import LandPage from "./pages/LandPage";
 import QuotePage from "./pages/QuotePage";
+import OfferteStatusPage from "./pages/OfferteStatusPage";
+
 import PrijsBerekenenPage from "./pages/PrijsBerekenenPage";
 import ContactPage from "./pages/ContactPage";
 import FaqPage from "./pages/FaqPage";
@@ -59,6 +61,8 @@ const App = () => (
           <Route path="/bestemming/:slug" element={<BestemmingDetailPage />} />
           <Route path="/spoedkoerier-naar/:landSlug" element={<LandPage />} />
           <Route path="/offerte" element={<QuotePage />} />
+          <Route path="/offerte-status/:token" element={<OfferteStatusPage />} />
+
           <Route path="/prijs-berekenen" element={<PrijsBerekenenPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
