@@ -38,12 +38,15 @@ export type Database = {
           ophaal_plaats: string
           ophaal_postcode: string | null
           opmerkingen: string | null
+          public_token: string
           rijtijd_minuten: number | null
           route_id: string | null
           status: string
+          status_updated_at: string
           tijd_voorkeur: string | null
           transport_type: string | null
           updated_at: string
+          verwacht_reactie_voor: string | null
           verwachte_looptijd: string | null
           verwachte_prijs: number | null
           zending_type: string | null
@@ -71,12 +74,15 @@ export type Database = {
           ophaal_plaats: string
           ophaal_postcode?: string | null
           opmerkingen?: string | null
+          public_token?: string
           rijtijd_minuten?: number | null
           route_id?: string | null
           status?: string
+          status_updated_at?: string
           tijd_voorkeur?: string | null
           transport_type?: string | null
           updated_at?: string
+          verwacht_reactie_voor?: string | null
           verwachte_looptijd?: string | null
           verwachte_prijs?: number | null
           zending_type?: string | null
@@ -104,12 +110,15 @@ export type Database = {
           ophaal_plaats?: string
           ophaal_postcode?: string | null
           opmerkingen?: string | null
+          public_token?: string
           rijtijd_minuten?: number | null
           route_id?: string | null
           status?: string
+          status_updated_at?: string
           tijd_voorkeur?: string | null
           transport_type?: string | null
           updated_at?: string
+          verwacht_reactie_voor?: string | null
           verwachte_looptijd?: string | null
           verwachte_prijs?: number | null
           zending_type?: string | null
@@ -671,6 +680,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_aanvraag_status: {
+        Args: { p_token: string }
+        Returns: {
+          aflever_plaats: string
+          contact_naam: string
+          created_at: string
+          ophaal_plaats: string
+          status: string
+          status_updated_at: string
+          verwacht_reactie_voor: string
+        }[]
+      }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
     }
     Enums: {

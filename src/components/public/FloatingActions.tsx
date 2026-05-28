@@ -38,10 +38,22 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat via WhatsApp"
-        className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 transition-transform animate-fade-in"
+        className="fixed bottom-24 right-4 md:bottom-24 md:right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 transition-transform animate-fade-in"
       >
         <MessageCircle className="h-7 w-7" />
       </a>
+
+      {/* Floating "Bel mij terug" knop (desktop, links van WhatsApp) */}
+      <button
+        type="button"
+        onClick={() => setTerugbelOpen(true)}
+        aria-label="Bel mij terug"
+        className="hidden md:flex fixed bottom-6 right-6 z-40 items-center gap-2 rounded-full bg-cta px-5 py-3 text-cta-foreground font-semibold shadow-cta hover:brightness-110 transition animate-cta-pulse"
+      >
+        <PhoneCall className="h-5 w-5" />
+        Bel mij terug
+      </button>
+
 
       {/* Sticky mobile CTA bar */}
       <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t border-border bg-background/95 backdrop-blur shadow-lg">
