@@ -288,6 +288,78 @@ export type Database = {
         }
         Relationships: []
       }
+      klant_adressen: {
+        Row: {
+          adres: string
+          created_at: string
+          id: string
+          label: string
+          land: string | null
+          plaats: string
+          postcode: string | null
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          adres: string
+          created_at?: string
+          id?: string
+          label: string
+          land?: string | null
+          plaats: string
+          postcode?: string | null
+          type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          adres?: string
+          created_at?: string
+          id?: string
+          label?: string
+          land?: string | null
+          plaats?: string
+          postcode?: string | null
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      klant_profielen: {
+        Row: {
+          bedrijf: string | null
+          created_at: string
+          email: string
+          id: string
+          naam: string | null
+          telefoon: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bedrijf?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          naam?: string | null
+          telefoon?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bedrijf?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          naam?: string | null
+          telefoon?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       landen: {
         Row: {
           actief: boolean
