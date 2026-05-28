@@ -213,7 +213,7 @@ const RouteDetailPage = () => {
                   const prijsBestelwagen = Math.round(km * kmTarief);
                   const prijsBestelbus = Math.round(prijsBestelwagen * 1.154);
                   const prijsBakwagen = Math.round(prijsBestelwagen * 1.308);
-                  const fmt = (n: number) => `€ ${n.toLocaleString('nl-NL')}`;
+                  const fmt = (n: number) => formatPrijsRange(n) ?? 'op aanvraag';
 
                   return (
                     <div className="space-y-6">

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Phone, MessageCircle, FileText, Zap, Clock, Truck } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { supabase } from '@/integrations/supabase/client';
+import { formatPrijsRange } from '@/lib/prijs';
 
 interface SmartCTAProps {
   /** Afstand in km (depot-loop of direct, beide werken) */

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -549,10 +550,10 @@ export function PrijsBerekenenForm({
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs text-muted-foreground uppercase">
-                      Verwachte prijs
+                      Indicatieve prijs
                     </p>
-                    <p className="text-3xl font-bold text-primary">
-                      €{priceResult.prijs}
+                    <p className="text-2xl font-bold text-primary leading-tight">
+                      {formatPrijsRange(priceResult.prijs) ?? 'Op aanvraag'}
                     </p>
                   </div>
                   <div>
@@ -563,10 +564,7 @@ export function PrijsBerekenenForm({
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  De prijs is gebaseerd op een regulier transport met normale
-                  handelsgoederen. Inclusief dieselolietoeslag en tol/maut, exclusief
-                  BTW. Bij geconditioneerde of gevaarlijke goederen kunnen extra
-                  kosten van toepassing zijn.
+                  {PRIJS_DISCLAIMER}
                 </p>
               </div>
             )}
