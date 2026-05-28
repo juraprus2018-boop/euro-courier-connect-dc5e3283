@@ -38,12 +38,15 @@ export type Database = {
           ophaal_plaats: string
           ophaal_postcode: string | null
           opmerkingen: string | null
+          public_token: string
           rijtijd_minuten: number | null
           route_id: string | null
           status: string
+          status_updated_at: string
           tijd_voorkeur: string | null
           transport_type: string | null
           updated_at: string
+          verwacht_reactie_voor: string | null
           verwachte_looptijd: string | null
           verwachte_prijs: number | null
           zending_type: string | null
@@ -71,12 +74,15 @@ export type Database = {
           ophaal_plaats: string
           ophaal_postcode?: string | null
           opmerkingen?: string | null
+          public_token?: string
           rijtijd_minuten?: number | null
           route_id?: string | null
           status?: string
+          status_updated_at?: string
           tijd_voorkeur?: string | null
           transport_type?: string | null
           updated_at?: string
+          verwacht_reactie_voor?: string | null
           verwachte_looptijd?: string | null
           verwachte_prijs?: number | null
           zending_type?: string | null
@@ -104,12 +110,15 @@ export type Database = {
           ophaal_plaats?: string
           ophaal_postcode?: string | null
           opmerkingen?: string | null
+          public_token?: string
           rijtijd_minuten?: number | null
           route_id?: string | null
           status?: string
+          status_updated_at?: string
           tijd_voorkeur?: string | null
           transport_type?: string | null
           updated_at?: string
+          verwacht_reactie_voor?: string | null
           verwachte_looptijd?: string | null
           verwachte_prijs?: number | null
           zending_type?: string | null
@@ -668,7 +677,39 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      aanvraag_status_public: {
+        Row: {
+          aflever_plaats: string | null
+          contact_naam: string | null
+          created_at: string | null
+          ophaal_plaats: string | null
+          public_token: string | null
+          status: string | null
+          status_updated_at: string | null
+          verwacht_reactie_voor: string | null
+        }
+        Insert: {
+          aflever_plaats?: string | null
+          contact_naam?: string | null
+          created_at?: string | null
+          ophaal_plaats?: string | null
+          public_token?: string | null
+          status?: string | null
+          status_updated_at?: string | null
+          verwacht_reactie_voor?: string | null
+        }
+        Update: {
+          aflever_plaats?: string | null
+          contact_naam?: string | null
+          created_at?: string | null
+          ophaal_plaats?: string | null
+          public_token?: string | null
+          status?: string | null
+          status_updated_at?: string | null
+          verwacht_reactie_voor?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
