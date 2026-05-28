@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Truck, Phone, Mail, MapPin, Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
+import { Truck, Phone, Mail, MapPin, Menu, X, ChevronDown, ArrowRight, User } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { CONTACT } from '@/lib/contact';
@@ -89,7 +90,11 @@ export function Header({ landNaam }: HeaderProps) {
           </DropdownMenu>
           
           <Link to="/contact" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link>
+          <Link to="/account" className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors">
+            <User className="h-4 w-4" /> Mijn Account
+          </Link>
         </nav>
+
 
         {/* Pill CTAs */}
         <div className="flex items-center gap-2 sm:gap-3">
@@ -167,6 +172,10 @@ export function Header({ landNaam }: HeaderProps) {
             </div>
             
             <Link to="/contact" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+            <Link to="/account" className="text-sm font-medium hover:opacity-80 flex items-center gap-1" onClick={() => setMobileMenuOpen(false)}>
+              <User className="h-4 w-4" /> Mijn Account
+            </Link>
+
             <a href={CONTACT.telefoonHref} className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2 text-sm font-semibold w-fit">
               <Phone className="h-4 w-4" /> {CONTACT.telefoon}
             </a>

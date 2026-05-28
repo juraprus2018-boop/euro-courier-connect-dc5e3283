@@ -12,6 +12,9 @@ import BestemmingDetailPage from "./pages/BestemmingDetailPage";
 import LandPage from "./pages/LandPage";
 import QuotePage from "./pages/QuotePage";
 import OfferteStatusPage from "./pages/OfferteStatusPage";
+import AccountLogin from "./pages/account/AccountLogin";
+import AccountDashboard from "./pages/account/AccountDashboard";
+
 
 import PrijsBerekenenPage from "./pages/PrijsBerekenenPage";
 import ContactPage from "./pages/ContactPage";
@@ -62,6 +65,9 @@ const App = () => (
           <Route path="/spoedkoerier-naar/:landSlug" element={<LandPage />} />
           <Route path="/offerte" element={<QuotePage />} />
           <Route path="/offerte-status/:token" element={<OfferteStatusPage />} />
+          <Route path="/account/login" element={<AccountLogin />} />
+          <Route path="/account" element={<AccountDashboard />} />
+
 
           <Route path="/prijs-berekenen" element={<PrijsBerekenenPage />} />
           <Route path="/contact" element={<ContactPage />} />
