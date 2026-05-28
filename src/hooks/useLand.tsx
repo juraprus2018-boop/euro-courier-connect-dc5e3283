@@ -17,6 +17,15 @@ interface Land {
   meta_title?: string | null;
   meta_description?: string | null;
   faq?: Array<{ vraag: string; antwoord: string }> | null;
+  bedrijf_naam?: string | null;
+  adres?: string | null;
+  postcode?: string | null;
+  plaats?: string | null;
+  telefoon?: string | null;
+  email?: string | null;
+  kvk?: string | null;
+  btw?: string | null;
+  openingstijden?: string | null;
 }
 
 export function useLand() {
