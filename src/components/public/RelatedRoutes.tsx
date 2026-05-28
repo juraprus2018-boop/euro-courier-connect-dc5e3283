@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { MapPin, ArrowRight } from 'lucide-react';
+import { formatPrijsRange } from '@/lib/prijs';
 
 interface Props {
   currentRouteId: string;
@@ -74,7 +75,7 @@ export function RelatedRoutes({ currentRouteId, nlPlaatsId, nlPlaatsNaam, landId
           {r.nl_plaats?.naam} <ArrowRight className="inline h-3 w-3 mx-1" /> {r.buitenland_stad?.naam}
         </p>
         <p className="text-xs text-muted-foreground">
-          {Math.round(Number(r.afstand_km))} km · vanaf € {Math.round(Number(r.geschatte_prijs)).toLocaleString('nl-NL')}
+          {Math.round(Number(r.afstand_km))} km · indicatie {formatPrijsRange(Number(r.geschatte_prijs)) ?? 'op aanvraag'}
         </p>
       </div>
     </Link>

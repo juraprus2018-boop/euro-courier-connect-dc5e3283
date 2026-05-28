@@ -9,6 +9,7 @@ import { RouteFAQ } from '@/components/public/RouteFAQ';
 import { RelatedRoutes } from '@/components/public/RelatedRoutes';
 import { SmartCTA } from '@/components/public/SmartCTA';
 import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd } from '@/lib/seo';
+import { formatPrijsRange } from '@/lib/prijs';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
 import { Loader2, MapPin, ArrowRight, Truck, Clock } from 'lucide-react';
@@ -213,7 +214,7 @@ const RouteDetailPage = () => {
                   const prijsBestelwagen = Math.round(km * kmTarief);
                   const prijsBestelbus = Math.round(prijsBestelwagen * 1.154);
                   const prijsBakwagen = Math.round(prijsBestelwagen * 1.308);
-                  const fmt = (n: number) => `€ ${n.toLocaleString('nl-NL')}`;
+                  const fmt = (n: number) => formatPrijsRange(n) ?? 'op aanvraag';
 
                   return (
                     <div className="space-y-6">
