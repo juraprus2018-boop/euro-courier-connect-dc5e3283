@@ -299,9 +299,15 @@ Deno.serve(async (req) => {
         ? `Beste ${klantNaam},<br/><br/>Bedankt voor uw offerte-aanvraag bij <strong>${escapeHtml(brand.name)}</strong>. We hebben uw gegevens in goede orde ontvangen en sturen u <strong>binnen 1 uur</strong> (tijdens kantooruren) een persoonlijke offerte op maat.`
         : `Beste ${klantNaam},<br/><br/>Bedankt voor uw terugbelverzoek bij <strong>${escapeHtml(brand.name)}</strong>. Een van onze medewerkers belt u zo spoedig mogelijk terug binnen het door u gekozen tijdslot.`;
 
+      const statusUrl = (data.status_url as string) || "";
+      const statusBlock = isOfferte && statusUrl
+        ? `<tr><td style="padding:18px 0 0 0"><div style="border:1px solid ${brand.primary};background:${brand.primary}10;border-radius:8px;padding:16px"><div style="font-size:13px;color:#4b5563;margin-bottom:8px">Live status van uw aanvraag</div><a href="${escapeHtml(statusUrl)}" style="display:inline-block;background:${brand.primary};color:#fff;font-weight:600;text-decoration:none;padding:10px 16px;border-radius:6px;font-size:14px">Volg uw aanvraag online →</a></div></td></tr>`
+        : "";
+
       const klantBody =
         `<tr><td style="padding:18px 0 6px 0"><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:${brand.primary};font-weight:700">Samenvatting van uw aanvraag</div></td></tr>` +
         renderSections(type, visibleData) +
+        statusBlock +
         `<tr><td style="padding:22px 0 0 0;color:#4b5563;font-size:14px;line-height:1.6">Heeft u in de tussentijd een vraag? Bel ons gerust op <a href="${brand.phoneHref}" style="color:${brand.primary};font-weight:600;text-decoration:none">${escapeHtml(brand.phone)}</a> of antwoord direct op deze e-mail.</td></tr>` +
         `<tr><td style="padding:18px 0 0 0;color:#111827;font-size:14px">Met vriendelijke groet,<br/><strong>Team ${escapeHtml(brand.name)}</strong></td></tr>`;
 
@@ -310,8 +316,11 @@ Deno.serve(async (req) => {
         preheader: isOfferte ? "We sturen u binnen 1 uur een offerte op maat." : "We bellen u zo spoedig mogelijk terug.",
         intro: klantIntro,
         body: klantBody,
-        cta: { label: `Bel direct ${brand.phone}`, href: brand.phoneHref },
+        cta: isOfferte && statusUrl
+          ? { label: "Bekijk status van uw aanvraag", href: statusUrl }
+          : { label: `Bel direct ${brand.phone}`, href: brand.phoneHref },
       });
+
 
       await client.send({
         from: fromHeader,
