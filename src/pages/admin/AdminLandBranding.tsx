@@ -238,6 +238,10 @@ const AdminLandBranding = () => {
               <HelpCircle className="h-4 w-4" />
               FAQ
             </TabsTrigger>
+            <TabsTrigger value="bedrijf" className="gap-2">
+              <Building2 className="h-4 w-4" />
+              Bedrijfsgegevens
+            </TabsTrigger>
           </TabsList>
 
           {/* Colors Tab */}
