@@ -49,6 +49,20 @@ export function TerugbelDialog({ open, onOpenChange }: TerugbelDialogProps) {
       toast({ title: 'Er ging iets mis', description: error.message, variant: 'destructive' });
       return;
     }
+    // Notificatie via SMTP (niet blokkerend)
+    supabase.functions
+      .invoke('send-smtp-email', {
+        body: {
+          type: 'terugbel',
+          data: {
+            naam: parsed.data.naam,
+            telefoon: parsed.data.telefoon,
+            tijdslot: parsed.data.tijdslot,
+            opmerking: parsed.data.opmerking,
+          },
+        },
+      })
+      .catch((e) => console.error('SMTP send failed:', e));
     toast({ title: 'Bedankt!', description: 'We bellen u zo spoedig mogelijk terug.' });
     setNaam(''); setTelefoon(''); setOpmerking(''); setTijdslot('zo-snel-mogelijk');
     onOpenChange(false);
