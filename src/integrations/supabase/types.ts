@@ -677,41 +677,21 @@ export type Database = {
       }
     }
     Views: {
-      aanvraag_status_public: {
-        Row: {
-          aflever_plaats: string | null
-          contact_naam: string | null
-          created_at: string | null
-          ophaal_plaats: string | null
-          public_token: string | null
-          status: string | null
-          status_updated_at: string | null
-          verwacht_reactie_voor: string | null
-        }
-        Insert: {
-          aflever_plaats?: string | null
-          contact_naam?: string | null
-          created_at?: string | null
-          ophaal_plaats?: string | null
-          public_token?: string | null
-          status?: string | null
-          status_updated_at?: string | null
-          verwacht_reactie_voor?: string | null
-        }
-        Update: {
-          aflever_plaats?: string | null
-          contact_naam?: string | null
-          created_at?: string | null
-          ophaal_plaats?: string | null
-          public_token?: string | null
-          status?: string | null
-          status_updated_at?: string | null
-          verwacht_reactie_voor?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
+      get_aanvraag_status: {
+        Args: { p_token: string }
+        Returns: {
+          aflever_plaats: string
+          contact_naam: string
+          created_at: string
+          ophaal_plaats: string
+          status: string
+          status_updated_at: string
+          verwacht_reactie_voor: string
+        }[]
+      }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
     }
     Enums: {
