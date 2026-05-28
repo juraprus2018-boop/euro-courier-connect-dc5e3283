@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Loader2, Plus, Trash2, Palette, FileText, Search, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Loader2, Plus, Trash2, Palette, FileText, Search, HelpCircle, Building2 } from 'lucide-react';
 
 interface FAQItem {
   vraag: string;
@@ -59,6 +59,15 @@ const AdminLandBranding = () => {
     meta_title: '',
     meta_description: '',
     faq: [] as FAQItem[],
+    bedrijf_naam: '',
+    adres: '',
+    postcode: '',
+    plaats: '',
+    telefoon: '',
+    email: '',
+    kvk: '',
+    btw: '',
+    openingstijden: '',
   });
 
   useEffect(() => {
@@ -92,6 +101,15 @@ const AdminLandBranding = () => {
         meta_title: data.meta_title || '',
         meta_description: data.meta_description || '',
         faq: Array.isArray(data.faq) ? (data.faq as unknown as FAQItem[]) : [],
+        bedrijf_naam: (data as any).bedrijf_naam || '',
+        adres: (data as any).adres || '',
+        postcode: (data as any).postcode || '',
+        plaats: (data as any).plaats || '',
+        telefoon: (data as any).telefoon || '',
+        email: (data as any).email || '',
+        kvk: (data as any).kvk || '',
+        btw: (data as any).btw || '',
+        openingstijden: (data as any).openingstijden || '',
       });
       setLoading(false);
     };
@@ -115,7 +133,16 @@ const AdminLandBranding = () => {
         meta_title: formData.meta_title || null,
         meta_description: formData.meta_description || null,
         faq: formData.faq.length > 0 ? JSON.parse(JSON.stringify(formData.faq)) : null,
-      })
+        bedrijf_naam: formData.bedrijf_naam || null,
+        adres: formData.adres || null,
+        postcode: formData.postcode || null,
+        plaats: formData.plaats || null,
+        telefoon: formData.telefoon || null,
+        email: formData.email || null,
+        kvk: formData.kvk || null,
+        btw: formData.btw || null,
+        openingstijden: formData.openingstijden || null,
+      } as any)
       .eq('id', land.id);
 
     if (error) {
@@ -210,6 +237,10 @@ const AdminLandBranding = () => {
             <TabsTrigger value="faq" className="gap-2">
               <HelpCircle className="h-4 w-4" />
               FAQ
+            </TabsTrigger>
+            <TabsTrigger value="bedrijf" className="gap-2">
+              <Building2 className="h-4 w-4" />
+              Bedrijfsgegevens
             </TabsTrigger>
           </TabsList>
 
@@ -463,6 +494,105 @@ const AdminLandBranding = () => {
                     Geen aangepaste FAQ items. De standaard FAQ wordt getoond.
                   </p>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Bedrijfsgegevens Tab */}
+          <TabsContent value="bedrijf">
+            <Card>
+              <CardHeader>
+                <CardTitle>Bedrijfsgegevens voor {land.naam}</CardTitle>
+                <CardDescription>
+                  Deze gegevens worden in de footer getoond op het {land.naam}-domein.
+                  Laat leeg om de standaardgegevens van De Europa Koerier te gebruiken.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="bedrijf_naam">Bedrijfsnaam</Label>
+                    <Input
+                      id="bedrijf_naam"
+                      value={formData.bedrijf_naam}
+                      onChange={(e) => setFormData({ ...formData, bedrijf_naam: e.target.value })}
+                      placeholder={`De ${land.naam} Koerier`}
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="adres">Adres</Label>
+                    <Input
+                      id="adres"
+                      value={formData.adres}
+                      onChange={(e) => setFormData({ ...formData, adres: e.target.value })}
+                      placeholder="Pianostraat 17"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="postcode">Postcode</Label>
+                    <Input
+                      id="postcode"
+                      value={formData.postcode}
+                      onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
+                      placeholder="5642 RC"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="plaats">Plaats</Label>
+                    <Input
+                      id="plaats"
+                      value={formData.plaats}
+                      onChange={(e) => setFormData({ ...formData, plaats: e.target.value })}
+                      placeholder="Eindhoven"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="telefoon">Telefoon</Label>
+                    <Input
+                      id="telefoon"
+                      value={formData.telefoon}
+                      onChange={(e) => setFormData({ ...formData, telefoon: e.target.value })}
+                      placeholder="085 7602 999"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">E-mail</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="info@deeuropakoerier.nl"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="kvk">KvK-nummer</Label>
+                    <Input
+                      id="kvk"
+                      value={formData.kvk}
+                      onChange={(e) => setFormData({ ...formData, kvk: e.target.value })}
+                      placeholder="63044951"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="btw">BTW-nummer</Label>
+                    <Input
+                      id="btw"
+                      value={formData.btw}
+                      onChange={(e) => setFormData({ ...formData, btw: e.target.value })}
+                      placeholder="NL8550.69.764.B.02"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="openingstijden">Openingstijden</Label>
+                    <Input
+                      id="openingstijden"
+                      value={formData.openingstijden}
+                      onChange={(e) => setFormData({ ...formData, openingstijden: e.target.value })}
+                      placeholder="Ma–Vr 08:00–18:00 · Za 09:00–14:00"
+                    />
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
