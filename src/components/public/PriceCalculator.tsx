@@ -239,14 +239,15 @@ export function PriceCalculator({ landNaam, kmTarief = 0.85, restrictToCountry }
                     </div>
                     <div className="text-center p-4 rounded-xl bg-accent/10">
                       <Euro className="h-5 w-5 mx-auto text-accent mb-2" />
-                      <div className="text-2xl font-bold text-accent">€{calculatedPrice}</div>
-                      <div className="text-xs text-muted-foreground">Vanaf prijs</div>
+                      <div className="text-lg font-bold text-accent leading-tight">
+                        {formatPrijsRange(calculatedPrice) ?? 'Op aanvraag'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Indicatie</div>
                     </div>
                   </div>
 
                   <p className="text-xs text-muted-foreground">
-                    * Dit is een indicatieve prijs gebaseerd op €{kmTarief.toFixed(2)}/km. 
-                    De definitieve prijs kan afwijken op basis van gewicht, afmetingen en specifieke wensen.
+                    * {PRIJS_DISCLAIMER}
                   </p>
 
                   <SmartCTA
