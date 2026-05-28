@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.log-prijsberekening]
 verify_jwt = false
+
+[functions.send-smtp-email]
+verify_jwt = false
