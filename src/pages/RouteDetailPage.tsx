@@ -126,6 +126,8 @@ const RouteDetailPage = () => {
     <div className="min-h-screen flex flex-col">
       <SEOHead
         pageKey="route_detail"
+        title={`Spoedkoerier ${nlPlaats} naar ${buitenlandStad} | Koerier naar ${buitenlandStad} (${landNaam})`}
+        description={`Spoedkoerier van ${nlPlaats} naar ${buitenlandStad} (${landNaam}). Direct, 24/7, één chauffeur. Vraag nu uw koerier naar ${buitenlandStad} aan.`}
         landNaam={landNaam}
         variables={{ nl_plaats: nlPlaats, buitenland_stad: buitenlandStad, land: landNaam, afstand: Math.round(km) }}
         jsonLd={ldArr}
@@ -156,13 +158,17 @@ const RouteDetailPage = () => {
             </div>
 
             <h1 className="font-display text-3xl md:text-4xl font-bold">
-              Koerier van {nlPlaats} naar {buitenlandStad}
+              Spoedkoerier {nlPlaats} naar {buitenlandStad}
             </h1>
-            <p className="mt-4 text-primary-foreground/80 max-w-2xl">
+            <p className="mt-2 text-primary-foreground/90 font-semibold">
+              Koerier naar {buitenlandStad} – {landNaam}
+            </p>
+            <p className="mt-3 text-primary-foreground/80 max-w-2xl">
               Spoedkoerier van {nlPlaats} naar {buitenlandStad} ({landNaam}). Eén chauffeur, één auto, rechtstreeks naar het afleveradres.
             </p>
           </div>
         </section>
+
 
         {/* Route Info */}
         <section className="py-12">
