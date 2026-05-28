@@ -119,6 +119,47 @@ export function QuoteForm({
 
       if (error) throw error;
 
+      // Verstuur notificatie + bevestiging via SMTP (mag niet blokkeren bij fout)
+      supabase.functions
+        .invoke('send-smtp-email', {
+          body: {
+            type: 'offerte',
+            data: {
+              contact_naam: data.contact_naam,
+              contact_email: data.contact_email,
+              contact_telefoon: data.contact_telefoon,
+              ophaal_adres: data.ophaal_adres,
+              ophaal_postcode: data.ophaal_postcode,
+              ophaal_plaats: data.ophaal_plaats,
+              aflever_adres: data.aflever_adres,
+              aflever_postcode: data.aflever_postcode,
+              aflever_plaats: data.aflever_plaats,
+              datum: data.datum,
+              omschrijving: data.omschrijving,
+              afstand_km: afstandKm ? Math.round(afstandKm) : undefined,
+              urgentie: urgentieLabel,
+              opmerkingen,
+            },
+          },
+        })
+        .catch((e) => console.error('SMTP send failed:', e));
+
+        ophaal_postcode: data.ophaal_postcode || null,
+        ophaal_plaats: data.ophaal_plaats,
+        aflever_adres: data.aflever_adres,
+        aflever_postcode: data.aflever_postcode || null,
+        aflever_plaats: data.aflever_plaats,
+        datum: data.datum || null,
+        omschrijving: data.omschrijving || null,
+        contact_naam: data.contact_naam,
+        contact_email: data.contact_email,
+        contact_telefoon: data.contact_telefoon || null,
+        afstand_km: afstandKm || null,
+        opmerkingen,
+      });
+
+      if (error) throw error;
+
       setIsSubmitted(true);
       toast({
         title: 'Aanvraag verzonden!',
