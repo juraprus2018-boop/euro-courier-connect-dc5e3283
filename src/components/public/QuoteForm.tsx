@@ -51,6 +51,8 @@ export function QuoteForm({
 }: QuoteFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [statusToken, setStatusToken] = useState<string | null>(null);
+
   const { toast } = useToast();
   const { land, isHoofdsite } = useLand();
 
