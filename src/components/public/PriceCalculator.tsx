@@ -7,6 +7,7 @@ import { Loader2, MapPin, Navigation, Euro, Truck, ArrowRight, Clock } from 'luc
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { SmartCTA } from './SmartCTA';
+import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
 
 const RouteMap = lazy(() => import('./RouteMap'));
 

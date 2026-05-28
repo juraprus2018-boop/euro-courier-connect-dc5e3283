@@ -203,7 +203,7 @@ export function SmartCTA({
         </span>
         {prijsVanaf != null && prijsVanaf > 0 && (
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-card border border-border">
-            Vanaf € {Math.round(prijsVanaf).toLocaleString('nl-NL')} excl. BTW
+            Indicatie {formatPrijsRange(prijsVanaf)} excl. BTW
           </span>
         )}
       </div>
