@@ -282,8 +282,12 @@ export type Database = {
       landen: {
         Row: {
           actief: boolean
+          adres: string | null
+          bedrijf_naam: string | null
+          btw: string | null
           created_at: string
           domein: string | null
+          email: string | null
           faq: Json | null
           hero_afbeelding_url: string | null
           hero_subtitel: string | null
@@ -291,9 +295,13 @@ export type Database = {
           id: string
           iso_code: string | null
           km_tarief: number
+          kvk: string | null
           meta_description: string | null
           meta_title: string | null
           naam: string
+          openingstijden: string | null
+          plaats: string | null
+          postcode: string | null
           primary_color: string | null
           secondary_color: string | null
           slug: string
@@ -303,12 +311,17 @@ export type Database = {
           sync_routes_progress: number | null
           sync_routes_status: string | null
           sync_routes_total: number | null
+          telefoon: string | null
           updated_at: string
         }
         Insert: {
           actief?: boolean
+          adres?: string | null
+          bedrijf_naam?: string | null
+          btw?: string | null
           created_at?: string
           domein?: string | null
+          email?: string | null
           faq?: Json | null
           hero_afbeelding_url?: string | null
           hero_subtitel?: string | null
@@ -316,9 +329,13 @@ export type Database = {
           id?: string
           iso_code?: string | null
           km_tarief?: number
+          kvk?: string | null
           meta_description?: string | null
           meta_title?: string | null
           naam: string
+          openingstijden?: string | null
+          plaats?: string | null
+          postcode?: string | null
           primary_color?: string | null
           secondary_color?: string | null
           slug: string
@@ -328,12 +345,17 @@ export type Database = {
           sync_routes_progress?: number | null
           sync_routes_status?: string | null
           sync_routes_total?: number | null
+          telefoon?: string | null
           updated_at?: string
         }
         Update: {
           actief?: boolean
+          adres?: string | null
+          bedrijf_naam?: string | null
+          btw?: string | null
           created_at?: string
           domein?: string | null
+          email?: string | null
           faq?: Json | null
           hero_afbeelding_url?: string | null
           hero_subtitel?: string | null
@@ -341,9 +363,13 @@ export type Database = {
           id?: string
           iso_code?: string | null
           km_tarief?: number
+          kvk?: string | null
           meta_description?: string | null
           meta_title?: string | null
           naam?: string
+          openingstijden?: string | null
+          plaats?: string | null
+          postcode?: string | null
           primary_color?: string | null
           secondary_color?: string | null
           slug?: string
@@ -353,6 +379,7 @@ export type Database = {
           sync_routes_progress?: number | null
           sync_routes_status?: string | null
           sync_routes_total?: number | null
+          telefoon?: string | null
           updated_at?: string
         }
         Relationships: []
