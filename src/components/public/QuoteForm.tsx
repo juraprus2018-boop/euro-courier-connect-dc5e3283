@@ -125,6 +125,8 @@ export function QuoteForm({
           body: {
             type: 'offerte',
             data: {
+              land_id: landId,
+              host: typeof window !== 'undefined' ? window.location.host : undefined,
               contact_naam: data.contact_naam,
               contact_email: data.contact_email,
               contact_telefoon: data.contact_telefoon,

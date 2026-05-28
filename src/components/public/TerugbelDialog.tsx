@@ -55,6 +55,7 @@ export function TerugbelDialog({ open, onOpenChange }: TerugbelDialogProps) {
         body: {
           type: 'terugbel',
           data: {
+            host: typeof window !== 'undefined' ? window.location.host : undefined,
             naam: parsed.data.naam,
             telefoon: parsed.data.telefoon,
             tijdslot: parsed.data.tijdslot,
