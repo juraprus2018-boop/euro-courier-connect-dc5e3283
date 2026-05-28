@@ -59,6 +59,15 @@ const AdminLandBranding = () => {
     meta_title: '',
     meta_description: '',
     faq: [] as FAQItem[],
+    bedrijf_naam: '',
+    adres: '',
+    postcode: '',
+    plaats: '',
+    telefoon: '',
+    email: '',
+    kvk: '',
+    btw: '',
+    openingstijden: '',
   });
 
   useEffect(() => {
