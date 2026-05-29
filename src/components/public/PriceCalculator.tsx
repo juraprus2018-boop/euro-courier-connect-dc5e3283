@@ -57,13 +57,16 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
     }
   };
 
-  const getRoute = async (start: Coordinates, end: Coordinates) => {
+  const DEPOT: Coordinates = { lat: 51.4386732, lng: 5.5223595 };
+
+  const getRoute = async (...points: Coordinates[]) => {
     try {
+      const coordsStr = points.map(p => `${p.lng},${p.lat}`).join(';');
       const response = await fetch(
-        `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`
+        `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson`
       );
       const data = await response.json();
-      
+
       if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
         const route = data.routes[0];
         const coords: [number, number][] = route.geometry.coordinates.map(
@@ -105,8 +108,8 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
         return;
       }
       setDestinationCoords(destination);
-
-      const routeData = await getRoute(pickup, destination);
+      // Depot-loop: Eindhoven (depot) -> ophaal -> aflever -> Eindhoven (depot)
+      const routeData = await getRoute(DEPOT, pickup, destination, DEPOT);
       if (!routeData) {
         setError('Kon geen route berekenen. Probeer andere adressen.');
         setLoading(false);
