@@ -220,8 +220,6 @@ const RouteDetailPage = () => {
                 {(() => {
                   const km = Number(route.afstand_km) || 0;
                   const prijsBestelwagen = Math.round(km * kmTarief);
-                  const prijsBestelbus = Math.round(prijsBestelwagen * 1.154);
-                  const prijsBakwagen = Math.round(prijsBestelwagen * 1.308);
                   const fmt = (n: number) => formatPrijsRange(n) ?? 'op aanvraag';
 
                   return (
@@ -241,28 +239,15 @@ const RouteDetailPage = () => {
 
                       <div>
                         <h3 className="font-display text-xl font-bold mb-2">
-                          Prijsindicatie bestelbus: {fmt(prijsBestelbus)} excl. BTW
-                        </h3>
-                        <p className="text-muted-foreground">
-                          Voor een wat grotere zendingen zetten wij een Volkswagen Crafter in. Deze
-                          verlengde en verhoogde bus heeft een laadruimte van 325cm x 170cm x 185cm
-                          (L/B/H) en kan een gewicht van maximaal 1369 kg vervoeren. Verder heeft de
-                          bus een imperiaal die tot en met 6 meter lengte kan vervoeren met een
-                          maximaal gewicht van 150 kg. Voldoet uw zending aan bovenstaande maten en
-                          gewichten, bestel dan nu uw bestelbus van {nlPlaats} naar {buitenlandStad} – {landNaam}.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h3 className="font-display text-xl font-bold mb-2">
-                          Prijsindicatie bakwagen: {fmt(prijsBakwagen)} excl. BTW
+                          Bakwagen met laadklep: prijs op aanvraag
                         </h3>
                         <p className="text-muted-foreground">
                           Voor het transport van groter formaat, zetten wij een bakwagen in. Deze
                           bakwagen met laadklep kan maximaal 8 europallets vervoeren waarbij het
                           gewicht maximaal 870 kg mag zijn. De laadruimte is 440cm x 215cm x 208cm
-                          (L/B/H). Voldoet uw zending aan bovenstaande maten en gewichten, bestel
-                          dan nu uw bakwagen van {nlPlaats} naar {buitenlandStad} – {landNaam}.
+                          (L/B/H). Door beperkte beschikbaarheid (tachograaf-plicht) ontvangt u
+                          voor een bakwagen van {nlPlaats} naar {buitenlandStad} – {landNaam} een
+                          prijs op maat. Vraag een offerte aan of bel ons direct.
                         </p>
                       </div>
 
@@ -273,6 +258,7 @@ const RouteDetailPage = () => {
                     </div>
                   );
                 })()}
+
 
                 <div>
                   <h3 className="font-display text-xl font-bold mb-2">
