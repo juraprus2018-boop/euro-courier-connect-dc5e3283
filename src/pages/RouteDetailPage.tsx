@@ -47,12 +47,13 @@ const RouteDetailPage = () => {
             buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam, slug))
           `)
           .eq('slug', slug)
-          .maybeSingle(),
         supabase
           .from('instellingen')
           .select('waarde')
-          .eq('sleutel', 'km_tarief')
+          .eq('sleutel', 'km_tarief_bestelwagen')
           .maybeSingle(),
+      ]);
+
       ]);
 
       if (error) {
