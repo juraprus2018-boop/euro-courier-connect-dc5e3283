@@ -77,6 +77,8 @@ export function QuoteForm({
   const { user } = useAuth();
   const [adresboek, setAdresboek] = useState<KlantAdres[]>([]);
 
+  const [autofilled, setAutofilled] = useState(false);
+
   useEffect(() => {
     if (!user) {
       setAdresboek([]);
@@ -103,6 +105,7 @@ export function QuoteForm({
     setValue(`${soort}_postcode` as any, a.postcode || '', { shouldValidate: true });
     setValue(`${soort}_plaats` as any, a.plaats, { shouldValidate: true });
   };
+
 
 
   const {
