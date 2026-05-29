@@ -304,10 +304,15 @@ const AdminAanvragen = () => {
                         </Select>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="icon" onClick={() => setSelectedAanvraag(aanvraag)}>
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="icon" onClick={() => setSelectedAanvraag(aanvraag)} title="Bekijken & notitie">
                             <Eye className="h-4 w-4" />
                           </Button>
+                          {(notitieCounts[aanvraag.id] || 0) > 0 && (
+                            <span className="inline-flex items-center gap-1 text-xs text-muted-foreground" title="Aantal notities">
+                              <StickyNote className="h-3 w-3" />{notitieCounts[aanvraag.id]}
+                            </span>
+                          )}
                           <Button variant="ghost" size="icon" onClick={() => handleDelete(aanvraag.id)}>
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
