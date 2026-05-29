@@ -28,7 +28,8 @@ const RouteDetailPage = () => {
   const landSlug = landPrefix?.startsWith('spoed-koerier-') ? landPrefix.slice('spoed-koerier-'.length) : undefined;
   const { land, loading: landLoading } = useLand();
   const [route, setRoute] = useState<RouteDetail | null>(null);
-  const [kmTarief, setKmTarief] = useState<number>(0.85);
+  const [kmTarief, setKmTarief] = useState<number>(0.7);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,9 +51,10 @@ const RouteDetailPage = () => {
         supabase
           .from('instellingen')
           .select('waarde')
-          .eq('sleutel', 'km_tarief')
+          .eq('sleutel', 'km_tarief_bestelwagen')
           .maybeSingle(),
       ]);
+
 
       if (error) {
         console.error('Error fetching route:', error);
@@ -218,8 +220,6 @@ const RouteDetailPage = () => {
                 {(() => {
                   const km = Number(route.afstand_km) || 0;
                   const prijsBestelwagen = Math.round(km * kmTarief);
-                  const prijsBestelbus = Math.round(prijsBestelwagen * 1.154);
-                  const prijsBakwagen = Math.round(prijsBestelwagen * 1.308);
                   const fmt = (n: number) => formatPrijsRange(n) ?? 'op aanvraag';
 
                   return (
@@ -239,28 +239,15 @@ const RouteDetailPage = () => {
 
                       <div>
                         <h3 className="font-display text-xl font-bold mb-2">
-                          Prijsindicatie bestelbus: {fmt(prijsBestelbus)} excl. BTW
-                        </h3>
-                        <p className="text-muted-foreground">
-                          Voor een wat grotere zendingen zetten wij een Volkswagen Crafter in. Deze
-                          verlengde en verhoogde bus heeft een laadruimte van 325cm x 170cm x 185cm
-                          (L/B/H) en kan een gewicht van maximaal 1369 kg vervoeren. Verder heeft de
-                          bus een imperiaal die tot en met 6 meter lengte kan vervoeren met een
-                          maximaal gewicht van 150 kg. Voldoet uw zending aan bovenstaande maten en
-                          gewichten, bestel dan nu uw bestelbus van {nlPlaats} naar {buitenlandStad} – {landNaam}.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h3 className="font-display text-xl font-bold mb-2">
-                          Prijsindicatie bakwagen: {fmt(prijsBakwagen)} excl. BTW
+                          Bakwagen met laadklep: prijs op aanvraag
                         </h3>
                         <p className="text-muted-foreground">
                           Voor het transport van groter formaat, zetten wij een bakwagen in. Deze
                           bakwagen met laadklep kan maximaal 8 europallets vervoeren waarbij het
                           gewicht maximaal 870 kg mag zijn. De laadruimte is 440cm x 215cm x 208cm
-                          (L/B/H). Voldoet uw zending aan bovenstaande maten en gewichten, bestel
-                          dan nu uw bakwagen van {nlPlaats} naar {buitenlandStad} – {landNaam}.
+                          (L/B/H). Door beperkte beschikbaarheid (tachograaf-plicht) ontvangt u
+                          voor een bakwagen van {nlPlaats} naar {buitenlandStad} – {landNaam} een
+                          prijs op maat. Vraag een offerte aan of bel ons direct.
                         </p>
                       </div>
 
@@ -271,6 +258,7 @@ const RouteDetailPage = () => {
                     </div>
                   );
                 })()}
+
 
                 <div>
                   <h3 className="font-display text-xl font-bold mb-2">
@@ -298,12 +286,12 @@ const RouteDetailPage = () => {
                   <h3 className="font-display text-xl font-bold mb-2">Koeriersdiensten</h3>
                   <p className="text-muted-foreground">
                     Wij bieden verschillende koeriersdiensten van {nlPlaats} naar {buitenlandStad}.
-                    Een belangrijk document in een bestelwagen, lange rollen of maximaal 4 pallets
-                    in onze bestelbussen en 8 pallets in onze bakwagens met laadklep. Al onze
-                    koeriersdiensten zijn dedicated en direct vervoer. Dit wil zeggen dat wij alleen
-                    met uw zending direct van A naar B rijden zonder dat er zendingen van andere
-                    klanten in de wagens aanwezig zijn.
+                    Een belangrijk document of pallet in onze bestelwagens en tot 8 pallets in onze
+                    bakwagens met laadklep. Al onze koeriersdiensten zijn dedicated en direct
+                    vervoer. Dit wil zeggen dat wij alleen met uw zending direct van A naar B
+                    rijden zonder dat er zendingen van andere klanten in de wagens aanwezig zijn.
                   </p>
+
                 </div>
 
                 <div>

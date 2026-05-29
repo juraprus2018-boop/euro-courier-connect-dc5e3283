@@ -4,8 +4,8 @@ import { CONTACT } from '@/lib/contact';
 import { useLand } from '@/hooks/useLand';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
 import citan from '@/assets/citan.png';
-import bestelbus from '@/assets/bestelbus.webp';
 import bakwagen from '@/assets/bakwagen.webp';
+
 
 function buildTelHref(num: string) {
   const digits = num.replace(/[^0-9+]/g, '');
@@ -38,10 +38,9 @@ export function Footer() {
       <div className="container py-12">
         <div className="pb-10 mb-10 border-b border-border">
           <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {[
               { src: citan, alt: `Bestelwagen van ${bedrijf}`, label: 'Bestelwagen' },
-              { src: bestelbus, alt: `Bestelbus XL van ${bedrijf}`, label: 'Bestelbus (XL)' },
               { src: bakwagen, alt: `Bakwagen met laadklep van ${bedrijf}`, label: 'Bakwagen met laadklep' },
             ].map((v) => (
               <Link key={v.label} to="/laadcapaciteit" className="group block text-center">
@@ -53,6 +52,7 @@ export function Footer() {
             ))}
           </div>
         </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Kolom 1: Logo + adres + contact */}

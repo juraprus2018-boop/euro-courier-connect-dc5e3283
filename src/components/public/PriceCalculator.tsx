@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, MapPin, Navigation, Euro, Truck, ArrowRight, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Loader2, MapPin, Navigation, Euro, Truck, Clock, Phone } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { SmartCTA } from './SmartCTA';
 import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
+import { useTarieven } from '@/hooks/useTarieven';
+import { CONTACT } from '@/lib/contact';
 
 const RouteMap = lazy(() => import('./RouteMap'));
 
@@ -18,11 +19,15 @@ interface Coordinates {
 
 interface PriceCalculatorProps {
   landNaam?: string;
+  /** Behouden voor backwards compatibility — wordt genegeerd, tarief komt nu uit instellingen. */
   kmTarief?: number;
   restrictToCountry?: string;
 }
 
-export function PriceCalculator({ landNaam, kmTarief = 0.85, restrictToCountry }: PriceCalculatorProps) {
+export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculatorProps) {
+  const { tarieven } = useTarieven();
+  const kmTarief = tarieven.bestelwagen;
+
   const [pickupAddress, setPickupAddress] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [pickupCoords, setPickupCoords] = useState<Coordinates | null>(null);
@@ -226,8 +231,8 @@ export function PriceCalculator({ landNaam, kmTarief = 0.85, restrictToCountry }
               {distance && calculatedPrice && (
                 <div className="pt-6 border-t space-y-4">
                   <h3 className="font-display font-bold text-lg">Resultaat</h3>
-                  
-                  <div className="grid grid-cols-3 gap-4">
+
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-4 rounded-xl bg-muted">
                       <MapPin className="h-5 w-5 mx-auto text-primary mb-2" />
                       <div className="text-2xl font-bold">{Math.round(distance)} km</div>
@@ -238,18 +243,38 @@ export function PriceCalculator({ landNaam, kmTarief = 0.85, restrictToCountry }
                       <div className="text-2xl font-bold">{formattedDuration}</div>
                       <div className="text-xs text-muted-foreground">Rijtijd</div>
                     </div>
-                    <div className="text-center p-4 rounded-xl bg-accent/10">
-                      <Euro className="h-5 w-5 mx-auto text-accent mb-2" />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="p-4 rounded-xl bg-accent/10 border border-accent/30">
+                      <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                        <Truck className="h-3.5 w-3.5" /> Bestelwagen
+                      </div>
                       <div className="text-lg font-bold text-accent leading-tight">
                         {formatPrijsRange(calculatedPrice) ?? 'Op aanvraag'}
                       </div>
-                      <div className="text-xs text-muted-foreground">Indicatie</div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        Tot 618 kg / 1 pallet — indicatie excl. BTW
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-muted border border-border">
+                      <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                        <Truck className="h-3.5 w-3.5" /> Bakwagen met laadklep
+                      </div>
+                      <div className="text-lg font-bold leading-tight">Prijs op aanvraag</div>
+                      <a
+                        href={`tel:${CONTACT.telefoon.replace(/[^0-9+]/g, '')}`}
+                        className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                      >
+                        <Phone className="h-3 w-3" /> Bel voor maatwerk
+                      </a>
                     </div>
                   </div>
 
                   <p className="text-xs text-muted-foreground">
                     * {PRIJS_DISCLAIMER}
                   </p>
+
 
                   <SmartCTA
                     afstandKm={distance}

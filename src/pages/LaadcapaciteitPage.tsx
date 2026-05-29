@@ -6,9 +6,8 @@ import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { Truck, Package, PackageOpen } from 'lucide-react';
+import { Truck, Package } from 'lucide-react';
 import citan from '@/assets/citan.webp';
-import bestelbus from '@/assets/bestelbus.webp';
 import bakwagen from '@/assets/bakwagen.webp';
 
 const voertuigen = [
@@ -23,16 +22,6 @@ const voertuigen = [
       'Onze bestelwagens hebben een laadvermogen van maximaal 618 kg. Dit maakt ze ideaal voor het vervoeren van kleinere zendingen, zoals enveloppen, pakketten en kleine dozen. De laadruimte is 200 cm lang, 150 cm breed en 115 cm hoog. Hierdoor passen ze in smalle straatjes en komen ze op vrijwel elke locatie. Geschikt voor het vervoer van 1 pallet die niet hoger geladen is dan 115 cm.',
   },
   {
-    icon: PackageOpen,
-    naam: 'Bestelbussen (XL)',
-    afbeelding: bestelbus,
-    laadvermogen: '1.369 kg',
-    afmetingen: '325 × 170 × 180 cm',
-    pallets: '4 Europallets',
-    beschrijving:
-      'Onze bestelbussen hebben een laadvermogen tot 1.369 kg. Dit maakt ze geschikt voor grotere zendingen zoals meubels, apparatuur en machines. De laadruimte is 325 cm lang, 170 cm breed en 180 cm hoog – ruimte voor 4 Europallets en flexibel genoeg om ook op moeilijk bereikbare locaties te komen.',
-  },
-  {
     icon: Truck,
     naam: 'Bakwagens met laadklep',
     afbeelding: bakwagen,
@@ -40,9 +29,10 @@ const voertuigen = [
     afmetingen: '420 × 210 × 220 cm',
     pallets: '8 Europallets',
     beschrijving:
-      'Onze bakwagens met laadklep hebben een laadvermogen tot 870 kg en zijn ideaal voor grote hoeveelheden goederen, zoals 8 Europallets en grote machines. De laadruimte is 420 cm lang, 210 cm breed en 220 cm hoog. De laadklep maakt het laden en lossen eenvoudig.',
+      'Onze bakwagens met laadklep hebben een laadvermogen tot 870 kg en zijn ideaal voor grote hoeveelheden goederen, zoals 8 Europallets en grote machines. De laadruimte is 420 cm lang, 210 cm breed en 220 cm hoog. De laadklep maakt het laden en lossen eenvoudig. Inzet is afhankelijk van beschikbaarheid (tachograafplichtig) en wordt op aanvraag geprijsd.',
   },
 ];
+
 
 const LaadcapaciteitPage = () => (
   <HelmetProvider>
@@ -58,10 +48,10 @@ const LaadcapaciteitPage = () => (
           <div className="max-w-3xl">
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">Laadcapaciteit</h1>
             <p className="text-lg text-muted-foreground">
-              Bij De Europa Koerier beschikken wij over een uitgebreid wagenpark van bestelwagens,
-              bestelbussen en bakwagens met laadklep. Hierdoor vervoeren wij vrijwel elke soort
-              zending – van kleine pakketten tot grote pallets. Hieronder vindt u meer informatie
-              over de laadcapaciteit van onze voertuigen.
+              Bij De Europa Koerier beschikken wij over bestelwagens en bakwagens met laadklep.
+              Hierdoor vervoeren wij vrijwel elke soort zending – van kleine pakketten tot grote
+              pallets. Hieronder vindt u meer informatie over de laadcapaciteit van onze voertuigen.
+
             </p>
           </div>
         </section>

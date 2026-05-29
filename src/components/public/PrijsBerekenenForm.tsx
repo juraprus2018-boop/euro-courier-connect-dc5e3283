@@ -30,7 +30,10 @@ import {
 } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { useLand } from '@/hooks/useLand';
+import { useTarieven } from '@/hooks/useTarieven';
+import { CONTACT } from '@/lib/contact';
 import { AddressAutocomplete } from './AddressAutocomplete';
+
 
 const SOORTEN = [
   'Europallet (120 x 80)',
@@ -118,11 +121,14 @@ export function PrijsBerekenenForm({
   const [calcError, setCalcError] = useState<string | null>(null);
   const { toast } = useToast();
   const { land, isHoofdsite } = useLand();
+  const { tarieven } = useTarieven();
+
 
   const ophaalCountries = 'nl';
   const afleverCountries =
     !isHoofdsite && land?.iso_code ? land.iso_code : undefined;
-  const kmTarief = land?.km_tarief ?? 0.85;
+  const kmTarief = tarieven.bestelwagen;
+
 
   const {
     register,
@@ -546,28 +552,38 @@ export function PrijsBerekenenForm({
             )}
 
             {priceResult && (
-              <div className="rounded-xl border-2 border-primary/20 bg-primary/5 p-5">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase">
-                      Indicatieve prijs
+              <div className="rounded-xl border-2 border-primary/20 bg-primary/5 p-5 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="rounded-lg bg-card p-4 border border-border">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                      Bestelwagen (tot 618 kg / 1 pallet)
                     </p>
                     <p className="text-2xl font-bold text-primary leading-tight">
                       {formatPrijsRange(priceResult.prijs) ?? 'Op aanvraag'}
                     </p>
+                    <p className="text-xs text-muted-foreground mt-1">indicatie excl. BTW</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase">
-                      Verwachte looptijd
+                  <div className="rounded-lg bg-card p-4 border border-border">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                      Bakwagen met laadklep (tot 8 pallets)
                     </p>
-                    <p className="text-3xl font-bold">{priceResult.looptijd}</p>
+                    <p className="text-2xl font-bold leading-tight">Prijs op aanvraag</p>
+                    <a
+                      href={`tel:${CONTACT.telefoon.replace(/[^0-9+]/g, '')}`}
+                      className="mt-1 inline-block text-xs font-semibold text-primary hover:underline"
+                    >
+                      Bel {CONTACT.telefoon} voor maatwerk
+                    </a>
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground mt-3">
-                  {PRIJS_DISCLAIMER}
-                </p>
+                <div className="flex items-center justify-between text-sm border-t pt-3">
+                  <span className="text-muted-foreground">Verwachte looptijd</span>
+                  <span className="font-bold">{priceResult.looptijd}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">{PRIJS_DISCLAIMER}</p>
               </div>
             )}
+
           </div>
 
           <Button

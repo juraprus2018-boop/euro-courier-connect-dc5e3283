@@ -20,10 +20,13 @@ export default function AdminInstellingen() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
+    km_tarief_bestelwagen: "",
+    km_tarief_bakwagen: "",
     km_tarief: "",
     depot_latitude: "",
     depot_longitude: "",
   });
+
 
   useEffect(() => {
     fetchInstellingen();
@@ -58,14 +61,26 @@ export default function AdminInstellingen() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      // Update each setting
+      // Upsert each setting (insert if missing, update otherwise)
       for (const [sleutel, waarde] of Object.entries(formData)) {
-        const { error } = await supabase
-          .from("instellingen")
-          .update({ waarde })
-          .eq("sleutel", sleutel);
+        const { data: existing } = await supabase
+          .from('instellingen')
+          .select('id')
+          .eq('sleutel', sleutel)
+          .maybeSingle();
 
-        if (error) throw error;
+        if (existing) {
+          const { error } = await supabase
+            .from('instellingen')
+            .update({ waarde })
+            .eq('sleutel', sleutel);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from('instellingen')
+            .insert({ sleutel, waarde });
+          if (error) throw error;
+        }
       }
 
       toast.success("Instellingen opgeslagen");
@@ -76,6 +91,7 @@ export default function AdminInstellingen() {
       setSaving(false);
     }
   };
+
 
   if (loading) {
     return (
@@ -104,9 +120,39 @@ export default function AdminInstellingen() {
               Stel het kilometer tarief in voor prijsberekeningen
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="km_tarief">Prijs per kilometer (€)</Label>
+              <Label htmlFor="km_tarief_bestelwagen">Bestelwagen — prijs per km (€)</Label>
+              <Input
+                id="km_tarief_bestelwagen"
+                type="number"
+                step="0.01"
+                min="0"
+                value={formData.km_tarief_bestelwagen}
+                onChange={(e) => setFormData({ ...formData, km_tarief_bestelwagen: e.target.value })}
+                placeholder="0.70"
+              />
+              <p className="text-sm text-muted-foreground">
+                Gebruikt voor zichtbare prijsindicatie in de prijscalculator en op routepagina's.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="km_tarief_bakwagen">Bakwagen — prijs per km (€)</Label>
+              <Input
+                id="km_tarief_bakwagen"
+                type="number"
+                step="0.01"
+                min="0"
+                value={formData.km_tarief_bakwagen}
+                onChange={(e) => setFormData({ ...formData, km_tarief_bakwagen: e.target.value })}
+                placeholder="1.10"
+              />
+              <p className="text-sm text-muted-foreground">
+                Wordt intern gebruikt; op de website tonen we voor bakwagen "prijs op aanvraag".
+              </p>
+            </div>
+            <div className="space-y-2 pt-2 border-t">
+              <Label htmlFor="km_tarief">Standaard km-tarief (fallback) (€)</Label>
               <Input
                 id="km_tarief"
                 type="number"
@@ -114,10 +160,10 @@ export default function AdminInstellingen() {
                 min="0"
                 value={formData.km_tarief}
                 onChange={(e) => setFormData({ ...formData, km_tarief: e.target.value })}
-                placeholder="0.50"
+                placeholder="0.70"
               />
               <p className="text-sm text-muted-foreground">
-                Dit tarief wordt gebruikt voor alle routeprijsberekeningen
+                Fallback wanneer geen voertuigtarief beschikbaar is.
               </p>
             </div>
           </CardContent>
@@ -134,6 +180,7 @@ export default function AdminInstellingen() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="depot_latitude">Breedtegraad (Latitude)</Label>
