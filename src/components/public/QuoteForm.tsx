@@ -313,6 +313,12 @@ export function QuoteForm({
             <span className="text-xs text-muted-foreground ml-auto">Vooraf ingevuld — vul aan en verstuur</span>
           </div>
         )}
+        {user && autofilled && (
+          <div className="mb-4 rounded-lg border border-success/40 bg-success/5 p-3 text-sm flex items-center gap-2">
+            <BookUser className="h-4 w-4 text-success" />
+            <span>Velden automatisch ingevuld vanuit uw account en adresboek — controleer en pas eventueel aan.</span>
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
