@@ -74,12 +74,36 @@ export function QuoteForm({
 
   const { toast } = useToast();
   const { land, isHoofdsite } = useLand();
+  const { user } = useAuth();
+  const [adresboek, setAdresboek] = useState<KlantAdres[]>([]);
+
+  useEffect(() => {
+    if (!user) {
+      setAdresboek([]);
+      return;
+    }
+    supabase
+      .from('klant_adressen')
+      .select('id,label,type,adres,postcode,plaats,land')
+      .order('label', { ascending: true })
+      .then(({ data }) => setAdresboek((data as KlantAdres[]) || []));
+  }, [user]);
 
   const ophaalCountries = 'nl';
   const afleverCountries = !isHoofdsite && land?.iso_code ? land.iso_code : undefined;
   const afleverPlaceholder = afleverCountries
     ? `Adres in ${land?.naam}`
     : 'Begin met typen...';
+
+  const ophaalOpties = adresboek.filter((a) => a.type === 'ophaal' || a.type === 'beide');
+  const afleverOpties = adresboek.filter((a) => a.type === 'aflever' || a.type === 'beide');
+
+  const kiesAdres = (a: KlantAdres, soort: 'ophaal' | 'aflever') => {
+    setValue(`${soort}_adres` as any, a.adres, { shouldValidate: true });
+    setValue(`${soort}_postcode` as any, a.postcode || '', { shouldValidate: true });
+    setValue(`${soort}_plaats` as any, a.plaats, { shouldValidate: true });
+  };
+
 
   const {
     register,
