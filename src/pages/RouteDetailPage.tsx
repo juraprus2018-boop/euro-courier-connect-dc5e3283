@@ -286,12 +286,12 @@ const RouteDetailPage = () => {
                   <h3 className="font-display text-xl font-bold mb-2">Koeriersdiensten</h3>
                   <p className="text-muted-foreground">
                     Wij bieden verschillende koeriersdiensten van {nlPlaats} naar {buitenlandStad}.
-                    Een belangrijk document in een bestelwagen, lange rollen of maximaal 4 pallets
-                    in onze bestelbussen en 8 pallets in onze bakwagens met laadklep. Al onze
-                    koeriersdiensten zijn dedicated en direct vervoer. Dit wil zeggen dat wij alleen
-                    met uw zending direct van A naar B rijden zonder dat er zendingen van andere
-                    klanten in de wagens aanwezig zijn.
+                    Een belangrijk document of pallet in onze bestelwagens en tot 8 pallets in onze
+                    bakwagens met laadklep. Al onze koeriersdiensten zijn dedicated en direct
+                    vervoer. Dit wil zeggen dat wij alleen met uw zending direct van A naar B
+                    rijden zonder dat er zendingen van andere klanten in de wagens aanwezig zijn.
                   </p>
+
                 </div>
 
                 <div>
