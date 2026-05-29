@@ -47,6 +47,7 @@ const RouteDetailPage = () => {
             buitenland_stad:buitenland_steden(id, naam, land:landen(id, naam, slug))
           `)
           .eq('slug', slug)
+          .maybeSingle(),
         supabase
           .from('instellingen')
           .select('waarde')
@@ -54,7 +55,6 @@ const RouteDetailPage = () => {
           .maybeSingle(),
       ]);
 
-      ]);
 
       if (error) {
         console.error('Error fetching route:', error);
