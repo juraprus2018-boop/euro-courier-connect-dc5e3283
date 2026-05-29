@@ -267,7 +267,31 @@ export function QuoteForm({
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="ophaal_adres">Ophaaladres in Nederland *</Label>
+              <div className="flex items-center justify-between gap-2">
+                <Label htmlFor="ophaal_adres">Ophaaladres in Nederland *</Label>
+                {user && ophaalOpties.length > 0 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button type="button" variant="outline" size="sm" className="h-7 px-2 text-xs">
+                        <BookUser className="h-3.5 w-3.5 mr-1" /> Adresboek
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-72 bg-popover">
+                      <DropdownMenuLabel>Kies opgeslagen ophaaladres</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {ophaalOpties.map((a) => (
+                        <DropdownMenuItem key={a.id} onSelect={() => kiesAdres(a, 'ophaal')}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{a.label}</span>
+                            <span className="text-xs text-muted-foreground">{a.adres}, {a.plaats}</span>
+                          </div>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              </div>
+
               <AddressAutocomplete
                 id="ophaal_adres"
                 value={ophaalAdres || ''}
