@@ -108,10 +108,13 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
         return;
       }
       setDestinationCoords(destination);
-
-      const routeData = await getRoute(pickup, destination);
+      // Depot-loop: Eindhoven (depot) -> ophaal -> aflever -> Eindhoven (depot)
+      const routeData = await getRoute(DEPOT, pickup, destination, DEPOT);
       if (!routeData) {
         setError('Kon geen route berekenen. Probeer andere adressen.');
+        setLoading(false);
+        return;
+      }
         setLoading(false);
         return;
       }
