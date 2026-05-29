@@ -65,11 +65,23 @@ interface Aanvraag {
   transport_type: string | null;
 }
 
+interface Notitie {
+  id: string;
+  aanvraag_id: string;
+  notitie: string;
+  status_bij_notitie: string | null;
+  created_at: string;
+}
+
 const AdminAanvragen = () => {
   const [aanvragen, setAanvragen] = useState<Aanvraag[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAanvraag, setSelectedAanvraag] = useState<Aanvraag | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [notities, setNotities] = useState<Notitie[]>([]);
+  const [notitieCounts, setNotitieCounts] = useState<Record<string, number>>({});
+  const [nieuweNotitie, setNieuweNotitie] = useState('');
+  const [notitieLoading, setNotitieLoading] = useState(false);
   const { toast } = useToast();
 
   const normStatus = (s: string) => STATUS_ALIAS[s] || s;
@@ -86,22 +98,82 @@ const AdminAanvragen = () => {
       setAanvragen((data as unknown as Aanvraag[]) || []);
     }
     setLoading(false);
+
+    // Counts for notities
+    const { data: notData } = await supabase.from('aanvraag_notities' as any).select('aanvraag_id');
+    if (notData) {
+      const counts: Record<string, number> = {};
+      (notData as any[]).forEach((n) => { counts[n.aanvraag_id] = (counts[n.aanvraag_id] || 0) + 1; });
+      setNotitieCounts(counts);
+    }
   };
 
   useEffect(() => {
     fetchAanvragen();
   }, []);
 
-  const updateStatus = async (id: string, status: string) => {
+  const fetchNotities = async (aanvraagId: string) => {
+    const { data, error } = await supabase
+      .from('aanvraag_notities' as any)
+      .select('*')
+      .eq('aanvraag_id', aanvraagId)
+      .order('created_at', { ascending: false });
+    if (!error && data) setNotities(data as unknown as Notitie[]);
+  };
+
+  useEffect(() => {
+    if (selectedAanvraag) {
+      fetchNotities(selectedAanvraag.id);
+      setNieuweNotitie('');
+    } else {
+      setNotities([]);
+    }
+  }, [selectedAanvraag?.id]);
+
+  const voegNotitieToe = async () => {
+    if (!selectedAanvraag || !nieuweNotitie.trim()) return;
+    setNotitieLoading(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    const { error } = await supabase.from('aanvraag_notities' as any).insert({
+      aanvraag_id: selectedAanvraag.id,
+      notitie: nieuweNotitie.trim(),
+      status_bij_notitie: normStatus(selectedAanvraag.status),
+      aangemaakt_door: user?.id ?? null,
+    });
+    setNotitieLoading(false);
+    if (error) {
+      toast({ title: 'Fout bij opslaan notitie', description: error.message, variant: 'destructive' });
+    } else {
+      setNieuweNotitie('');
+      fetchNotities(selectedAanvraag.id);
+      setNotitieCounts((c) => ({ ...c, [selectedAanvraag.id]: (c[selectedAanvraag.id] || 0) + 1 }));
+      toast({ title: 'Notitie toegevoegd' });
+    }
+  };
+
+  const verwijderNotitie = async (id: string) => {
+    if (!confirm('Notitie verwijderen?')) return;
+    const { error } = await supabase.from('aanvraag_notities' as any).delete().eq('id', id);
+    if (error) {
+      toast({ title: 'Fout', description: error.message, variant: 'destructive' });
+    } else if (selectedAanvraag) {
+      fetchNotities(selectedAanvraag.id);
+      setNotitieCounts((c) => ({ ...c, [selectedAanvraag.id]: Math.max(0, (c[selectedAanvraag.id] || 1) - 1) }));
+    }
+  };
+
+  const updateStatus = async (id: string, status: string, opts?: { silent?: boolean }) => {
     const { error } = await supabase.from('aanvragen').update({ status }).eq('id', id);
 
     if (error) {
       toast({ title: 'Fout bij bijwerken', variant: 'destructive' });
     } else {
-      toast({ title: 'Status bijgewerkt' });
+      if (!opts?.silent) toast({ title: 'Status bijgewerkt' });
       fetchAanvragen();
     }
   };
+
+
 
   const handleDelete = async (id: string) => {
     if (!confirm('Weet u zeker dat u deze aanvraag wilt verwijderen?')) return;
