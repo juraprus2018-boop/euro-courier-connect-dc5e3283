@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      aanvraag_notities: {
+        Row: {
+          aangemaakt_door: string | null
+          aanvraag_id: string
+          created_at: string
+          id: string
+          notitie: string
+          status_bij_notitie: string | null
+        }
+        Insert: {
+          aangemaakt_door?: string | null
+          aanvraag_id: string
+          created_at?: string
+          id?: string
+          notitie: string
+          status_bij_notitie?: string | null
+        }
+        Update: {
+          aangemaakt_door?: string | null
+          aanvraag_id?: string
+          created_at?: string
+          id?: string
+          notitie?: string
+          status_bij_notitie?: string | null
+        }
+        Relationships: []
+      }
       aanvragen: {
         Row: {
           aflever_adres: string
