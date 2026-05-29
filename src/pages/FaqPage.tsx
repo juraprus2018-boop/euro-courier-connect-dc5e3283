@@ -19,7 +19,8 @@ const faq = [
   {
     vraag: 'Wat voor soort voertuigen gebruikt De Europa Koerier?',
     antwoord:
-      'Bij De Europa Koerier beschikken wij over een breed scala aan voertuigen, van bestelwagens voor kleine zendingen tot bakwagens met laadklep voor grotere zendingen. Onze bestelwagens, bestelbussen en bakwagens met laadklep staan dag en nacht 7 dagen per week tot uw beschikking. Al onze voertuigen zijn goed onderhouden en uitgerust met GPS tracking, zodat we uw zendingen op de voet kunnen volgen.',
+      'Bij De Europa Koerier beschikken wij over bestelwagens voor kleine zendingen en bakwagens met laadklep voor grotere zendingen. Onze voertuigen staan dag en nacht 7 dagen per week tot uw beschikking en zijn uitgerust met GPS tracking, zodat we uw zendingen op de voet kunnen volgen.',
+
   },
   {
     vraag: 'Hoe kan ik een zending boeken bij De Europa Koerier?',
