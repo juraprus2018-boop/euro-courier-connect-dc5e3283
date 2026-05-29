@@ -330,7 +330,7 @@ const AdminAanvragen = () => {
                 </TableBody>
               </Table>
             )}
-          </CardContent>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         </Card>
       </div>
 
