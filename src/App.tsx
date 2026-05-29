@@ -17,6 +17,7 @@ import AccountDashboard from "./pages/account/AccountDashboard";
 
 
 import PrijsBerekenenPage from "./pages/PrijsBerekenenPage";
+import PrijsIndicatiePage from "./pages/PrijsIndicatiePage";
 import ContactPage from "./pages/ContactPage";
 import FaqPage from "./pages/FaqPage";
 import AlgemeneVoorwaardenPage from "./pages/AlgemeneVoorwaardenPage";
@@ -69,7 +70,8 @@ const App = () => (
           <Route path="/account" element={<AccountDashboard />} />
 
 
-          <Route path="/prijs-berekenen" element={<PrijsBerekenenPage />} />
+          <Route path="/prijs-berekenen" element={<PrijsIndicatiePage />} />
+          <Route path="/offerte-aanvragen" element={<PrijsBerekenenPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaardenPage />} />
