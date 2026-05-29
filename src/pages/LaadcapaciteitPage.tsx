@@ -36,12 +36,11 @@ const voertuigen = [
 
 const LaadcapaciteitPage = () => (
   <HelmetProvider>
-            <p className="text-lg text-muted-foreground">
-              Bij De Europa Koerier beschikken wij over bestelwagens en bakwagens met laadklep.
-              Hierdoor vervoeren wij vrijwel elke soort zending – van kleine pakketten tot grote
-              pallets. Hieronder vindt u meer informatie over de laadcapaciteit van onze voertuigen.
-            </p>
-
+    <SEOHead pageKey="laadcapaciteit" />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <div className="container py-8">
           <PageBreadcrumb items={[{ label: 'Laadcapaciteit' }]} />
         </div>
 
@@ -49,10 +48,10 @@ const LaadcapaciteitPage = () => (
           <div className="max-w-3xl">
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">Laadcapaciteit</h1>
             <p className="text-lg text-muted-foreground">
-              Bij De Europa Koerier beschikken wij over een uitgebreid wagenpark van bestelwagens,
-              bestelbussen en bakwagens met laadklep. Hierdoor vervoeren wij vrijwel elke soort
-              zending – van kleine pakketten tot grote pallets. Hieronder vindt u meer informatie
-              over de laadcapaciteit van onze voertuigen.
+              Bij De Europa Koerier beschikken wij over bestelwagens en bakwagens met laadklep.
+              Hierdoor vervoeren wij vrijwel elke soort zending – van kleine pakketten tot grote
+              pallets. Hieronder vindt u meer informatie over de laadcapaciteit van onze voertuigen.
+
             </p>
           </div>
         </section>
