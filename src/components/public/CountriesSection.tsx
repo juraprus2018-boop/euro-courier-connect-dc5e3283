@@ -50,17 +50,18 @@ export function CountriesSection() {
               className="group relative overflow-hidden rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
             >
               <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 text-3xl leading-none">
-                    <span aria-hidden>{isoToFlag(land.iso_code)}</span>
-                  </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
-              <div className="p-6">
                 <div className="flex items-center justify-end mb-4">
                   <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
                 </div>
-
+                <h3 className="font-display text-xl font-bold flex items-center gap-2">
+                  <span aria-hidden className="text-2xl leading-none">{isoToFlag(land.iso_code)}</span>
+                  {land.naam}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Bekijk routes en prijzen
+                </p>
               </div>
+
               <div className="h-1 w-full bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </a>
           ))}
