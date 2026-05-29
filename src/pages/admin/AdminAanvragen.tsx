@@ -363,6 +363,51 @@ const AdminAanvragen = () => {
                   </Select>
                 </div>
               </div>
+
+              <div className="rounded-lg border p-4">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3 flex items-center gap-2">
+                  <StickyNote className="h-4 w-4" /> Statusnotities ({notities.length})
+                </h4>
+                <div className="space-y-2 mb-3">
+                  <Textarea
+                    placeholder="Voeg een interne notitie toe (bijv. 'Klant gebeld, wachten op bevestiging')..."
+                    value={nieuweNotitie}
+                    onChange={(e) => setNieuweNotitie(e.target.value)}
+                    rows={2}
+                  />
+                  <div className="flex justify-end">
+                    <Button size="sm" onClick={voegNotitieToe} disabled={notitieLoading || !nieuweNotitie.trim()}>
+                      {notitieLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Send className="h-4 w-4 mr-2" />}
+                      Notitie opslaan
+                    </Button>
+                  </div>
+                </div>
+                {notities.length > 0 ? (
+                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                    {notities.map((n) => (
+                      <div key={n.id} className="rounded border bg-muted/30 p-3 text-sm">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span>{formatDistanceToNow(new Date(n.created_at), { addSuffix: true, locale: nl })}</span>
+                            {n.status_bij_notitie && (
+                              <span className={`px-1.5 py-0.5 rounded ${STATUS_MAP[n.status_bij_notitie]?.color || 'bg-muted'}`}>
+                                {STATUS_MAP[n.status_bij_notitie]?.label || n.status_bij_notitie}
+                              </span>
+                            )}
+                          </div>
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => verwijderNotitie(n.id)}>
+                            <Trash className="h-3 w-3 text-destructive" />
+                          </Button>
+                        </div>
+                        <p className="whitespace-pre-wrap">{n.notitie}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Nog geen notities.</p>
+                )}
+              </div>
+
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-sm text-muted-foreground mb-2">Ophaaladres</h4>
