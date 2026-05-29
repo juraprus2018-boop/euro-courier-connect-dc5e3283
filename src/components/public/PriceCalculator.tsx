@@ -264,7 +264,12 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                       <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground mb-1">
                         <Truck className="h-3.5 w-3.5" /> Bakwagen met laadklep
                       </div>
-                      <div className="text-lg font-bold leading-tight">Prijs op aanvraag</div>
+                      <div className="text-lg font-bold leading-tight">
+                        {formatPrijsRange(Math.round(distance * tarieven.bakwagen)) ?? 'Op aanvraag'}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        Tot ~2.500 kg / meerdere pallets — indicatie excl. BTW
+                      </div>
                       <a
                         href={`tel:${CONTACT.telefoon.replace(/[^0-9+]/g, '')}`}
                         className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
@@ -273,6 +278,7 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                       </a>
                     </div>
                   </div>
+
 
                   <p className="text-xs text-muted-foreground">
                     * {PRIJS_DISCLAIMER}
