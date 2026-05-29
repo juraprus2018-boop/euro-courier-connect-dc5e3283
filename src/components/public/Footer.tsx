@@ -27,8 +27,6 @@ export function Footer() {
   const email = (!isHoofdsite && land?.email) || CONTACT.email;
   const kvk = (!isHoofdsite && land?.kvk) || CONTACT.kvk;
   const btw = (!isHoofdsite && land?.btw) || CONTACT.btw;
-  const kvk = (!isHoofdsite && land?.kvk) || CONTACT.kvk;
-  const btw = (!isHoofdsite && land?.btw) || CONTACT.btw;
 
   const telHref = buildTelHref(telefoon);
   const emailHref = `mailto:${email}`;
