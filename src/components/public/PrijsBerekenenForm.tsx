@@ -119,7 +119,10 @@ export function PrijsBerekenenForm({
   const [calculating, setCalculating] = useState(false);
   const [priceResult, setPriceResult] = useState<PriceResult | null>(null);
   const [calcError, setCalcError] = useState<string | null>(null);
+  const { toast } = useToast();
+  const { land, isHoofdsite } = useLand();
   const { tarieven } = useTarieven();
+
 
   const ophaalCountries = 'nl';
   const afleverCountries =
