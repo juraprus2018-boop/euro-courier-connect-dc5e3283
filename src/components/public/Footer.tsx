@@ -27,8 +27,8 @@ export function Footer() {
   const email = (!isHoofdsite && land?.email) || CONTACT.email;
   const kvk = (!isHoofdsite && land?.kvk) || CONTACT.kvk;
   const btw = (!isHoofdsite && land?.btw) || CONTACT.btw;
-  const openingstijden =
-    (!isHoofdsite && land?.openingstijden) || 'Ma–Vr 08:00–18:00 · Za 09:00–14:00';
+  const kvk = (!isHoofdsite && land?.kvk) || CONTACT.kvk;
+  const btw = (!isHoofdsite && land?.btw) || CONTACT.btw;
 
   const telHref = buildTelHref(telefoon);
   const emailHref = `mailto:${email}`;
