@@ -159,3 +159,14 @@
     line-height: 1.6;
   }
 }
+
+/* Leaflet onder dialogs/overlays houden (shadcn dialog = z-50) */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom,
+.leaflet-control {
+  z-index: 1 !important;
+}
+.leaflet-container {
+  z-index: 0;
+}
