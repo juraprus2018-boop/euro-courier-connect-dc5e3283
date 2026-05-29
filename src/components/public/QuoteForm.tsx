@@ -129,6 +129,52 @@ export function QuoteForm({
   const ophaalAdres = values.ophaal_adres;
   const afleverAdres = values.aflever_adres;
 
+  // Autofill profielgegevens + standaard adresboek bij ingelogde klant
+  useEffect(() => {
+    if (!user || autofilled) return;
+
+    const setIfEmpty = (name: keyof QuoteFormData, val?: string | null) => {
+      if (val && !(values[name] as string | undefined)?.trim()) {
+        setValue(name, val, { shouldValidate: true });
+      }
+    };
+
+    let didFill = false;
+
+    // Profielgegevens
+    supabase
+      .from('klant_profielen')
+      .select('naam,email,telefoon')
+      .eq('user_id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        const profielNaam = data?.naam || (user.user_metadata as any)?.naam || (user.user_metadata as any)?.full_name;
+        const profielEmail = data?.email || user.email;
+        const profielTel = data?.telefoon || (user.user_metadata as any)?.telefoon;
+        if (profielNaam) { setIfEmpty('contact_naam', profielNaam); didFill = true; }
+        if (profielEmail) { setIfEmpty('contact_email', profielEmail); didFill = true; }
+        if (profielTel) { setIfEmpty('contact_telefoon', profielTel); didFill = true; }
+        if (didFill) setAutofilled(true);
+      });
+  }, [user, autofilled]);
+
+  // Autofill ophaal/aflever zodra adresboek geladen is
+  useEffect(() => {
+    if (!user || adresboek.length === 0) return;
+    const standaardOphaal = ophaalOpties[0];
+    const standaardAflever = afleverOpties[0];
+    if (standaardOphaal && !values.ophaal_adres?.trim()) {
+      kiesAdres(standaardOphaal, 'ophaal');
+      setAutofilled(true);
+    }
+    if (standaardAflever && !values.aflever_adres?.trim()) {
+      kiesAdres(standaardAflever, 'aflever');
+      setAutofilled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adresboek, user]);
+
+
   const filled = (name: keyof QuoteFormData, minLen = 1) => {
     const v = values[name];
     return typeof v === 'string' && v.trim().length >= minLen && !errors[name];
