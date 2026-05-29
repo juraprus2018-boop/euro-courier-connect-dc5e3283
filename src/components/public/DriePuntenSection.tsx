@@ -1,4 +1,5 @@
 import { Truck, Wallet, Clock } from 'lucide-react';
+import { useTarieven } from '@/hooks/useTarieven';
 
 interface DriePuntenSectionProps {
   landNaam?: string;
