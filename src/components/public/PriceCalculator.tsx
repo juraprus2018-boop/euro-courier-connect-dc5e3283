@@ -281,9 +281,26 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                   </div>
 
 
+                  <Button asChild size="lg" className="w-full bg-cta text-cta-foreground hover:opacity-90">
+                    <Link
+                      to={`/offerte?${new URLSearchParams({
+                        van: pickupAddress,
+                        naar: destinationAddress,
+                        afstand: String(Math.round(distance)),
+                        ...(duration ? { rijtijd: String(Math.round(duration)) } : {}),
+                        prijs: String(calculatedPrice),
+                        prijs_bakwagen: String(Math.round(distance * tarieven.bakwagen)),
+                      }).toString()}`}
+                    >
+                      <FileText className="mr-2 h-5 w-5" />
+                      Vraag direct offerte aan
+                    </Link>
+                  </Button>
+
                   <p className="text-xs text-muted-foreground">
                     * {PRIJS_DISCLAIMER}
                   </p>
+
 
 
                   <SmartCTA
