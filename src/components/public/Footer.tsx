@@ -27,16 +27,14 @@ export function Footer() {
   const email = (!isHoofdsite && land?.email) || CONTACT.email;
   const kvk = (!isHoofdsite && land?.kvk) || CONTACT.kvk;
   const btw = (!isHoofdsite && land?.btw) || CONTACT.btw;
-  const openingstijden =
-    (!isHoofdsite && land?.openingstijden) || 'Ma–Vr 08:00–18:00 · Za 09:00–14:00';
 
   const telHref = buildTelHref(telefoon);
   const emailHref = `mailto:${email}`;
 
   return (
     <footer className="border-t border-border bg-card">
-      <div className="container py-12">
-        <div className="pb-10 mb-10 border-b border-border">
+      <div className="container py-8">
+        <div className="pb-6 mb-6 border-b border-border">
           <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {[
@@ -136,14 +134,13 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="pt-2 text-sm text-muted-foreground space-y-1">
-              <p>Openingstijden: {openingstijden}</p>
+            <div className="pt-2 text-sm text-muted-foreground">
               <p>BTW: {btw} · KvK: {kvk}</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="mt-8 pt-4 border-t border-border text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} {bedrijf}. Alle rechten voorbehouden.</p>
         </div>
       </div>
