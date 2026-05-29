@@ -61,7 +61,7 @@ export function DriePuntenSection({ landNaam }: DriePuntenSectionProps) {
             <ul className="mt-8 space-y-4">
               <li className="flex gap-4">
                 <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
-                  <Wallet className="h-6 w-6 text-primary" />
+                  <h3 className="font-display font-semibold">Vanaf €{prijs} per kilometer</h3>
                 </span>
                 <div>
                   <h3 className="font-display font-semibold">Vanaf €0,50 per kilometer</h3>
