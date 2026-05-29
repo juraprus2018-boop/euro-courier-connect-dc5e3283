@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Loader2, Send } from 'lucide-react';
+import { BookUser, Loader2, Send } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +10,26 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useLand } from '@/hooks/useLand';
+import { useAuth } from '@/hooks/useAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { AddressAutocomplete } from './AddressAutocomplete';
+
+interface KlantAdres {
+  id: string;
+  label: string;
+  type: string;
+  adres: string;
+  postcode: string | null;
+  plaats: string;
+  land: string | null;
+}
 
 const quoteSchema = z.object({
   ophaal_adres: z.string().min(1, 'Ophaaladres is verplicht').max(500),
