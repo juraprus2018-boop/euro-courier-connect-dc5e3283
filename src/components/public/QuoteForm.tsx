@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Loader2, Send } from 'lucide-react';
+import { BookUser, Loader2, Send } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +10,26 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useLand } from '@/hooks/useLand';
+import { useAuth } from '@/hooks/useAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { AddressAutocomplete } from './AddressAutocomplete';
+
+interface KlantAdres {
+  id: string;
+  label: string;
+  type: string;
+  adres: string;
+  postcode: string | null;
+  plaats: string;
+  land: string | null;
+}
 
 const quoteSchema = z.object({
   ophaal_adres: z.string().min(1, 'Ophaaladres is verplicht').max(500),
@@ -55,12 +74,36 @@ export function QuoteForm({
 
   const { toast } = useToast();
   const { land, isHoofdsite } = useLand();
+  const { user } = useAuth();
+  const [adresboek, setAdresboek] = useState<KlantAdres[]>([]);
+
+  useEffect(() => {
+    if (!user) {
+      setAdresboek([]);
+      return;
+    }
+    supabase
+      .from('klant_adressen')
+      .select('id,label,type,adres,postcode,plaats,land')
+      .order('label', { ascending: true })
+      .then(({ data }) => setAdresboek((data as KlantAdres[]) || []));
+  }, [user]);
 
   const ophaalCountries = 'nl';
   const afleverCountries = !isHoofdsite && land?.iso_code ? land.iso_code : undefined;
   const afleverPlaceholder = afleverCountries
     ? `Adres in ${land?.naam}`
     : 'Begin met typen...';
+
+  const ophaalOpties = adresboek.filter((a) => a.type === 'ophaal' || a.type === 'beide');
+  const afleverOpties = adresboek.filter((a) => a.type === 'aflever' || a.type === 'beide');
+
+  const kiesAdres = (a: KlantAdres, soort: 'ophaal' | 'aflever') => {
+    setValue(`${soort}_adres` as any, a.adres, { shouldValidate: true });
+    setValue(`${soort}_postcode` as any, a.postcode || '', { shouldValidate: true });
+    setValue(`${soort}_plaats` as any, a.plaats, { shouldValidate: true });
+  };
+
 
   const {
     register,
@@ -224,7 +267,31 @@ export function QuoteForm({
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="ophaal_adres">Ophaaladres in Nederland *</Label>
+              <div className="flex items-center justify-between gap-2">
+                <Label htmlFor="ophaal_adres">Ophaaladres in Nederland *</Label>
+                {user && ophaalOpties.length > 0 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button type="button" variant="outline" size="sm" className="h-7 px-2 text-xs">
+                        <BookUser className="h-3.5 w-3.5 mr-1" /> Adresboek
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-72 bg-popover">
+                      <DropdownMenuLabel>Kies opgeslagen ophaaladres</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {ophaalOpties.map((a) => (
+                        <DropdownMenuItem key={a.id} onSelect={() => kiesAdres(a, 'ophaal')}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{a.label}</span>
+                            <span className="text-xs text-muted-foreground">{a.adres}, {a.plaats}</span>
+                          </div>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              </div>
+
               <AddressAutocomplete
                 id="ophaal_adres"
                 value={ophaalAdres || ''}
@@ -247,9 +314,33 @@ export function QuoteForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="aflever_adres">
-                Afleveradres {afleverCountries ? `in ${land?.naam}` : ''} *
-              </Label>
+              <div className="flex items-center justify-between gap-2">
+                <Label htmlFor="aflever_adres">
+                  Afleveradres {afleverCountries ? `in ${land?.naam}` : ''} *
+                </Label>
+                {user && afleverOpties.length > 0 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button type="button" variant="outline" size="sm" className="h-7 px-2 text-xs">
+                        <BookUser className="h-3.5 w-3.5 mr-1" /> Adresboek
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-72 bg-popover">
+                      <DropdownMenuLabel>Kies opgeslagen afleveradres</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {afleverOpties.map((a) => (
+                        <DropdownMenuItem key={a.id} onSelect={() => kiesAdres(a, 'aflever')}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{a.label}</span>
+                            <span className="text-xs text-muted-foreground">{a.adres}, {a.plaats}</span>
+                          </div>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              </div>
+
               <AddressAutocomplete
                 id="aflever_adres"
                 value={afleverAdres || ''}
