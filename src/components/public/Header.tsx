@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Truck, Phone, Mail, MapPin, Menu, X, ChevronDown, ArrowRight, User } from 'lucide-react';
+import { Truck, Phone, MapPin, Menu, X, ChevronDown, ArrowRight, User } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -95,7 +95,6 @@ export function Header({ landNaam }: HeaderProps) {
           </Link>
         </nav>
 
-
         {/* Pill CTAs */}
         <div className="flex items-center gap-2 sm:gap-3">
           <a
@@ -106,15 +105,6 @@ export function Header({ landNaam }: HeaderProps) {
               <Phone className="h-3.5 w-3.5" />
             </span>
             Bel: {CONTACT.telefoon}
-          </a>
-          <a
-            href={CONTACT.emailHref}
-            className="hidden xl:inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all"
-          >
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10">
-              <Mail className="h-3.5 w-3.5" />
-            </span>
-            Mail: {CONTACT.email}
           </a>
           <Button
             asChild
