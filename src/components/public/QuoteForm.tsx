@@ -314,9 +314,33 @@ export function QuoteForm({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="aflever_adres">
-                Afleveradres {afleverCountries ? `in ${land?.naam}` : ''} *
-              </Label>
+              <div className="flex items-center justify-between gap-2">
+                <Label htmlFor="aflever_adres">
+                  Afleveradres {afleverCountries ? `in ${land?.naam}` : ''} *
+                </Label>
+                {user && afleverOpties.length > 0 && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button type="button" variant="outline" size="sm" className="h-7 px-2 text-xs">
+                        <BookUser className="h-3.5 w-3.5 mr-1" /> Adresboek
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-72 bg-popover">
+                      <DropdownMenuLabel>Kies opgeslagen afleveradres</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {afleverOpties.map((a) => (
+                        <DropdownMenuItem key={a.id} onSelect={() => kiesAdres(a, 'aflever')}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{a.label}</span>
+                            <span className="text-xs text-muted-foreground">{a.adres}, {a.plaats}</span>
+                          </div>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              </div>
+
               <AddressAutocomplete
                 id="aflever_adres"
                 value={afleverAdres || ''}
