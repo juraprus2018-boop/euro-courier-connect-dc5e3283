@@ -9,8 +9,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Eye, Trash2, CheckCircle2, Circle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { format } from 'date-fns';
+import { Textarea } from '@/components/ui/textarea';
+import { format, formatDistanceToNow } from 'date-fns';
 import { nl } from 'date-fns/locale';
+import { StickyNote, Send, Trash } from 'lucide-react';
 
 const STATUS_FLOW = [
   { key: 'nieuw', label: 'Nieuw', color: 'bg-primary/10 text-primary' },
