@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, MapPin, Navigation, Euro, Truck, ArrowRight, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Loader2, MapPin, Navigation, Euro, Truck, Clock, Phone } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { SmartCTA } from './SmartCTA';
 import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
+import { useTarieven } from '@/hooks/useTarieven';
+import { CONTACT } from '@/lib/contact';
 
 const RouteMap = lazy(() => import('./RouteMap'));
 
@@ -18,11 +19,15 @@ interface Coordinates {
 
 interface PriceCalculatorProps {
   landNaam?: string;
+  /** Behouden voor backwards compatibility — wordt genegeerd, tarief komt nu uit instellingen. */
   kmTarief?: number;
   restrictToCountry?: string;
 }
 
-export function PriceCalculator({ landNaam, kmTarief = 0.85, restrictToCountry }: PriceCalculatorProps) {
+export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculatorProps) {
+  const { tarieven } = useTarieven();
+  const kmTarief = tarieven.bestelwagen;
+
   const [pickupAddress, setPickupAddress] = useState('');
   const [destinationAddress, setDestinationAddress] = useState('');
   const [pickupCoords, setPickupCoords] = useState<Coordinates | null>(null);
