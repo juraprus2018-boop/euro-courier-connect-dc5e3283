@@ -169,7 +169,18 @@ export default function AdminInstellingen() {
           </CardContent>
         </Card>
 
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" />
+              Depot Locatie
+            </CardTitle>
+            <CardDescription>
+              De vaste locatie van waaruit alle routes starten en eindigen
+            </CardDescription>
+          </CardHeader>
           <CardContent className="space-y-4">
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="depot_latitude">Breedtegraad (Latitude)</Label>
