@@ -115,9 +115,6 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
         setLoading(false);
         return;
       }
-        setLoading(false);
-        return;
-      }
 
       setRouteCoords(routeData.coordinates);
       setDistance(routeData.distance);
