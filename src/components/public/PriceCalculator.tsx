@@ -271,12 +271,6 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                       <div className="text-xs text-muted-foreground mt-1">
                         Tot ~2.500 kg / meerdere pallets — indicatie excl. BTW
                       </div>
-                      <a
-                        href={`tel:${CONTACT.telefoon.replace(/[^0-9+]/g, '')}`}
-                        className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
-                      >
-                        <Phone className="h-3 w-3" /> Bel voor maatwerk
-                      </a>
                     </div>
                   </div>
 
