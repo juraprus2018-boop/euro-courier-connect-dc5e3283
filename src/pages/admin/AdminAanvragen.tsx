@@ -9,8 +9,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Eye, Trash2, CheckCircle2, Circle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { format } from 'date-fns';
+import { Textarea } from '@/components/ui/textarea';
+import { format, formatDistanceToNow } from 'date-fns';
 import { nl } from 'date-fns/locale';
+import { StickyNote, Send, Trash } from 'lucide-react';
 
 const STATUS_FLOW = [
   { key: 'nieuw', label: 'Nieuw', color: 'bg-primary/10 text-primary' },
@@ -63,11 +65,23 @@ interface Aanvraag {
   transport_type: string | null;
 }
 
+interface Notitie {
+  id: string;
+  aanvraag_id: string;
+  notitie: string;
+  status_bij_notitie: string | null;
+  created_at: string;
+}
+
 const AdminAanvragen = () => {
   const [aanvragen, setAanvragen] = useState<Aanvraag[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedAanvraag, setSelectedAanvraag] = useState<Aanvraag | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [notities, setNotities] = useState<Notitie[]>([]);
+  const [notitieCounts, setNotitieCounts] = useState<Record<string, number>>({});
+  const [nieuweNotitie, setNieuweNotitie] = useState('');
+  const [notitieLoading, setNotitieLoading] = useState(false);
   const { toast } = useToast();
 
   const normStatus = (s: string) => STATUS_ALIAS[s] || s;
@@ -84,22 +98,82 @@ const AdminAanvragen = () => {
       setAanvragen((data as unknown as Aanvraag[]) || []);
     }
     setLoading(false);
+
+    // Counts for notities
+    const { data: notData } = await supabase.from('aanvraag_notities' as any).select('aanvraag_id');
+    if (notData) {
+      const counts: Record<string, number> = {};
+      (notData as any[]).forEach((n) => { counts[n.aanvraag_id] = (counts[n.aanvraag_id] || 0) + 1; });
+      setNotitieCounts(counts);
+    }
   };
 
   useEffect(() => {
     fetchAanvragen();
   }, []);
 
-  const updateStatus = async (id: string, status: string) => {
+  const fetchNotities = async (aanvraagId: string) => {
+    const { data, error } = await supabase
+      .from('aanvraag_notities' as any)
+      .select('*')
+      .eq('aanvraag_id', aanvraagId)
+      .order('created_at', { ascending: false });
+    if (!error && data) setNotities(data as unknown as Notitie[]);
+  };
+
+  useEffect(() => {
+    if (selectedAanvraag) {
+      fetchNotities(selectedAanvraag.id);
+      setNieuweNotitie('');
+    } else {
+      setNotities([]);
+    }
+  }, [selectedAanvraag?.id]);
+
+  const voegNotitieToe = async () => {
+    if (!selectedAanvraag || !nieuweNotitie.trim()) return;
+    setNotitieLoading(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    const { error } = await supabase.from('aanvraag_notities' as any).insert({
+      aanvraag_id: selectedAanvraag.id,
+      notitie: nieuweNotitie.trim(),
+      status_bij_notitie: normStatus(selectedAanvraag.status),
+      aangemaakt_door: user?.id ?? null,
+    });
+    setNotitieLoading(false);
+    if (error) {
+      toast({ title: 'Fout bij opslaan notitie', description: error.message, variant: 'destructive' });
+    } else {
+      setNieuweNotitie('');
+      fetchNotities(selectedAanvraag.id);
+      setNotitieCounts((c) => ({ ...c, [selectedAanvraag.id]: (c[selectedAanvraag.id] || 0) + 1 }));
+      toast({ title: 'Notitie toegevoegd' });
+    }
+  };
+
+  const verwijderNotitie = async (id: string) => {
+    if (!confirm('Notitie verwijderen?')) return;
+    const { error } = await supabase.from('aanvraag_notities' as any).delete().eq('id', id);
+    if (error) {
+      toast({ title: 'Fout', description: error.message, variant: 'destructive' });
+    } else if (selectedAanvraag) {
+      fetchNotities(selectedAanvraag.id);
+      setNotitieCounts((c) => ({ ...c, [selectedAanvraag.id]: Math.max(0, (c[selectedAanvraag.id] || 1) - 1) }));
+    }
+  };
+
+  const updateStatus = async (id: string, status: string, opts?: { silent?: boolean }) => {
     const { error } = await supabase.from('aanvragen').update({ status }).eq('id', id);
 
     if (error) {
       toast({ title: 'Fout bij bijwerken', variant: 'destructive' });
     } else {
-      toast({ title: 'Status bijgewerkt' });
+      if (!opts?.silent) toast({ title: 'Status bijgewerkt' });
       fetchAanvragen();
     }
   };
+
+
 
   const handleDelete = async (id: string) => {
     if (!confirm('Weet u zeker dat u deze aanvraag wilt verwijderen?')) return;
@@ -230,10 +304,15 @@ const AdminAanvragen = () => {
                         </Select>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="icon" onClick={() => setSelectedAanvraag(aanvraag)}>
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="icon" onClick={() => setSelectedAanvraag(aanvraag)} title="Bekijken & notitie">
                             <Eye className="h-4 w-4" />
                           </Button>
+                          {(notitieCounts[aanvraag.id] || 0) > 0 && (
+                            <span className="inline-flex items-center gap-1 text-xs text-muted-foreground" title="Aantal notities">
+                              <StickyNote className="h-3 w-3" />{notitieCounts[aanvraag.id]}
+                            </span>
+                          )}
                           <Button variant="ghost" size="icon" onClick={() => handleDelete(aanvraag.id)}>
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
@@ -256,7 +335,7 @@ const AdminAanvragen = () => {
       </div>
 
       <Dialog open={!!selectedAanvraag} onOpenChange={() => setSelectedAanvraag(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Aanvraag details</DialogTitle>
           </DialogHeader>
@@ -284,6 +363,51 @@ const AdminAanvragen = () => {
                   </Select>
                 </div>
               </div>
+
+              <div className="rounded-lg border p-4">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3 flex items-center gap-2">
+                  <StickyNote className="h-4 w-4" /> Statusnotities ({notities.length})
+                </h4>
+                <div className="space-y-2 mb-3">
+                  <Textarea
+                    placeholder="Voeg een interne notitie toe (bijv. 'Klant gebeld, wachten op bevestiging')..."
+                    value={nieuweNotitie}
+                    onChange={(e) => setNieuweNotitie(e.target.value)}
+                    rows={2}
+                  />
+                  <div className="flex justify-end">
+                    <Button size="sm" onClick={voegNotitieToe} disabled={notitieLoading || !nieuweNotitie.trim()}>
+                      {notitieLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Send className="h-4 w-4 mr-2" />}
+                      Notitie opslaan
+                    </Button>
+                  </div>
+                </div>
+                {notities.length > 0 ? (
+                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                    {notities.map((n) => (
+                      <div key={n.id} className="rounded border bg-muted/30 p-3 text-sm">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span>{formatDistanceToNow(new Date(n.created_at), { addSuffix: true, locale: nl })}</span>
+                            {n.status_bij_notitie && (
+                              <span className={`px-1.5 py-0.5 rounded ${STATUS_MAP[n.status_bij_notitie]?.color || 'bg-muted'}`}>
+                                {STATUS_MAP[n.status_bij_notitie]?.label || n.status_bij_notitie}
+                              </span>
+                            )}
+                          </div>
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => verwijderNotitie(n.id)}>
+                            <Trash className="h-3 w-3 text-destructive" />
+                          </Button>
+                        </div>
+                        <p className="whitespace-pre-wrap">{n.notitie}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Nog geen notities.</p>
+                )}
+              </div>
+
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-sm text-muted-foreground mb-2">Ophaaladres</h4>
