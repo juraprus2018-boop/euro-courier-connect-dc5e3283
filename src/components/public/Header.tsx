@@ -89,6 +89,7 @@ export function Header({ landNaam }: HeaderProps) {
             </DropdownMenuContent>
           </DropdownMenu>
           
+          <Link to="/prijs-berekenen" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Prijs berekenen</Link>
           <Link to="/contact" className="text-primary-foreground/90 hover:text-primary-foreground transition-colors">Contact</Link>
           <Link to="/account" className="flex items-center gap-1 text-primary-foreground/90 hover:text-primary-foreground transition-colors">
             <User className="h-4 w-4" /> Mijn Account
@@ -161,6 +162,7 @@ export function Header({ landNaam }: HeaderProps) {
               </div>
             </div>
             
+            <Link to="/prijs-berekenen" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Prijs berekenen</Link>
             <Link to="/contact" className="text-sm font-medium hover:opacity-80" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
             <Link to="/account" className="text-sm font-medium hover:opacity-80 flex items-center gap-1" onClick={() => setMobileMenuOpen(false)}>
               <User className="h-4 w-4" /> Mijn Account
