@@ -134,8 +134,7 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="pt-2 text-sm text-muted-foreground space-y-1">
-              <p>Openingstijden: {openingstijden}</p>
+            <div className="pt-2 text-sm text-muted-foreground">
               <p>BTW: {btw} · KvK: {kvk}</p>
             </div>
           </div>
