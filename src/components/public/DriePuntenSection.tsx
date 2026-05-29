@@ -1,11 +1,13 @@
 import { Truck, Wallet, Clock } from 'lucide-react';
+import { useTarieven } from '@/hooks/useTarieven';
 
 interface DriePuntenSectionProps {
   landNaam?: string;
 }
-
 export function DriePuntenSection({ landNaam }: DriePuntenSectionProps) {
   const bestemming = landNaam ? `naar ${landNaam}` : 'door heel Europa';
+  const { tarieven } = useTarieven();
+  const prijs = tarieven.bestelwagen.toFixed(2).replace('.', ',');
   return (
     <section className="py-20 bg-background">
       <div className="container">
@@ -59,7 +61,7 @@ export function DriePuntenSection({ landNaam }: DriePuntenSectionProps) {
             <ul className="mt-8 space-y-4">
               <li className="flex gap-4">
                 <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
-                  <Wallet className="h-6 w-6 text-primary" />
+                  <h3 className="font-display font-semibold">Vanaf €{prijs} per kilometer</h3>
                 </span>
                 <div>
                   <h3 className="font-display font-semibold">Vanaf €0,50 per kilometer</h3>
