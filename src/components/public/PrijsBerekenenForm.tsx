@@ -30,7 +30,10 @@ import {
 } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { useLand } from '@/hooks/useLand';
+import { useTarieven } from '@/hooks/useTarieven';
+import { CONTACT } from '@/lib/contact';
 import { AddressAutocomplete } from './AddressAutocomplete';
+
 
 const SOORTEN = [
   'Europallet (120 x 80)',
