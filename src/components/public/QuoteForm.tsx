@@ -77,6 +77,8 @@ export function QuoteForm({
   const { user } = useAuth();
   const [adresboek, setAdresboek] = useState<KlantAdres[]>([]);
 
+  const [autofilled, setAutofilled] = useState(false);
+
   useEffect(() => {
     if (!user) {
       setAdresboek([]);
@@ -105,6 +107,7 @@ export function QuoteForm({
   };
 
 
+
   const {
     register,
     handleSubmit,
@@ -125,6 +128,52 @@ export function QuoteForm({
   const values = watch();
   const ophaalAdres = values.ophaal_adres;
   const afleverAdres = values.aflever_adres;
+
+  // Autofill profielgegevens + standaard adresboek bij ingelogde klant
+  useEffect(() => {
+    if (!user || autofilled) return;
+
+    const setIfEmpty = (name: keyof QuoteFormData, val?: string | null) => {
+      if (val && !(values[name] as string | undefined)?.trim()) {
+        setValue(name, val, { shouldValidate: true });
+      }
+    };
+
+    let didFill = false;
+
+    // Profielgegevens
+    supabase
+      .from('klant_profielen')
+      .select('naam,email,telefoon')
+      .eq('user_id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        const profielNaam = data?.naam || (user.user_metadata as any)?.naam || (user.user_metadata as any)?.full_name;
+        const profielEmail = data?.email || user.email;
+        const profielTel = data?.telefoon || (user.user_metadata as any)?.telefoon;
+        if (profielNaam) { setIfEmpty('contact_naam', profielNaam); didFill = true; }
+        if (profielEmail) { setIfEmpty('contact_email', profielEmail); didFill = true; }
+        if (profielTel) { setIfEmpty('contact_telefoon', profielTel); didFill = true; }
+        if (didFill) setAutofilled(true);
+      });
+  }, [user, autofilled]);
+
+  // Autofill ophaal/aflever zodra adresboek geladen is
+  useEffect(() => {
+    if (!user || adresboek.length === 0) return;
+    const standaardOphaal = ophaalOpties[0];
+    const standaardAflever = afleverOpties[0];
+    if (standaardOphaal && !values.ophaal_adres?.trim()) {
+      kiesAdres(standaardOphaal, 'ophaal');
+      setAutofilled(true);
+    }
+    if (standaardAflever && !values.aflever_adres?.trim()) {
+      kiesAdres(standaardAflever, 'aflever');
+      setAutofilled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adresboek, user]);
+
 
   const filled = (name: keyof QuoteFormData, minLen = 1) => {
     const v = values[name];
@@ -262,6 +311,12 @@ export function QuoteForm({
               </span>
             )}
             <span className="text-xs text-muted-foreground ml-auto">Vooraf ingevuld — vul aan en verstuur</span>
+          </div>
+        )}
+        {user && autofilled && (
+          <div className="mb-4 rounded-lg border border-success/40 bg-success/5 p-3 text-sm flex items-center gap-2">
+            <BookUser className="h-4 w-4 text-success" />
+            <span>Velden automatisch ingevuld vanuit uw account en adresboek — controleer en pas eventueel aan.</span>
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
