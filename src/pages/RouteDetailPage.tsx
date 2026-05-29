@@ -28,7 +28,8 @@ const RouteDetailPage = () => {
   const landSlug = landPrefix?.startsWith('spoed-koerier-') ? landPrefix.slice('spoed-koerier-'.length) : undefined;
   const { land, loading: landLoading } = useLand();
   const [route, setRoute] = useState<RouteDetail | null>(null);
-  const [kmTarief, setKmTarief] = useState<number>(0.85);
+  const [kmTarief, setKmTarief] = useState<number>(0.7);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
