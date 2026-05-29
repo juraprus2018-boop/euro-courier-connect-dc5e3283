@@ -5,8 +5,10 @@ interface DriePuntenSectionProps {
   landNaam?: string;
 }
 
-export function DriePuntenSection({ landNaam }: DriePuntenSectionProps) {
   const bestemming = landNaam ? `naar ${landNaam}` : 'door heel Europa';
+  const { tarieven } = useTarieven();
+  const prijs = tarieven.bestelwagen.toFixed(2).replace('.', ',');
+  return (
   return (
     <section className="py-20 bg-background">
       <div className="container">
