@@ -33,8 +33,8 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-card">
-      <div className="container py-12">
-        <div className="pb-10 mb-10 border-b border-border">
+      <div className="container py-8">
+        <div className="pb-6 mb-6 border-b border-border">
           <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {[
@@ -140,7 +140,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="mt-8 pt-4 border-t border-border text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} {bedrijf}. Alle rechten voorbehouden.</p>
         </div>
       </div>
