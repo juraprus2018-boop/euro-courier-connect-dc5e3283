@@ -1,9 +1,10 @@
 import { useState, lazy, Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, MapPin, Navigation, Euro, Truck, Clock, Phone } from 'lucide-react';
+import { Loader2, MapPin, Navigation, Euro, Truck, Clock, Phone, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { SmartCTA } from './SmartCTA';
 import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
@@ -280,9 +281,26 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                   </div>
 
 
+                  <Button asChild size="lg" className="w-full bg-cta text-cta-foreground hover:opacity-90">
+                    <Link
+                      to={`/offerte?${new URLSearchParams({
+                        van: pickupAddress,
+                        naar: destinationAddress,
+                        afstand: String(Math.round(distance)),
+                        ...(duration ? { rijtijd: String(Math.round(duration)) } : {}),
+                        prijs: String(calculatedPrice),
+                        prijs_bakwagen: String(Math.round(distance * tarieven.bakwagen)),
+                      }).toString()}`}
+                    >
+                      <FileText className="mr-2 h-5 w-5" />
+                      Vraag direct offerte aan
+                    </Link>
+                  </Button>
+
                   <p className="text-xs text-muted-foreground">
                     * {PRIJS_DISCLAIMER}
                   </p>
+
 
 
                   <SmartCTA
