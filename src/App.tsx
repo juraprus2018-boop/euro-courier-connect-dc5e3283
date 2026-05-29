@@ -69,8 +69,9 @@ const App = () => (
           <Route path="/account/login" element={<AccountLogin />} />
           <Route path="/account" element={<AccountDashboard />} />
 
-
           <Route path="/prijs-berekenen" element={<PrijsIndicatiePage />} />
+          <Route path="/prijs-indicatie" element={<PrijsIndicatiePage />} />
+          <Route path="/offerte-aanvragen" element={<PrijsBerekenenPage />} />
           <Route path="/offerte-aanvragen" element={<PrijsBerekenenPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/faq" element={<FaqPage />} />
