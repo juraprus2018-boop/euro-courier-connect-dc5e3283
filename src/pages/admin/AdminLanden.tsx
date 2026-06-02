@@ -45,6 +45,13 @@ const SUPPORTED_COUNTRIES = [
   { naam: 'Zwitserland', domeinSuggestie: 'koerier-zwitserland.nl' },
 ];
 
+// Zorgt dat een domein altijd begint met www.
+const normalizeDomein = (raw: string): string => {
+  const cleaned = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/+$/, '');
+  if (!cleaned) return '';
+  return cleaned.startsWith('www.') ? cleaned : `www.${cleaned}`;
+};
+
 interface Land {
   id: string;
   naam: string;
