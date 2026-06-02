@@ -397,7 +397,7 @@ const AdminLanden = () => {
                     id="domein"
                     value={formData.domein}
                     onChange={(e) => setFormData({ ...formData, domein: e.target.value })}
-                    placeholder="koerier-frankrijk.nl"
+                    placeholder="www.koerier-frankrijk.nl"
                   />
                 </div>
                 <div className="space-y-2">
