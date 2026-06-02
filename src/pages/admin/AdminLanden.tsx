@@ -45,6 +45,13 @@ const SUPPORTED_COUNTRIES = [
   { naam: 'Zwitserland', domeinSuggestie: 'koerier-zwitserland.nl' },
 ];
 
+// Zorgt dat een domein altijd begint met www.
+const normalizeDomein = (raw: string): string => {
+  const cleaned = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/+$/, '');
+  if (!cleaned) return '';
+  return cleaned.startsWith('www.') ? cleaned : `www.${cleaned}`;
+};
+
 interface Land {
   id: string;
   naam: string;
@@ -257,7 +264,7 @@ const AdminLanden = () => {
     const landData = {
       naam: formData.naam,
       slug: slugify(formData.naam),
-      domein: formData.domein || null,
+      domein: formData.domein ? normalizeDomein(formData.domein) : null,
       km_tarief: parseFloat(formData.km_tarief),
       actief: formData.actief,
     };
@@ -365,7 +372,7 @@ const AdminLanden = () => {
                         setFormData({ 
                           ...formData, 
                           naam: value,
-                          domein: country?.domeinSuggestie || ''
+                          domein: country?.domeinSuggestie ? `www.${country.domeinSuggestie}` : ''
                         });
                       }}
                     >
@@ -390,7 +397,7 @@ const AdminLanden = () => {
                     id="domein"
                     value={formData.domein}
                     onChange={(e) => setFormData({ ...formData, domein: e.target.value })}
-                    placeholder="koerier-frankrijk.nl"
+                    placeholder="www.koerier-frankrijk.nl"
                   />
                 </div>
                 <div className="space-y-2">
