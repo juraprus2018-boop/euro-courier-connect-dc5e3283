@@ -10,6 +10,13 @@
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+  # Forceer www (consistent voor alle domeinen, behalve localhost/lovable preview)
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteCond %{HTTP_HOST} !^localhost [NC]
+  RewriteCond %{HTTP_HOST} !\.lovable\.app$ [NC]
+  RewriteCond %{HTTP_HOST} !\.lovableproject\.com$ [NC]
+  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
   # Sitemap.xml doorsturen naar Supabase edge function
   RewriteRule ^sitemap\.xml$ https://opiojltrlkpivowxfvrz.supabase.co/functions/v1/sitemap [L,P]
 
