@@ -8,7 +8,7 @@ const corsHeaders = {
 // Standaard verwacht IP (eigen server bij TransIP). Kan overschreven worden
 // via de instelling `verwacht_server_ip` in de tabel `instellingen`, of
 // via de body parameter `verwacht_ip`.
-const DEFAULT_EXPECTED_IP = '136.144.162.73';
+const DEFAULT_EXPECTED_IP = '185.114.156.39';
 
 interface DnsAnswer {
   name: string;
