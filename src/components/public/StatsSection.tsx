@@ -7,7 +7,7 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="py-16 bg-gradient-dark">
+    <section className="py-16 bg-background border-y border-border">
       <div className="container">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, index) => (
@@ -16,10 +16,10 @@ export function StatsSection() {
               className="text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-accent">
+              <div className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary">
                 {stat.value}
               </div>
-              <div className="mt-2 text-primary-foreground/70 font-medium">
+              <div className="mt-2 text-muted-foreground font-medium">
                 {stat.label}
               </div>
             </div>
