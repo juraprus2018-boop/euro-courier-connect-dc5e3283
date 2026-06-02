@@ -372,7 +372,7 @@ const AdminLanden = () => {
                         setFormData({ 
                           ...formData, 
                           naam: value,
-                          domein: country?.domeinSuggestie || ''
+                          domein: country?.domeinSuggestie ? `www.${country.domeinSuggestie}` : ''
                         });
                       }}
                     >
