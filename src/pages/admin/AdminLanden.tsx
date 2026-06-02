@@ -264,7 +264,7 @@ const AdminLanden = () => {
     const landData = {
       naam: formData.naam,
       slug: slugify(formData.naam),
-      domein: formData.domein || null,
+      domein: formData.domein ? normalizeDomein(formData.domein) : null,
       km_tarief: parseFloat(formData.km_tarief),
       actief: formData.actief,
     };
