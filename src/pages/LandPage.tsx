@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
+import RouteMap from '@/components/public/RouteMap';
+import { formatPrijsRange } from '@/lib/prijs';
 import { SmartCTA } from '@/components/public/SmartCTA';
 
 const LandPage = () => {
@@ -62,6 +64,26 @@ const LandPage = () => {
       const avgKm = routes.reduce((a, r) => a + Number(r.afstand_km || 0), 0) / routes.length;
       const minPrijs = Math.min(...routes.map((r) => Number(r.geschatte_prijs || 0)).filter((n) => n > 0));
       return { avgKm, minPrijs: isFinite(minPrijs) ? minPrijs : undefined };
+    },
+    enabled: !!land?.id,
+  });
+
+  // Top routes naar dit land (kortste afstand eerst — meest gevraagd)
+  const { data: topRoutes } = useQuery({
+    queryKey: ['land-top-routes', land?.id],
+    queryFn: async () => {
+      const { data: stedenIds } = await supabase
+        .from('buitenland_steden')
+        .select('id')
+        .eq('land_id', land!.id);
+      if (!stedenIds?.length) return [];
+      const { data } = await supabase
+        .from('routes')
+        .select('id, slug, afstand_km, geschatte_prijs, nl_plaats:nl_plaatsen(naam), buitenland_stad:buitenland_steden(naam)')
+        .in('buitenland_stad_id', stedenIds.map((s) => s.id))
+        .order('afstand_km', { ascending: true })
+        .limit(12);
+      return data || [];
     },
     enabled: !!land?.id,
   });
@@ -177,18 +199,30 @@ const LandPage = () => {
         </div>
       </section>
 
-      {/* Animated route map */}
+      {/* Echte kaart met route Eindhoven → bestemming */}
       {(() => {
         const target = steden?.find((s) => s.latitude != null && s.longitude != null);
         if (!target) return null;
+        const pickup = { lat: 51.4386732, lng: 5.5223595 };
+        const dest = { lat: Number(target.latitude), lng: Number(target.longitude) };
         return (
           <section className="py-12 bg-background">
             <div className="container">
-              <AnimatedRouteMap
-                toName={target.naam}
-                toLat={Number(target.latitude)}
-                toLng={Number(target.longitude)}
-              />
+              <div className="mb-4">
+                <h2 className="font-display text-xl md:text-2xl font-bold">
+                  Route Nederland → {naam}
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Directe rit vanuit Eindhoven naar {target.naam} ({naam}), één chauffeur, zonder overslag.
+                </p>
+              </div>
+              <div className="h-[420px] rounded-2xl overflow-hidden border border-border shadow-sm">
+                <RouteMap
+                  pickupCoords={pickup}
+                  destinationCoords={dest}
+                  routeCoords={[[pickup.lat, pickup.lng], [dest.lat, dest.lng]]}
+                />
+              </div>
             </div>
           </section>
         );
@@ -261,9 +295,14 @@ const LandPage = () => {
           {/* Steden */}
           {steden && steden.length > 0 && (
             <div className="mt-10">
-              <h2 className="font-display font-semibold mb-4">
+              <h2 className="font-display font-semibold mb-2">
                 Bestemmingen in {naam}
               </h2>
+              <p className="text-muted-foreground mb-4">
+                Wij rijden naar <strong>alle plekken in {naam}</strong> — van grote steden tot
+                kleine dorpen. Hieronder ziet u een aantal populaire bestemmingen waar wij
+                regelmatig naartoe rijden:
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {steden.map((s) => (
                   <Link
@@ -273,6 +312,42 @@ const LandPage = () => {
                   >
                     <MapPin className="h-4 w-4 text-primary shrink-0" />
                     <span className="truncate">{s.naam}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Top routes */}
+          {topRoutes && topRoutes.length > 0 && (
+            <div className="mt-10">
+              <h2 className="font-display font-semibold mb-2">
+                Top routes naar {naam}
+              </h2>
+              <p className="text-muted-foreground mb-4">
+                Een overzicht van veelgevraagde routes vanuit Nederland naar {naam}, inclusief
+                indicatieve afstand en prijs. Heeft uw stad er niet bij staan? Geen probleem —
+                wij rijden vanaf elke locatie in Nederland.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {topRoutes.map((r: any) => (
+                  <Link
+                    key={r.id}
+                    to={`/route/${r.slug}`}
+                    className="group flex items-center justify-between gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <MapPin className="h-4 w-4 text-primary shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-sm truncate">
+                          {r.nl_plaats?.naam} <ArrowRight className="inline h-3 w-3 mx-1" /> {r.buitenland_stad?.naam}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {Math.round(Number(r.afstand_km))} km · indicatie {formatPrijsRange(Number(r.geschatte_prijs)) ?? 'op aanvraag'}
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
                   </Link>
                 ))}
               </div>
