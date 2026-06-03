@@ -295,9 +295,14 @@ const LandPage = () => {
           {/* Steden */}
           {steden && steden.length > 0 && (
             <div className="mt-10">
-              <h2 className="font-display font-semibold mb-4">
+              <h2 className="font-display font-semibold mb-2">
                 Bestemmingen in {naam}
               </h2>
+              <p className="text-muted-foreground mb-4">
+                Wij rijden naar <strong>alle plekken in {naam}</strong> — van grote steden tot
+                kleine dorpen. Hieronder ziet u een aantal populaire bestemmingen waar wij
+                regelmatig naartoe rijden:
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {steden.map((s) => (
                   <Link
@@ -307,6 +312,42 @@ const LandPage = () => {
                   >
                     <MapPin className="h-4 w-4 text-primary shrink-0" />
                     <span className="truncate">{s.naam}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Top routes */}
+          {topRoutes && topRoutes.length > 0 && (
+            <div className="mt-10">
+              <h2 className="font-display font-semibold mb-2">
+                Top routes naar {naam}
+              </h2>
+              <p className="text-muted-foreground mb-4">
+                Een overzicht van veelgevraagde routes vanuit Nederland naar {naam}, inclusief
+                indicatieve afstand en prijs. Heeft uw stad er niet bij staan? Geen probleem —
+                wij rijden vanaf elke locatie in Nederland.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {topRoutes.map((r: any) => (
+                  <Link
+                    key={r.id}
+                    to={`/route/${r.slug}`}
+                    className="group flex items-center justify-between gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <MapPin className="h-4 w-4 text-primary shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-sm truncate">
+                          {r.nl_plaats?.naam} <ArrowRight className="inline h-3 w-3 mx-1" /> {r.buitenland_stad?.naam}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {Math.round(Number(r.afstand_km))} km · indicatie {formatPrijsRange(Number(r.geschatte_prijs)) ?? 'op aanvraag'}
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
                   </Link>
                 ))}
               </div>
