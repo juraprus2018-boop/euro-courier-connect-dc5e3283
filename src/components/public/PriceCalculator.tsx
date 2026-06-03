@@ -258,7 +258,7 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                         {formatPrijsRange(calculatedPrice) ?? 'Op aanvraag'}
                       </div>
                       <div className="text-xs text-muted-foreground mt-1">
-                        Tot 618 kg / 1 pallet — indicatie excl. BTW
+                        Tot 618 kg / 1 pallet, indicatie excl. BTW
                       </div>
                     </div>
                     <div className="p-4 rounded-xl bg-muted border border-border">
@@ -269,7 +269,7 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                         {formatPrijsRange(Math.round(distance * tarieven.bakwagen)) ?? 'Op aanvraag'}
                       </div>
                       <div className="text-xs text-muted-foreground mt-1">
-                        Tot ~2.500 kg / meerdere pallets — indicatie excl. BTW
+                        Tot ~2.500 kg / meerdere pallets, indicatie excl. BTW
                       </div>
                     </div>
                   </div>

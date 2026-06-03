@@ -38,7 +38,7 @@ export function ServicesSection() {
             Alles voor uw Europese transport
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Van spoedzending tot regulier transport – wij bieden een complete oplossing voor al uw koeriersbehoeften door heel Europa.
+            Van spoedzending tot regulier transport. Wij bieden een complete oplossing voor al uw koeriersbehoeften door heel Europa.
           </p>
         </div>
         

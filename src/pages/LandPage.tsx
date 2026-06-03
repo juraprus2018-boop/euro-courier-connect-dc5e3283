@@ -229,62 +229,66 @@ const LandPage = () => {
         <div className="container">
           <div className="max-w-4xl mr-auto">
           <h2 className="font-display text-xl md:text-2xl font-bold mb-4">
-            Wij rijden naar {naam} – elke dag opnieuw
+            De {naam} Koerier: uw vaste partner voor spoedritten naar {naam}
           </h2>
           <div className="prose prose-slate max-w-none text-foreground text-[18px] leading-relaxed">
             <p>
-              Heeft u op korte termijn een <strong>spoedkoerier naar {naam}</strong> nodig?
-              De Europa Koerier rijdt dagelijks vanuit Nederland naar {naam} en is gespecialiseerd
-              in directe, exclusieve ritten zonder overslag. Of het nu gaat om een gepland
-              transport of een <strong>koerier met spoed naar {naam}</strong> die binnen het uur
-              moet vertrekken: wij staan 24/7 voor u klaar.
+              Een <strong>spoedkoerier naar {naam}</strong> regelen is bij De {naam} Koerier
+              een kwestie van bellen of een offerte aanvragen. Wij zijn een Nederlands
+              koeriersbedrijf dat zich volledig richt op directe ritten tussen Nederland
+              en {naam}. Geen Europees algemeen verhaal, maar chauffeurs en planners die
+              de weg naar {naam} kennen: van de Nederlandse oprit tot het laad- en losadres
+              in {naam} zelf.
             </p>
             <p>
-              Een <strong>koerier naar {naam}</strong> boeken via ons betekent één vast
-              contactpersoon, een transparante kilometerprijs en realtime track & trace.
-              U weet exact waar uw zending zich bevindt, vanaf het moment van ophalen tot
-              aflevering op de eindbestemming in {naam}. Onze ervaren chauffeurs rijden met
-              eigen bestelwagens, zodat uw goederen veilig en zonder tussenstops worden
-              afgeleverd.
+              Wij rijden iedere werkdag, en op afroep ook 's nachts en in het weekend,
+              vanuit elke Nederlandse postcode naar {naam}. Doordat wij ons specialiseren
+              in deze corridor weten onze chauffeurs precies wanneer er drukte is bij de
+              grensovergangen, welke routes binnen {naam} het snelst zijn en waar onderweg
+              tijd te winnen valt. Dat scheelt vaak uren ten opzichte van een algemene
+              koerier die heel Europa bedient.
             </p>
 
             <h2 className="font-display font-semibold mt-8 mb-3">
               Wanneer kiest u voor een spoedkoerier naar {naam}?
             </h2>
             <p>
-              Veel klanten kiezen voor onze <strong>spoeddienst naar {naam}</strong> wanneer
-              elke minuut telt. Denk aan dringende reserveonderdelen voor productielijnen,
-              prototypes voor beurzen, juridische documenten, medische monsters of
-              temperatuurgevoelige goederen. Een <strong>koerier met spoed naar {naam}</strong>
-              voorkomt productiestilstand, gemiste deadlines en financiële schade.
+              Onze klanten boeken een <strong>spoeddienst naar {naam}</strong> vooral
+              wanneer een vertraging direct geld kost. Denk aan een productielijn in {naam}
+              die stilstaat door een ontbrekend reserveonderdeel, een prototype dat morgen
+              op een beurs in {naam} moet staan, juridische documenten die voor sluitingstijd
+              ondertekend moeten zijn, of medische monsters die binnen een strak tijdvenster
+              in een laboratorium in {naam} moeten worden afgeleverd. In al die gevallen
+              vertrekt onze <strong>koerier met spoed naar {naam}</strong> direct na uw
+              opdracht.
             </p>
             <p>
               Wij vervoeren naar {naam} onder andere:
             </p>
             <ul>
-              <li>Reserveonderdelen en machines</li>
-              <li>Medische monsters en farmaceutische zendingen</li>
-              <li>Juridische en zakelijke documenten</li>
-              <li>Kunst, antiek en waardevolle goederen</li>
-              <li>Prototypes, beursmateriaal en showroommodellen</li>
-              <li>Temperatuurgevoelige producten</li>
+              <li>Reserveonderdelen voor productie en machinebouw in {naam}</li>
+              <li>Medische monsters en farmaceutische zendingen naar {naam}se laboratoria en ziekenhuizen</li>
+              <li>Juridische en zakelijke documenten met een harde deadline in {naam}</li>
+              <li>Kunst, antiek en waardevolle objecten richting {naam}</li>
+              <li>Prototypes, beursmateriaal en showroommodellen voor evenementen in {naam}</li>
+              <li>Temperatuurgevoelige producten die zonder overslag in {naam} moeten aankomen</li>
             </ul>
 
             <h2 className="font-display font-semibold mt-8 mb-3">
-              Waarom De Europa Koerier voor uw transport naar {naam}?
+              Waarom De {naam} Koerier en niet zomaar een Europese koerier?
             </h2>
             <p>
-              Als specialist in internationaal spoedtransport bieden wij een
-              <strong> spoedkoerier naar {naam}</strong> met de volgende voordelen:
-              vaste prijs vooraf, geen verrassingen achteraf, een eigen wagenpark zonder
-              onderaannemers, volledige goederenverzekering en directe levering van deur tot deur.
-              Een <strong>koerier naar {naam}</strong> die binnen 60 minuten kan vertrekken
-              maakt het verschil tussen op tijd leveren en te laat zijn.
+              Het verschil zit in focus. Wij rijden dagelijks op {naam} en kennen de
+              bijzonderheden van deze bestemming: rij- en rusttijden voor de heenrit,
+              tolwegen onderweg, taal en gewoonten bij ontvangst, en de bereikbaarheid
+              van afgelegen industrieterreinen in {naam}. U krijgt een vaste prijs vooraf,
+              één vast aanspreekpunt, een eigen wagenpark zonder onderaannemers, volledige
+              goederenverzekering en een directe deur-tot-deur levering in {naam}.
             </p>
             <p>
               Vraag direct uw offerte aan voor een <strong>koerier met spoed naar {naam}</strong>
               of bel ons voor persoonlijk advies. Wij denken graag mee over de snelste en
-              meest efficiënte route voor uw zending.
+              meest efficiënte route voor uw zending richting {naam}.
             </p>
           </div>
 
@@ -295,7 +299,7 @@ const LandPage = () => {
                 Bestemmingen in {naam}
               </h2>
               <p className="text-muted-foreground mb-4">
-                Wij rijden naar <strong>alle plekken in {naam}</strong> — van grote steden tot
+                Wij rijden naar <strong>alle plekken in {naam}</strong>, van grote steden tot
                 kleine dorpen. Hieronder ziet u een aantal populaire bestemmingen waar wij
                 regelmatig naartoe rijden:
               </p>
@@ -322,7 +326,7 @@ const LandPage = () => {
               </h2>
               <p className="text-muted-foreground mb-4">
                 Een overzicht van veelgevraagde routes vanuit Nederland naar {naam}, inclusief
-                indicatieve afstand en prijs. Heeft uw stad er niet bij staan? Geen probleem —
+                indicatieve afstand en prijs. Heeft uw stad er niet bij staan? Geen probleem,
                 wij rijden vanaf elke locatie in Nederland.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

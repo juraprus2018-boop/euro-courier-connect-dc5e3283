@@ -40,7 +40,7 @@ export function DriePuntenSection({ landNaam }: DriePuntenSectionProps) {
                 </span>
                 <div>
                   <h3 className="font-display font-semibold">Binnen 60 minuten ophalen</h3>
-                  <p className="text-sm text-muted-foreground">Bij spoed staan we klaar – ook 's avonds en in het weekend.</p>
+                  <p className="text-sm text-muted-foreground">Bij spoed staan we klaar, ook 's avonds en in het weekend.</p>
                 </div>
               </li>
             </ul>
