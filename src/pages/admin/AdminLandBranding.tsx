@@ -129,6 +129,7 @@ const AdminLandBranding = () => {
       .update({
         primary_color: formData.primary_color,
         secondary_color: formData.secondary_color,
+        vlag: formData.vlag || null,
         hero_titel: formData.hero_titel || null,
         hero_subtitel: formData.hero_subtitel || null,
         hero_afbeelding_url: formData.hero_afbeelding_url || null,
