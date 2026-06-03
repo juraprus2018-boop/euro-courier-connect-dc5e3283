@@ -118,7 +118,7 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                   </span>
                   <span className="text-sm">
                     <strong className="block">Binnen 60 minuten ophalen</strong>
-                    <span className="text-muted-foreground">Bij spoed staan wij direct klaar – 7 dagen per week.</span>
+                    <span className="text-muted-foreground">Bij spoed staan wij direct klaar, 7 dagen per week.</span>
                   </span>
                 </li>
                 <li className="flex gap-3">
