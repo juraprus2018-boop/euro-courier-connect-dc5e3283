@@ -96,6 +96,7 @@ const AdminLandBranding = () => {
       setFormData({
         primary_color: data.primary_color || '220 90% 56%',
         secondary_color: data.secondary_color || '38 92% 50%',
+        vlag: (data as any).vlag || '',
         hero_titel: data.hero_titel || '',
         hero_subtitel: data.hero_subtitel || '',
         hero_afbeelding_url: data.hero_afbeelding_url || '',
