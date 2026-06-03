@@ -68,6 +68,26 @@ const LandPage = () => {
     enabled: !!land?.id,
   });
 
+  // Top routes naar dit land (kortste afstand eerst — meest gevraagd)
+  const { data: topRoutes } = useQuery({
+    queryKey: ['land-top-routes', land?.id],
+    queryFn: async () => {
+      const { data: stedenIds } = await supabase
+        .from('buitenland_steden')
+        .select('id')
+        .eq('land_id', land!.id);
+      if (!stedenIds?.length) return [];
+      const { data } = await supabase
+        .from('routes')
+        .select('id, slug, afstand_km, geschatte_prijs, nl_plaats:nl_plaatsen(naam), buitenland_stad:buitenland_steden(naam)')
+        .in('buitenland_stad_id', stedenIds.map((s) => s.id))
+        .order('afstand_km', { ascending: true })
+        .limit(12);
+      return data || [];
+    },
+    enabled: !!land?.id,
+  });
+
   // SEO meta tags (basis — SEOHead component levert verdere head-tags)
   useEffect(() => {
     if (!land) return;
