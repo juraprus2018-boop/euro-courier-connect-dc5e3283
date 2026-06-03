@@ -21,7 +21,7 @@ export function SpoedKoerierSection({ landNaam }: SpoedKoerierSectionProps) {
               Spoedkoerier
             </span>
             <h2 className="font-display text-3xl lg:text-4xl font-bold mt-2">
-              Spoed nodig? Wij rijden direct van A naar B
+              Spoedkoerier nodig? Wij rijden direct van A naar B
             </h2>
             <p className="mt-3 text-lg text-muted-foreground">
               Wij zijn De Europa Koerier en vervoeren jouw spoedzending rechtstreeks – bijvoorbeeld
