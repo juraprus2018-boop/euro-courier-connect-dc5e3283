@@ -25,34 +25,72 @@ function interpolate(template: string, vars: Record<string, string | number | un
 
 export function SEOHead({ title, description, landNaam, canonicalPath, noindex, pageKey, variables, jsonLd }: SEOHeadProps) {
   const [override, setOverride] = useState<{ titel?: string; description?: string } | null>(null);
+  const [vlag, setVlag] = useState<string>('');
 
   useEffect(() => {
-    if (!pageKey) return;
     let cancelled = false;
-    supabase
-      .from('seo_paginas')
-      .select('titel_template, description_template')
-      .eq('pagina_key', pageKey)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (cancelled || !data) return;
-        const vars = { land: landNaam, ...(variables || {}) };
-        setOverride({
-          titel: data.titel_template ? interpolate(data.titel_template, vars) : undefined,
-          description: data.description_template ? interpolate(data.description_template, vars) : undefined,
-        });
+
+    (async () => {
+      // 1. Resolve land (voor vlag + per-land SEO override)
+      let landId: string | null = null;
+      let landVlag = '';
+      if (landNaam) {
+        const { data: landRow } = await supabase
+          .from('landen')
+          .select('id, vlag')
+          .eq('naam', landNaam)
+          .maybeSingle();
+        if (landRow) {
+          landId = landRow.id;
+          landVlag = (landRow as any).vlag || '';
+        }
+      }
+      if (!cancelled) setVlag(landVlag);
+
+      if (!pageKey) return;
+
+      // 2. Per-land override eerst, dan globale template
+      const vars = { land: landNaam, vlag: landVlag, ...(variables || {}) };
+
+      if (landId) {
+        const { data: ov } = await supabase
+          .from('seo_paginas_land_overrides')
+          .select('titel_template, description_template')
+          .eq('pagina_key', pageKey)
+          .eq('land_id', landId)
+          .maybeSingle();
+        if (!cancelled && ov && (ov.titel_template || ov.description_template)) {
+          setOverride({
+            titel: ov.titel_template ? interpolate(ov.titel_template, vars) : undefined,
+            description: ov.description_template ? interpolate(ov.description_template, vars) : undefined,
+          });
+          return;
+        }
+      }
+
+      const { data } = await supabase
+        .from('seo_paginas')
+        .select('titel_template, description_template')
+        .eq('pagina_key', pageKey)
+        .maybeSingle();
+      if (cancelled || !data) return;
+      setOverride({
+        titel: data.titel_template ? interpolate(data.titel_template, vars) : undefined,
+        description: data.description_template ? interpolate(data.description_template, vars) : undefined,
       });
+    })();
+
     return () => { cancelled = true; };
   }, [pageKey, landNaam, JSON.stringify(variables)]);
 
   const siteNaam = landNaam ? `De ${landNaam} Koerier` : 'De Europa Koerier';
 
   const defaultTitle = landNaam
-    ? `Spoedkoerier ${landNaam} | ${siteNaam} - Dagelijks op pad`
+    ? `Spoedkoerier ${landNaam} | ${siteNaam}${vlag ? ' ' + vlag : ''}`
     : 'Spoedkoerier Europa | De Europa Koerier - Snel & betrouwbaar';
 
   const defaultDescription = landNaam
-    ? `Spoedkoerier van Nederland naar ${landNaam}. Direct van A naar B, 24/7 beschikbaar. Vraag nu een offerte aan!`
+    ? `Spoedkoerier van Nederland naar ${landNaam}${vlag ? ' ' + vlag : ''}. Direct van A naar B, 24/7 beschikbaar. Vraag nu een offerte aan!`
     : 'Spoedkoerier door heel Europa. Direct transport van Nederland naar uw bestemming. 24/7 beschikbaar, dagelijks op pad.';
 
   // Prio: prop > admin override > default
