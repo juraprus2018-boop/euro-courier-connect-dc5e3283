@@ -299,7 +299,7 @@ const LandPage = () => {
                 Bestemmingen in {naam}
               </h2>
               <p className="text-muted-foreground mb-4">
-                Wij rijden naar <strong>alle plekken in {naam}</strong> — van grote steden tot
+                Wij rijden naar <strong>alle plekken in {naam}</strong>, van grote steden tot
                 kleine dorpen. Hieronder ziet u een aantal populaire bestemmingen waar wij
                 regelmatig naartoe rijden:
               </p>
@@ -326,7 +326,7 @@ const LandPage = () => {
               </h2>
               <p className="text-muted-foreground mb-4">
                 Een overzicht van veelgevraagde routes vanuit Nederland naar {naam}, inclusief
-                indicatieve afstand en prijs. Heeft uw stad er niet bij staan? Geen probleem —
+                indicatieve afstand en prijs. Heeft uw stad er niet bij staan? Geen probleem,
                 wij rijden vanaf elke locatie in Nederland.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
