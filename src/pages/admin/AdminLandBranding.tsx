@@ -53,6 +53,7 @@ const AdminLandBranding = () => {
   const [formData, setFormData] = useState({
     primary_color: '220 90% 56%',
     secondary_color: '38 92% 50%',
+    vlag: '',
     hero_titel: '',
     hero_subtitel: '',
     hero_afbeelding_url: '',
