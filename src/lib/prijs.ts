@@ -12,7 +12,7 @@ export function formatPrijsRange(base: number | null | undefined, opts?: { uplif
   const high = roundTo(base * (1 + uplift), step);
   const f = (n: number) => `€ ${n.toLocaleString('nl-NL')}`;
   if (high <= low) return f(low);
-  return `${f(low)} – ${f(high)}`;
+  return `${f(low)} tot ${f(high)}`;
 }
 
 export const PRIJS_DISCLAIMER =

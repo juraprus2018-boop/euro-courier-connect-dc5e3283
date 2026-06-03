@@ -41,7 +41,7 @@ const TIERS: Tier[] = [
     badge: 'Binnen 2 uur ter plaatse',
     badgeColor: 'bg-success text-success-foreground',
     icon: Zap,
-    titel: (b) => `Snelle rit naar ${b || 'uw bestemming'} — bel direct`,
+    titel: (b) => `Snelle rit naar ${b || 'uw bestemming'}, bel direct`,
     subtitel: (rt) => `Onze chauffeur kan binnen ${rt} bij u zijn. Voor spoed: bel ons direct, dat is sneller dan een formulier.`,
     primary: 'bel',
     whatsapp: (b, v) =>

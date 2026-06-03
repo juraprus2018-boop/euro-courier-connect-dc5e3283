@@ -28,7 +28,7 @@ export function buildRouteFaq(args: {
       antwoord: `Ja, wij beschikken over ADR-geschikte voertuigen en gecertificeerde chauffeurs voor het vervoer van gevaarlijke stoffen boven de 1000 punten naar ${buitenlandStad} en de rest van ${landNaam}.`,
     },
     {
-      vraag: `Hoe wordt de prijs berekend voor de route ${nlPlaats} – ${buitenlandStad}?`,
+      vraag: `Hoe wordt de prijs berekend voor de route ${nlPlaats} naar ${buitenlandStad}?`,
       antwoord: `De prijs wordt berekend op basis van de totale rijafstand (depot → ophaalpunt → bestemming → depot) maal het kilometertarief. Voor deze route is dat circa ${Math.round(afstandKm)} km. Vraag een offerte aan voor de exacte prijs.`,
     },
   ];
