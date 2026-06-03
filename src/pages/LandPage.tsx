@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
+import RouteMap from '@/components/public/RouteMap';
+import { formatPrijsRange } from '@/lib/prijs';
 import { SmartCTA } from '@/components/public/SmartCTA';
 
 const LandPage = () => {
