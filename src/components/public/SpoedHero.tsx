@@ -44,9 +44,10 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
             </h1>
             <p className="mt-4 text-lg sm:text-xl text-primary-foreground/90 leading-relaxed max-w-xl">
               Wij zijn <strong>{bedrijfsNaam}</strong> en rijden jouw spoedzending
-              rechtstreeks van A naar B – bijvoorbeeld direct van Amsterdam naar
-              {landNaam ? ` ${landNaam}` : ' Parijs'}. Eén chauffeur, één bus, geen overslag.
-              Ook 's avonds en in het weekend.
+              rechtstreeks van A naar B
+              {landNaam
+                ? `. Vandaag opgehaald in Nederland, morgen geleverd in ${landNaam}. Eén chauffeur, één bus, geen overslag. Ook 's avonds en in het weekend.`
+                : `, bijvoorbeeld direct van Amsterdam naar Parijs. Eén chauffeur, één bus, geen overslag. Ook 's avonds en in het weekend.`}
             </p>
             {tagline && (
               <p className="mt-3 font-display text-xl sm:text-2xl italic font-light text-primary-foreground/80">
