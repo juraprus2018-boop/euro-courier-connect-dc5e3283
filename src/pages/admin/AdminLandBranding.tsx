@@ -350,6 +350,26 @@ const AdminLandBranding = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
+                  <Label htmlFor="vlag">Vlag (emoji)</Label>
+                  <div className="flex gap-2 items-center">
+                    <div className="w-12 h-12 rounded-lg border border-border flex items-center justify-center text-3xl bg-muted">
+                      {formData.vlag || '🏳️'}
+                    </div>
+                    <Input
+                      id="vlag"
+                      value={formData.vlag}
+                      onChange={(e) => setFormData({ ...formData, vlag: e.target.value })}
+                      placeholder="🇭🇷"
+                      maxLength={8}
+                      className="font-mono"
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Vlag-emoji die op de website en in SEO-titels wordt getoond. Gebruik <code className="bg-muted px-1 rounded">{`{vlag}`}</code> in SEO-templates.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="hero_titel">Hero titel</Label>
                   <Input
                     id="hero_titel"
