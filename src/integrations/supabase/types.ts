@@ -421,6 +421,7 @@ export type Database = {
           sync_routes_total: number | null
           telefoon: string | null
           updated_at: string
+          vlag: string | null
         }
         Insert: {
           actief?: boolean
@@ -455,6 +456,7 @@ export type Database = {
           sync_routes_total?: number | null
           telefoon?: string | null
           updated_at?: string
+          vlag?: string | null
         }
         Update: {
           actief?: boolean
@@ -489,6 +491,7 @@ export type Database = {
           sync_routes_total?: number | null
           telefoon?: string | null
           updated_at?: string
+          vlag?: string | null
         }
         Relationships: []
       }
@@ -726,6 +729,44 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      seo_paginas_land_overrides: {
+        Row: {
+          created_at: string
+          description_template: string | null
+          id: string
+          land_id: string
+          pagina_key: string
+          titel_template: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description_template?: string | null
+          id?: string
+          land_id: string
+          pagina_key: string
+          titel_template?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description_template?: string | null
+          id?: string
+          land_id?: string
+          pagina_key?: string
+          titel_template?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_paginas_land_overrides_land_id_fkey"
+            columns: ["land_id"]
+            isOneToOne: false
+            referencedRelation: "landen"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       terugbel_verzoeken: {
         Row: {
