@@ -199,18 +199,30 @@ const LandPage = () => {
         </div>
       </section>
 
-      {/* Animated route map */}
+      {/* Echte kaart met route Eindhoven → bestemming */}
       {(() => {
         const target = steden?.find((s) => s.latitude != null && s.longitude != null);
         if (!target) return null;
+        const pickup = { lat: 51.4386732, lng: 5.5223595 };
+        const dest = { lat: Number(target.latitude), lng: Number(target.longitude) };
         return (
           <section className="py-12 bg-background">
             <div className="container">
-              <AnimatedRouteMap
-                toName={target.naam}
-                toLat={Number(target.latitude)}
-                toLng={Number(target.longitude)}
-              />
+              <div className="mb-4">
+                <h2 className="font-display text-xl md:text-2xl font-bold">
+                  Route Nederland → {naam}
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Directe rit vanuit Eindhoven naar {target.naam} ({naam}), één chauffeur, zonder overslag.
+                </p>
+              </div>
+              <div className="h-[420px] rounded-2xl overflow-hidden border border-border shadow-sm">
+                <RouteMap
+                  pickupCoords={pickup}
+                  destinationCoords={dest}
+                  routeCoords={[[pickup.lat, pickup.lng], [dest.lat, dest.lng]]}
+                />
+              </div>
             </div>
           </section>
         );
