@@ -116,33 +116,33 @@ export function Header({ landNaam }: HeaderProps) {
         }`}
         aria-hidden={!menuOpen}
       >
-        {/* Backdrop */}
+        {/* Backdrop — solid very dark navy */}
         <div
-          className="absolute inset-0 bg-primary-deep/95 backdrop-blur-xl"
+          className="absolute inset-0 bg-[#020b1f]"
           onClick={close}
         />
 
         {/* Decorative gradient blobs */}
-        <div className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-primary/40 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-cta/20 blur-3xl" />
+        <div className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-primary/30 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-cta/15 blur-3xl" />
 
         {/* Content */}
         <div
-          className={`relative h-full w-full overflow-y-auto text-primary-foreground transition-transform duration-500 ${
+          className={`relative h-full w-full overflow-y-auto text-white transition-transform duration-500 ${
             menuOpen ? 'translate-y-0' : '-translate-y-4'
           }`}
         >
           {/* Top bar */}
           <div className="container flex h-20 items-center justify-between">
-            <Link to="/" onClick={close} className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/15 backdrop-blur">
-                <Truck className="h-6 w-6 text-primary-foreground" />
+            <Link to="/" onClick={close} className="flex items-center gap-3 text-white">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
+                <Truck className="h-6 w-6 text-white" />
               </div>
-              <span className="font-display text-base sm:text-lg font-bold">{siteNaam}</span>
+              <span className="font-display text-base sm:text-lg font-bold text-white">{siteNaam}</span>
             </Link>
             <button
               onClick={close}
-              className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 px-4 py-2.5 text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
               aria-label="Sluit menu"
             >
               <X className="h-5 w-5" />
@@ -155,7 +155,7 @@ export function Header({ landNaam }: HeaderProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
               {/* Quick links */}
               <div className="lg:col-span-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60 mb-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 mb-5">
                   Navigatie
                 </p>
                 <ul className="space-y-1">
@@ -166,9 +166,9 @@ export function Header({ landNaam }: HeaderProps) {
                         <Link
                           to={l.to}
                           onClick={close}
-                          className="group flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-primary-foreground/10 transition-colors"
+                          className="group flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-white/10 transition-colors text-white"
                         >
-                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground/10 group-hover:bg-primary-foreground/20 transition-colors">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
                             <Icon className="h-4 w-4" />
                           </span>
                           <span className="font-medium">{l.label}</span>
@@ -182,7 +182,7 @@ export function Header({ landNaam }: HeaderProps) {
 
               {/* Diensten */}
               <div className="lg:col-span-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60 mb-5 flex items-center gap-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 mb-5 flex items-center gap-2">
                   <Briefcase className="h-3.5 w-3.5" /> Diensten
                 </p>
                 <ul className="space-y-1">
@@ -191,7 +191,7 @@ export function Header({ landNaam }: HeaderProps) {
                       <Link
                         to={s.to}
                         onClick={close}
-                        className="group flex items-center justify-between rounded-xl px-3 py-3 hover:bg-primary-foreground/10 transition-colors"
+                        className="group flex items-center justify-between rounded-xl px-3 py-3 hover:bg-white/10 transition-colors text-white"
                       >
                         <span className="font-display text-lg">{s.label}</span>
                         <ArrowRight className="h-4 w-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
@@ -204,13 +204,13 @@ export function Header({ landNaam }: HeaderProps) {
               {/* Bestemmingen */}
               <div className="lg:col-span-5">
                 <div className="flex items-center justify-between mb-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60 flex items-center gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 flex items-center gap-2">
                     <MapPin className="h-3.5 w-3.5" /> Bestemmingen
                   </p>
                   <Link
                     to="/bestemmingen"
                     onClick={close}
-                    className="text-xs font-semibold text-primary-foreground/80 hover:text-primary-foreground inline-flex items-center gap-1"
+                    className="text-xs font-semibold text-white/80 hover:text-white inline-flex items-center gap-1"
                   >
                     Bekijk alle <ArrowRight className="h-3 w-3" />
                   </Link>
@@ -221,7 +221,7 @@ export function Header({ landNaam }: HeaderProps) {
                       <Link
                         to={`/spoedkoerier-naar/${l.slug}`}
                         onClick={close}
-                        className="group flex items-center gap-2 rounded-lg px-3 py-2.5 hover:bg-primary-foreground/10 transition-colors"
+                        className="group flex items-center gap-2 rounded-lg px-3 py-2.5 hover:bg-white/10 transition-colors text-white"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-cta group-hover:scale-150 transition-transform" />
                         <span className="text-sm font-medium">{l.naam}</span>
@@ -233,10 +233,10 @@ export function Header({ landNaam }: HeaderProps) {
             </div>
 
             {/* Footer CTAs in menu */}
-            <div className="mt-12 pt-8 border-t border-primary-foreground/15 grid gap-3 sm:grid-cols-2">
+            <div className="mt-12 pt-8 border-t border-white/15 grid gap-3 sm:grid-cols-2">
               <a
                 href={CONTACT.telefoonHref}
-                className="flex items-center justify-center gap-2 rounded-full bg-primary-foreground text-primary px-6 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
+                className="flex items-center justify-center gap-2 rounded-full bg-white text-[#020b1f] px-6 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
               >
                 <Phone className="h-4 w-4" /> Bel direct: {CONTACT.telefoon}
               </a>
