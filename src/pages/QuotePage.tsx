@@ -5,9 +5,12 @@ import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { EuropaRouteMap } from '@/components/public/EuropaRouteMap';
 import { SEOHead } from '@/components/SEOHead';
+import { useLand } from '@/hooks/useLand';
 
 const QuotePage = () => {
   const [searchParams] = useSearchParams();
+  const { land } = useLand();
+  const landNaam = land?.naam;
   const van = searchParams.get('van') || undefined;
   const naar = searchParams.get('naar') || undefined;
   const afstandStr = searchParams.get('afstand');
