@@ -13,8 +13,8 @@ const slugify = (text: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 
-// Fallback list (top 10) als Overpass faalt
-const fallbackTop10 = [
+// Vaste top 20 + veelgevraagde extra plaatsen voor selectie in admin
+const fallbackPlaatsen = [
   { naam: "Amsterdam", lat: 52.3676, lon: 4.9041 },
   { naam: "Rotterdam", lat: 51.9225, lon: 4.4792 },
   { naam: "Den Haag", lat: 52.0705, lon: 4.3007 },
@@ -25,7 +25,35 @@ const fallbackTop10 = [
   { naam: "Almere", lat: 52.3508, lon: 5.2647 },
   { naam: "Breda", lat: 51.5719, lon: 4.7683 },
   { naam: "Nijmegen", lat: 51.8126, lon: 5.8372 },
+  { naam: "Enschede", lat: 52.2215, lon: 6.8937 },
+  { naam: "Haarlem", lat: 52.3874, lon: 4.6462 },
+  { naam: "Arnhem", lat: 51.9851, lon: 5.8987 },
+  { naam: "Zaanstad", lat: 52.4570, lon: 4.7510 },
+  { naam: "Amersfoort", lat: 52.1561, lon: 5.3878 },
+  { naam: "Haarlemmermeer", lat: 52.3000, lon: 4.6667 },
+  { naam: "Apeldoorn", lat: 52.2112, lon: 5.9699 },
+  { naam: "'s-Hertogenbosch", lat: 51.6978, lon: 5.3037 },
+  { naam: "Hoofddorp", lat: 52.3061, lon: 4.6907 },
+  { naam: "Maastricht", lat: 50.8514, lon: 5.6910 },
+  { naam: "Helmond", lat: 51.4817, lon: 5.6611 },
 ];
+
+const mergeCities = (
+  primary: { naam: string; lat: number; lon: number }[],
+  fallback: { naam: string; lat: number; lon: number }[],
+  limit: number,
+) => {
+  const seen = new Set<string>();
+  const out: { naam: string; lat: number; lon: number }[] = [];
+  for (const city of [...primary, ...fallback]) {
+    const key = slugify(city.naam);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(city);
+    if (out.length >= limit) break;
+  }
+  return out;
+};
 
 async function fetchTopCitiesNL(limit = 100): Promise<{ naam: string; lat: number; lon: number }[]> {
   const query = `
@@ -70,12 +98,12 @@ out body;
         unique.push({ naam: c.naam, lat: c.lat, lon: c.lon });
         if (unique.length >= limit) break;
       }
-      if (unique.length > 0) return unique;
+      if (unique.length > 0) return mergeCities(unique, fallbackPlaatsen, limit);
     } catch (e) {
       console.error('Overpass fetch failed:', e);
     }
   }
-  return fallbackTop10;
+  return fallbackPlaatsen.slice(0, limit);
 }
 
 serve(async (req) => {
@@ -88,10 +116,10 @@ serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   );
 
-  console.log('Starting NL places import - fetching top 100 via Overpass...');
+  console.log('Starting NL places import - fetching top 20 via Overpass...');
 
   try {
-    const cities = await fetchTopCitiesNL(100);
+    const cities = await fetchTopCitiesNL(20);
     console.log(`Fetched ${cities.length} NL cities`);
 
     // Clear existing
