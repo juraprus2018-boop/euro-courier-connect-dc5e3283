@@ -155,7 +155,7 @@ export function Header({ landNaam }: HeaderProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
               {/* Quick links */}
               <div className="lg:col-span-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60 mb-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 mb-5">
                   Navigatie
                 </p>
                 <ul className="space-y-1">
@@ -166,9 +166,9 @@ export function Header({ landNaam }: HeaderProps) {
                         <Link
                           to={l.to}
                           onClick={close}
-                          className="group flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-primary-foreground/10 transition-colors"
+                          className="group flex items-center gap-3 rounded-xl px-3 py-3 hover:bg-white/10 transition-colors text-white"
                         >
-                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground/10 group-hover:bg-primary-foreground/20 transition-colors">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
                             <Icon className="h-4 w-4" />
                           </span>
                           <span className="font-medium">{l.label}</span>
