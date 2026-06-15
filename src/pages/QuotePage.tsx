@@ -24,8 +24,8 @@ const QuotePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="quote" />
-      <Header />
+      <SEOHead pageKey="quote" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1 py-12">
         <div className="container">
