@@ -163,7 +163,7 @@ const RouteDetailPage = () => {
               Spoedkoerier {nlPlaats} naar {buitenlandStad}
             </h1>
             <p className="mt-2 text-primary-foreground/90 font-semibold">
-              Koerier naar {buitenlandStad} – {landNaam}
+              Koerier naar {buitenlandStad}, {landNaam}
             </p>
             <p className="mt-3 text-primary-foreground/80 max-w-2xl">
               Spoedkoerier van {nlPlaats} naar {buitenlandStad} ({landNaam}). Eén chauffeur, één auto, rechtstreeks naar het afleveradres.
@@ -214,7 +214,7 @@ const RouteDetailPage = () => {
                   U heeft een zending die met spoed van {nlPlaats} naar {buitenlandStad} in {landNaam} moet,
                   of juist van {buitenlandStad} naar {nlPlaats}. Ontspan! Wij nemen al uw zorgen weg.
                   Wij komen de zending direct bij u ophalen en brengen die zonder omwegen direct naar
-                  uw bestemming in {buitenlandStad} – {landNaam}. Een snellere optie zult u niet vinden.
+                  uw bestemming in {buitenlandStad}, {landNaam}. Een snellere optie zult u niet vinden.
                 </p>
 
                 {(() => {
@@ -246,7 +246,7 @@ const RouteDetailPage = () => {
                           bakwagen met laadklep kan maximaal 8 europallets vervoeren waarbij het
                           gewicht maximaal 870 kg mag zijn. De laadruimte is 440cm x 215cm x 208cm
                           (L/B/H). Door beperkte beschikbaarheid (tachograaf-plicht) ontvangt u
-                          voor een bakwagen van {nlPlaats} naar {buitenlandStad} – {landNaam} een
+                          voor een bakwagen van {nlPlaats} naar {buitenlandStad}, {landNaam} een
                           prijs op maat. Vraag een offerte aan of bel ons direct.
                         </p>
                       </div>
@@ -266,9 +266,9 @@ const RouteDetailPage = () => {
                   </h3>
                   <p className="text-muted-foreground">
                     Bij De {landNaam} Koerier begrijpen we dat tijd cruciaal is. Daarom bieden wij
-                    directe leveringen van deur tot deur – zonder tussenstops of overladen. Uw
+                    directe leveringen van deur tot deur, zonder tussenstops of overladen. Uw
                     zending wordt met de hoogste prioriteit behandeld en rechtstreeks van {nlPlaats}
-                    naar {buitenlandStad} vervoerd. Snel, veilig en betrouwbaar – precies zoals u
+                    naar {buitenlandStad} vervoerd. Snel, veilig en betrouwbaar, precies zoals u
                     mag verwachten van een specialist in spoedtransport.
                   </p>
                 </div>

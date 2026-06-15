@@ -104,7 +104,7 @@ const PrijsBerekenenPage = () => {
                 Bereken je transportkosten
               </h2>
               <p className="mt-3 text-muted-foreground">
-                Vraag een vrijblijvende offerte aan — binnen 1 uur reactie.
+                Vraag een vrijblijvende offerte aan, binnen 1 uur reactie.
               </p>
             </div>
             <PrijsBerekenenForm defaultOphaalPlaats={van} defaultAfleverPlaats={naar} />

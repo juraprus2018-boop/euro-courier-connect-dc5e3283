@@ -73,7 +73,7 @@ const CertificeringenPage = () => (
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary">
                 <AlertTriangle className="h-5 w-5 text-primary-foreground" />
               </div>
-              <h2 className="font-display text-2xl font-bold">ADR – vervoer gevaarlijke stoffen</h2>
+              <h2 className="font-display text-2xl font-bold">ADR vervoer gevaarlijke stoffen</h2>
             </div>
             <div className="space-y-4 text-muted-foreground">
               <p>

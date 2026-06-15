@@ -31,7 +31,7 @@ const QuotePage = () => {
             <h1 className="font-display text-3xl md:text-4xl font-bold">Offerte spoedkoerier aanvragen</h1>
             <p className="mt-2 text-muted-foreground">
               {urgentieLabel
-                ? `Uw selectie is overgenomen — controleer en verstuur. Wij reageren binnen 1 uur.`
+                ? `Uw selectie is overgenomen. Controleer en verstuur, wij reageren binnen 1 uur.`
                 : `Vul het formulier in en ontvang binnen 1 uur een vrijblijvende offerte.`}
             </p>
           </div>

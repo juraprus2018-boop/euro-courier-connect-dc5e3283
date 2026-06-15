@@ -44,7 +44,7 @@ interface Adres {
 }
 
 const STATUS_LABEL: Record<string, string> = {
-  nieuw: 'Nieuw — wacht op behandeling',
+  nieuw: 'Nieuw, wacht op behandeling',
   in_behandeling: 'In behandeling',
   offerte_verstuurd: 'Offerte verstuurd',
   bevestigd: 'Bevestigd',

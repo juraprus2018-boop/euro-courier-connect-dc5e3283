@@ -24,7 +24,7 @@ const InternationaalTransportPage = () => (
       chauffeur die de zending ophaalt, levert hem ook af.
     </p>
     <p className="text-muted-foreground">
-      Spoedrit naar Parijs, zending naar Madrid of transport naar Warschau – we plannen het in
+      Spoedrit naar Parijs, zending naar Madrid of transport naar Warschau, wij plannen het in
       en vertrekken zo snel mogelijk. Onze bestelwagens en bakwagens met laadklep hebben
       GPS-tracking en zijn geschikt voor zendingen tot enkele honderden kilo's.
     </p>

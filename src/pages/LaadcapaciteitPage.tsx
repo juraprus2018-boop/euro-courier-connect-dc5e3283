@@ -49,7 +49,7 @@ const LaadcapaciteitPage = () => (
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">Laadcapaciteit</h1>
             <p className="text-lg text-muted-foreground">
               Bij De Europa Koerier beschikken wij over bestelwagens en bakwagens met laadklep.
-              Hierdoor vervoeren wij vrijwel elke soort zending – van kleine pakketten tot grote
+              Hierdoor vervoeren wij vrijwel elke soort zending, van kleine pakketten tot grote
               pallets. Hieronder vindt u meer informatie over de laadcapaciteit van onze voertuigen.
 
             </p>

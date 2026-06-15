@@ -62,7 +62,7 @@ const AccountLogin = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead title="Mijn account — inloggen" noindex />
+      <SEOHead title="Mijn account inloggen" noindex />
       <Header />
       <main className="flex-1 py-12">
         <div className="container max-w-md">
