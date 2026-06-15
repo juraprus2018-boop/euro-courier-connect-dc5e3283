@@ -9,7 +9,7 @@ import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
-import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
+import { AnimatedLeafletRouteMap } from '@/components/public/AnimatedLeafletRouteMap';
 import RouteMap from '@/components/public/RouteMap';
 import { formatPrijsRange } from '@/lib/prijs';
 import { SmartCTA } from '@/components/public/SmartCTA';
@@ -199,7 +199,7 @@ const LandPage = () => {
         </div>
       </section>
 
-      {/* Geanimeerde route Eindhoven → bestemming */}
+      {/* Geanimeerde Leaflet kaart Eindhoven → bestemming */}
       {(() => {
         const target = steden?.find((s) => s.latitude != null && s.longitude != null);
         if (!target) return null;
@@ -214,7 +214,7 @@ const LandPage = () => {
                   Directe rit vanuit Eindhoven naar {target.naam} ({naam}), één chauffeur, zonder overslag.
                 </p>
               </div>
-              <AnimatedRouteMap
+              <AnimatedLeafletRouteMap
                 toName={`${target.naam} (${naam})`}
                 toLat={Number(target.latitude)}
                 toLng={Number(target.longitude)}
