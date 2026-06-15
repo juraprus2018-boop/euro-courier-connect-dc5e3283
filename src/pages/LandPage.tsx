@@ -146,26 +146,100 @@ const LandPage = () => {
   const naam = land.naam;
   const externalUrl = land.domein ? `https://${land.domein.replace(/^https?:\/\//, '')}` : null;
 
-  // JSON-LD structured data
-  const jsonLd = {
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const pageUrl = `${origin}/spoedkoerier-naar/${land.slug}`;
+
+  // FAQ items voor structured data
+  const faqItems = [
+    {
+      q: `Hoe snel kan een spoedkoerier naar ${naam} vertrekken?`,
+      a: `Onze spoedkoerier naar ${naam} kan in de meeste gevallen binnen 60 minuten na uw aanvraag vertrekken vanuit Nederland. Wij zijn 24/7 bereikbaar, ook in het weekend en op feestdagen.`,
+    },
+    {
+      q: `Wat is de leveringstijd naar ${naam}?`,
+      a: `De rijtijd vanuit Nederland naar ${naam} bedraagt afhankelijk van de exacte bestemming circa 14 tot 18 uur directe rit. Wij rijden non-stop met twee chauffeurs wanneer dit nodig is.`,
+    },
+    {
+      q: `Wat moet ik aanleveren voor een rit naar ${naam}?`,
+      a: `Voor een vlotte rit naar ${naam} ontvangen wij graag: ophaal- en afleveradres, contactpersoon, afmetingen en gewicht van de zending, omschrijving van de inhoud en eventuele douanedocumenten of CMR-vrachtbrief.`,
+    },
+    {
+      q: `Is mijn zending naar ${naam} verzekerd?`,
+      a: `Ja, elke spoedrit naar ${naam} is standaard CMR-verzekerd. Voor zendingen met hogere waarde regelen wij op verzoek aanvullende goederenverzekering.`,
+    },
+  ];
+
+  // JSON-LD: Service, BreadcrumbList, FAQPage
+  const serviceLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
+    serviceType: `Spoedkoerier naar ${naam}`,
     name: `Spoedkoerier naar ${naam}`,
-    description: `Spoedkoerier en koeriersdienst van Nederland naar ${naam}. Dagelijkse ritten, directe levering.`,
+    description: `Spoedkoerier en koeriersdienst van Nederland naar ${naam}. Dagelijkse directe ritten, één vaste chauffeur, 24/7 beschikbaar.`,
+    url: pageUrl,
     provider: {
-      '@type': 'Organization',
-      name: 'De Europa Koerier',
+      '@type': 'LocalBusiness',
+      '@id': `${origin}/#organization`,
+      name: CONTACT.bedrijf,
       telephone: CONTACT.telefoon,
       email: CONTACT.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: CONTACT.adres,
+        postalCode: CONTACT.postcode,
+        addressLocality: CONTACT.plaats,
+        addressCountry: 'NL',
+      },
     },
-    areaServed: { '@type': 'Country', name: naam },
+    areaServed: [
+      { '@type': 'Country', name: 'Netherlands' },
+      { '@type': 'Country', name: naam },
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `Spoedkoerier ritten naar ${naam}`,
+      itemListElement: (topRoutes || []).slice(0, 6).map((r: any) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: `Spoedkoerier ${r.nl_plaats?.naam} naar ${r.buitenland_stad?.naam}`,
+          url: `${origin}/route/${r.slug}`,
+        },
+      })),
+    },
+  };
+
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: origin || '/' },
+      { '@type': 'ListItem', position: 2, name: 'Bestemmingen', item: `${origin}/bestemmingen` },
+      { '@type': 'ListItem', position: 3, name: naam, item: pageUrl },
+    ],
+  };
+
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   };
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        pageKey="land_detail"
+        landNaam={naam}
+        variables={{ land: naam }}
+        canonicalPath={`/spoedkoerier-naar/${land.slug}`}
+        jsonLd={[serviceLd, breadcrumbLd, faqLd]}
+      />
       <Header landNaam={activeLand?.naam} />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
       <section className="bg-gradient-hero text-primary-foreground py-16">
