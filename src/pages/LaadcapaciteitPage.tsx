@@ -115,7 +115,7 @@ const LaadcapaciteitPage = () => {
                 <Button asChild size="lg" variant="secondary">
                   <Link to="/offerte">Offerte aanvragen</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent">
+                <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 hover:text-white">
                   <Link to="/contact">Neem contact op</Link>
                 </Button>
               </div>
