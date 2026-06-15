@@ -93,14 +93,63 @@ const BestemmingDetailPage = () => {
     { icon: Phone, title: '24/7 bereikbaar', desc: 'Onze planning staat dag en nacht voor u klaar.' },
   ];
 
+  // Rich snippets (JSON-LD): Service + Breadcrumb + FAQPage
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const pageUrl = `${origin}/bestemming/${stad.slug}`;
+  const faqItems = [
+    { q: `Hoe snel rijdt u naar ${stadNaam}?`, a: `Onze spoedkoerier rijdt binnen 60 minuten uit naar ${stadNaam}. Wij zijn 24/7 bereikbaar voor directe ritten vanuit heel Nederland.` },
+    { q: `Is mijn zending naar ${stadNaam} verzekerd?`, a: `Ja, alle ritten naar ${stadNaam} zijn standaard CMR-verzekerd. Aanvullende goederenverzekering is op aanvraag mogelijk.` },
+    { q: `Kan ik 's nachts laten ophalen voor ${stadNaam}?`, a: `Ja, wij rijden 24/7 naar ${stadNaam}, inclusief 's nachts, weekend en feestdagen.` },
+    { q: `Wat vervoeren jullie naar ${stadNaam}?`, a: `Documenten, pakketten, pallets, machine-onderdelen, medische zendingen en bestelbusladingen — alles wat in een bestelbus past, vervoeren wij direct naar ${stadNaam}.` },
+  ];
+  const bestemmingJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      serviceType: `Spoedkoerier naar ${stadNaam}`,
+      name: `Spoedkoerier naar ${stadNaam}${landNaam ? ', ' + landNaam : ''}`,
+      description: `Directe spoedkoerier vanuit Nederland naar ${stadNaam}${landNaam ? ' (' + landNaam + ')' : ''}. Eén vaste chauffeur, 24/7 beschikbaar.`,
+      url: pageUrl,
+      areaServed: [{ '@type': 'City', name: stadNaam }, landNaam ? { '@type': 'Country', name: landNaam } : null].filter(Boolean),
+      provider: {
+        '@type': 'LocalBusiness',
+        '@id': `${origin}/#organization`,
+        name: 'De Europa Koerier',
+        telephone: '+31857602999',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: origin || '/' },
+        { '@type': 'ListItem', position: 2, name: 'Bestemmingen', item: `${origin}/bestemmingen` },
+        { '@type': 'ListItem', position: 3, name: stadNaam, item: pageUrl },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
         pageKey="bestemming_detail"
         landNaam={landNaam || undefined}
         variables={{ stad: stadNaam, land: landNaam }}
+        canonicalPath={`/bestemming/${stad.slug}`}
+        jsonLd={bestemmingJsonLd}
       />
       <Header landNaam={land?.naam} />
+
+
 
       <main className="flex-1">
         {/* HERO */}
