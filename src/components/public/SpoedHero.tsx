@@ -116,8 +116,8 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
                     <Zap className="h-5 w-5 text-primary" />
                   </span>
-                  <span className="text-sm">
-                    <strong className="block">Binnen 60 minuten ophalen</strong>
+                  <span className="text-base">
+                    <strong className="block text-lg">Binnen 60 minuten ophalen</strong>
                     <span className="text-muted-foreground">Bij spoed staan wij direct klaar, 7 dagen per week.</span>
                   </span>
                 </li>
@@ -125,8 +125,8 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
                     <ShieldCheck className="h-5 w-5 text-primary" />
                   </span>
-                  <span className="text-sm">
-                    <strong className="block">Eigen ervaren chauffeurs</strong>
+                  <span className="text-base">
+                    <strong className="block text-lg">Eigen ervaren chauffeurs</strong>
                     <span className="text-muted-foreground">Geen onderaannemers, geen overslag. Persoonlijk contact met de chauffeur.</span>
                   </span>
                 </li>
@@ -134,15 +134,15 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
                     <Wallet className="h-5 w-5 text-primary" />
                   </span>
-                  <span className="text-sm">
-                    <strong className="block">Transparante kilometerprijs</strong>
+                  <span className="text-base">
+                    <strong className="block text-lg">Transparante kilometerprijs</strong>
                     <span className="text-muted-foreground">Vooraf duidelijk, geen verrassingen achteraf.</span>
                   </span>
                 </li>
               </ul>
               <Link
                 to="/offerte"
-                className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-md hover:bg-primary/90 transition-all"
               >
                 Direct offerte aanvragen <ArrowRight className="h-4 w-4" />
               </Link>
