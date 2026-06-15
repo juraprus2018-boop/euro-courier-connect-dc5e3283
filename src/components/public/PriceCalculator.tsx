@@ -12,7 +12,7 @@ import { useTarieven } from '@/hooks/useTarieven';
 import { CONTACT } from '@/lib/contact';
 
 const RouteMap = lazy(() => import('./RouteMap'));
-import { AnimatedRouteMap } from './AnimatedRouteMap';
+import { AnimatedLeafletRouteMap } from './AnimatedLeafletRouteMap';
 
 interface Coordinates {
   lat: number;
@@ -291,12 +291,15 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
           <Card className="border-2 overflow-hidden">
             <CardContent className="p-0">
               {destinationCoords ? (
-                <AnimatedRouteMap
+                <AnimatedLeafletRouteMap
                   fromName={pickupAddress || 'Eindhoven'}
+                  fromLat={pickupCoords?.lat}
+                  fromLng={pickupCoords?.lng}
                   toName={destinationAddress || 'Bestemming'}
                   toLat={destinationCoords.lat}
                   toLng={destinationCoords.lng}
                   rijtijdMinuten={duration ?? undefined}
+                  showStats={false}
                 />
               ) : (
                 <div className="h-[500px] flex flex-col items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10 text-center p-8">
