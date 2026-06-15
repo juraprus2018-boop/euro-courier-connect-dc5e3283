@@ -289,18 +289,21 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
           </Card>
 
           <Card className="border-2 overflow-hidden">
-            <CardContent className="p-0 h-[500px]">
-              <Suspense fallback={
-                <div className="h-full flex items-center justify-center bg-muted">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-              }>
-                <RouteMap 
-                  pickupCoords={pickupCoords}
-                  destinationCoords={destinationCoords}
-                  routeCoords={routeCoords}
+            <CardContent className="p-0">
+              {destinationCoords ? (
+                <AnimatedRouteMap
+                  fromName={pickupAddress || 'Eindhoven'}
+                  toName={destinationAddress || 'Bestemming'}
+                  toLat={destinationCoords.lat}
+                  toLng={destinationCoords.lng}
+                  rijtijdMinuten={duration ?? undefined}
                 />
-              </Suspense>
+              ) : (
+                <div className="h-[500px] flex flex-col items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10 text-center p-8">
+                  <Truck className="h-12 w-12 text-primary/40 mb-3" />
+                  <p className="text-muted-foreground">Vul uw adressen in en bereken de prijs om de route te zien.</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
