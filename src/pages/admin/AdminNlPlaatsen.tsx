@@ -172,7 +172,7 @@ const AdminNlPlaatsen = () => {
             </Button>
           </div>
         </div>
-        </div>
+
 
         <div className="flex items-center gap-4">
           <div className="relative flex-1 max-w-sm">
