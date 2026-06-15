@@ -89,31 +89,8 @@ const LandPage = () => {
     enabled: !!land?.id,
   });
 
-  // SEO meta tags (basis — SEOHead component levert verdere head-tags)
-  useEffect(() => {
-    if (!land) return;
-    const title = land.meta_title || `Spoedkoerier naar ${land.naam} | Koerier naar ${land.naam} - 24/7`;
-    const desc =
-      land.meta_description ||
-      `Spoedkoerier naar ${land.naam} nodig? Dagelijks vanuit Nederland. Koerier naar ${land.naam}, direct, betrouwbaar en snel. Vraag nu uw offerte aan.`;
-    document.title = title;
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', desc);
+  // SEO wordt nu volledig door <SEOHead /> afgehandeld (zie return JSX hieronder).
 
-    // canonical
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', `${window.location.origin}/spoedkoerier-naar/${land.slug}`);
-  }, [land]);
 
 
   if (landLoading || isLoading) {
