@@ -183,8 +183,8 @@ const RouteDetailPage = () => {
                       <Truck className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Afstand</p>
-                      <p className="font-display text-2xl font-bold">{Number(route.afstand_km).toLocaleString('nl-NL')} km</p>
+                      <p className="text-sm text-muted-foreground">Directe rit</p>
+                      <p className="font-display text-2xl font-bold">Eén chauffeur</p>
                     </div>
                   </div>
                 </CardContent>
