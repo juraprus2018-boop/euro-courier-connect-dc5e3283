@@ -381,7 +381,7 @@ const BestemmingDetailPage = () => {
                           {route.nl_plaats?.naam} &rarr; {stadNaam}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {route.afstand_km} km
+                          Directe rit, vaste chauffeur
                         </p>
                       </div>
                     </div>
