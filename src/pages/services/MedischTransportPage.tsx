@@ -6,11 +6,11 @@ const MedischTransportPage = () => (
     metaTitle="Medisch transport | De Europa Koerier"
     metaDescription="Spoed medisch transport door heel Europa: medicatie, monsters, organen, medische apparatuur. 24/7 direct van A naar B."
     badge="Medisch transport"
-    title="Medisch transport – snel, veilig en op tijd"
-    intro="In de medische sector telt elke minuut. Wij verzorgen spoedtransport van medicatie, laboratoriummonsters, medische apparatuur en andere kritieke zendingen voor ziekenhuizen, laboratoria en farmaceutische bedrijven – 24 uur per dag, 7 dagen per week."
+    title="Medisch transport: snel, veilig en op tijd"
+    intro="In de medische sector telt elke minuut. Wij verzorgen spoedtransport van medicatie, laboratoriummonsters, medische apparatuur en andere kritieke zendingen voor ziekenhuizen, laboratoria en farmaceutische bedrijven, 24 uur per dag, 7 dagen per week."
     icon={HeartPulse}
     features={[
-      { title: '24/7 spoeddienst', description: 'Onze koeriers staan dag en nacht klaar voor medische spoedritten – ook in het weekend en op feestdagen.' },
+      { title: '24/7 spoeddienst', description: 'Onze koeriers staan dag en nacht klaar voor medische spoedritten, ook in het weekend en op feestdagen.' },
       { title: 'Direct van A naar B', description: 'Geen overslag, geen vertraging. Uw zending wordt direct van ophaal- naar afleveradres gebracht.' },
       { title: 'Geconditioneerd vervoer', description: 'Op verzoek vervoer onder temperatuurcontrole (gekoeld of bevroren) voor medicatie en monsters.' },
       { title: 'Discreet en hygiënisch', description: 'Onze chauffeurs werken volgens de geldende protocollen voor medisch transport.' },
@@ -27,7 +27,7 @@ const MedischTransportPage = () => (
     </p>
     <p className="text-muted-foreground">
       Wij rijden direct, zonder overslag, zodat uw zending zo snel mogelijk bij de patiënt of het
-      lab is. Bel ons voor een spoedrit – ook 's nachts en in het weekend zijn wij bereikbaar.
+      lab is. Bel ons voor een spoedrit, ook 's nachts en in het weekend zijn wij bereikbaar.
     </p>
   </ServicePageLayout>
 );

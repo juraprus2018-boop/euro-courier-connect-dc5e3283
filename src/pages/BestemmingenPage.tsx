@@ -64,7 +64,7 @@ const BestemmingenPage = () => {
               Dit zijn niet alle bestemmingen
             </h2>
             <p className="mt-2 text-muted-foreground max-w-3xl">
-              Onderstaande steden zijn een selectie van populaire bestemmingen. <strong>Wij rijden naar elke plaats binnen heel Europa</strong> — van klein dorp tot grote stad. Staat uw bestemming er niet tussen? Vraag gewoon een vrijblijvende offerte aan, wij regelen het.
+              Onderstaande steden zijn een selectie van populaire bestemmingen. <strong>Wij rijden naar elke plaats binnen heel Europa</strong>, van klein dorp tot grote stad. Staat uw bestemming er niet tussen? Vraag gewoon een vrijblijvende offerte aan, wij regelen het.
             </p>
             <div className="mt-5">
               <Button asChild size="lg">

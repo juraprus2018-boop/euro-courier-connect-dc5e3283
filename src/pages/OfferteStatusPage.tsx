@@ -48,7 +48,7 @@ function useCountdown(target: Date | null) {
   }, [target?.getTime()]);
   if (!target) return null;
   const ms = target.getTime() - now.getTime();
-  if (ms <= 0) return { expired: true, label: 'Reactietijd verstreken — wij nemen z.s.m. contact op' };
+  if (ms <= 0) return { expired: true, label: 'Reactietijd verstreken, wij nemen z.s.m. contact op' };
   const min = Math.floor(ms / 60000);
   const sec = Math.floor((ms % 60000) / 1000);
   return { expired: false, label: `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}` };

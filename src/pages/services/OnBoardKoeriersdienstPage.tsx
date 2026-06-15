@@ -6,15 +6,15 @@ const OnBoardKoeriersdienstPage = () => (
     metaTitle="On-Board Koeriersdienst (OBC) | De Europa Koerier"
     metaDescription="On-Board Courier service: een persoonlijke koerier reist mee met uw zending in het vliegtuig of voertuig. Maximale snelheid en zekerheid wereldwijd."
     badge="On-Board Koeriersdienst"
-    title="On-Board Koeriersdienst (OBC) – persoonlijke begeleiding"
-    intro="Wanneer er geen ruimte is voor risico, sturen wij een persoonlijke koerier met uw zending mee. Onze On-Board Couriers reizen met de eerstvolgende vlucht of vertrekken direct met de auto – en houden uw zending van ophaal tot aflevering onafgebroken in eigen hand."
+    title="On-Board Koeriersdienst (OBC) met persoonlijke begeleiding"
+    intro="Wanneer er geen ruimte is voor risico, sturen wij een persoonlijke koerier met uw zending mee. Onze On-Board Couriers reizen met de eerstvolgende vlucht of vertrekken direct met de auto. Zo houden wij uw zending van ophaal tot aflevering onafgebroken in eigen hand."
     icon={Plane}
     features={[
       { title: 'Persoonlijke koerier', description: 'Eén vaste koerier reist mee met uw zending van het ophaaladres tot aan de bestemming.' },
       { title: 'Snelste optie', description: 'Wij boeken de eerstvolgende vlucht of vertrekken direct per auto. Sneller dan reguliere expresdiensten.' },
       { title: 'Maximale zekerheid', description: 'Uw zending wordt nooit uit het oog verloren. Geen overslag, geen risico op verlies.' },
       { title: 'Wereldwijd inzetbaar', description: 'Niet alleen Europa: onze OBC-koeriers vliegen ook intercontinentaal voor uw spoedzending.' },
-      { title: 'Realtime updates', description: 'U ontvangt updates van vertrek, transfer en aankomst – stap voor stap.' },
+      { title: 'Realtime updates', description: 'U ontvangt updates van vertrek, transfer en aankomst, stap voor stap.' },
       { title: 'Waardevolle zendingen', description: 'Geschikt voor prototypes, monsters, juwelen, contracten en andere onmisbare goederen.' },
     ]}
   >
@@ -28,7 +28,7 @@ const OnBoardKoeriersdienstPage = () => (
     <p className="text-muted-foreground">
       Onze koerier haalt uw zending persoonlijk op, reist mee in cabine of voertuig en levert
       direct af bij de eindbestemming. U weet exact waar uw zending is, op elk moment. Bel ons
-      voor de planning – wij vertrekken indien nodig binnen het uur.
+      voor de planning. Wij vertrekken indien nodig binnen het uur.
     </p>
   </ServicePageLayout>
 );
