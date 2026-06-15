@@ -152,11 +152,6 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
   };
 
   const calculatedPrice = distance ? Math.round(distance * kmTarief) : null;
-  const formattedDuration = duration 
-    ? duration >= 60 
-      ? `${Math.floor(duration / 60)}u ${Math.round(duration % 60)}min`
-      : `${Math.round(duration)} min`
-    : null;
 
   return (
     <section className="py-16 lg:py-24">
