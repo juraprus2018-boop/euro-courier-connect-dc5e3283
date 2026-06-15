@@ -13,6 +13,7 @@ import { AnimatedLeafletRouteMap } from '@/components/public/AnimatedLeafletRout
 import RouteMap from '@/components/public/RouteMap';
 import { formatPrijsRange } from '@/lib/prijs';
 import { SmartCTA } from '@/components/public/SmartCTA';
+import { SEOHead } from '@/components/SEOHead';
 
 const LandPage = () => {
   const { landSlug } = useParams<{ landSlug: string }>();
