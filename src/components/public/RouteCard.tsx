@@ -31,7 +31,7 @@ export function RouteCard({ nlPlaats, buitenlandStad, afstandKm, prijs, slug, la
             </div>
             
             <div className="text-right">
-              <p className="font-display font-bold text-lg text-primary">{afstandKm} km</p>
+              <ArrowRight className="h-5 w-5 text-primary group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
         </CardContent>
