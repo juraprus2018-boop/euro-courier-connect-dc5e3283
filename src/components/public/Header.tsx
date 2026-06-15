@@ -182,7 +182,7 @@ export function Header({ landNaam }: HeaderProps) {
 
               {/* Diensten */}
               <div className="lg:col-span-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60 mb-5 flex items-center gap-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 mb-5 flex items-center gap-2">
                   <Briefcase className="h-3.5 w-3.5" /> Diensten
                 </p>
                 <ul className="space-y-1">
@@ -191,7 +191,7 @@ export function Header({ landNaam }: HeaderProps) {
                       <Link
                         to={s.to}
                         onClick={close}
-                        className="group flex items-center justify-between rounded-xl px-3 py-3 hover:bg-primary-foreground/10 transition-colors"
+                        className="group flex items-center justify-between rounded-xl px-3 py-3 hover:bg-white/10 transition-colors text-white"
                       >
                         <span className="font-display text-lg">{s.label}</span>
                         <ArrowRight className="h-4 w-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
