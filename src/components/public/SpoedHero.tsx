@@ -116,8 +116,8 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
                   <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary-soft">
                     <Zap className="h-5 w-5 text-primary" />
                   </span>
-                  <span className="text-sm">
-                    <strong className="block">Binnen 60 minuten ophalen</strong>
+                  <span className="text-base">
+                    <strong className="block text-lg">Binnen 60 minuten ophalen</strong>
                     <span className="text-muted-foreground">Bij spoed staan wij direct klaar, 7 dagen per week.</span>
                   </span>
                 </li>
