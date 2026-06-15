@@ -134,15 +134,15 @@ export function Header({ landNaam }: HeaderProps) {
         >
           {/* Top bar */}
           <div className="container flex h-20 items-center justify-between">
-            <Link to="/" onClick={close} className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/15 backdrop-blur">
-                <Truck className="h-6 w-6 text-primary-foreground" />
+            <Link to="/" onClick={close} className="flex items-center gap-3 text-white">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
+                <Truck className="h-6 w-6 text-white" />
               </div>
-              <span className="font-display text-base sm:text-lg font-bold">{siteNaam}</span>
+              <span className="font-display text-base sm:text-lg font-bold text-white">{siteNaam}</span>
             </Link>
             <button
               onClick={close}
-              className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 px-4 py-2.5 text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 px-4 py-2.5 text-sm font-semibold text-white transition-colors"
               aria-label="Sluit menu"
             >
               <X className="h-5 w-5" />
