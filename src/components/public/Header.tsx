@@ -204,13 +204,13 @@ export function Header({ landNaam }: HeaderProps) {
               {/* Bestemmingen */}
               <div className="lg:col-span-5">
                 <div className="flex items-center justify-between mb-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground/60 flex items-center gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 flex items-center gap-2">
                     <MapPin className="h-3.5 w-3.5" /> Bestemmingen
                   </p>
                   <Link
                     to="/bestemmingen"
                     onClick={close}
-                    className="text-xs font-semibold text-primary-foreground/80 hover:text-primary-foreground inline-flex items-center gap-1"
+                    className="text-xs font-semibold text-white/80 hover:text-white inline-flex items-center gap-1"
                   >
                     Bekijk alle <ArrowRight className="h-3 w-3" />
                   </Link>
@@ -221,7 +221,7 @@ export function Header({ landNaam }: HeaderProps) {
                       <Link
                         to={`/spoedkoerier-naar/${l.slug}`}
                         onClick={close}
-                        className="group flex items-center gap-2 rounded-lg px-3 py-2.5 hover:bg-primary-foreground/10 transition-colors"
+                        className="group flex items-center gap-2 rounded-lg px-3 py-2.5 hover:bg-white/10 transition-colors text-white"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-cta group-hover:scale-150 transition-transform" />
                         <span className="text-sm font-medium">{l.naam}</span>
