@@ -50,12 +50,18 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const AnalyticsTracker = () => {
+  useAnalytics();
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AnalyticsTracker />
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
