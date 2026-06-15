@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+// React imports niet meer nodig — SEO via <SEOHead />
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -9,10 +9,11 @@ import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, ArrowRight, Truck, Clock, ShieldCheck, Phone } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
-import { AnimatedRouteMap } from '@/components/public/AnimatedRouteMap';
+import { AnimatedLeafletRouteMap } from '@/components/public/AnimatedLeafletRouteMap';
 import RouteMap from '@/components/public/RouteMap';
 import { formatPrijsRange } from '@/lib/prijs';
 import { SmartCTA } from '@/components/public/SmartCTA';
+import { SEOHead } from '@/components/SEOHead';
 
 const LandPage = () => {
   const { landSlug } = useParams<{ landSlug: string }>();
@@ -88,31 +89,8 @@ const LandPage = () => {
     enabled: !!land?.id,
   });
 
-  // SEO meta tags (basis — SEOHead component levert verdere head-tags)
-  useEffect(() => {
-    if (!land) return;
-    const title = land.meta_title || `Spoedkoerier naar ${land.naam} | Koerier naar ${land.naam} - 24/7`;
-    const desc =
-      land.meta_description ||
-      `Spoedkoerier naar ${land.naam} nodig? Dagelijks vanuit Nederland. Koerier naar ${land.naam}, direct, betrouwbaar en snel. Vraag nu uw offerte aan.`;
-    document.title = title;
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', desc);
+  // SEO wordt nu volledig door <SEOHead /> afgehandeld (zie return JSX hieronder).
 
-    // canonical
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', `${window.location.origin}/spoedkoerier-naar/${land.slug}`);
-  }, [land]);
 
 
   if (landLoading || isLoading) {
@@ -146,26 +124,100 @@ const LandPage = () => {
   const naam = land.naam;
   const externalUrl = land.domein ? `https://${land.domein.replace(/^https?:\/\//, '')}` : null;
 
-  // JSON-LD structured data
-  const jsonLd = {
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const pageUrl = `${origin}/spoedkoerier-naar/${land.slug}`;
+
+  // FAQ items voor structured data
+  const faqItems = [
+    {
+      q: `Hoe snel kan een spoedkoerier naar ${naam} vertrekken?`,
+      a: `Onze spoedkoerier naar ${naam} kan in de meeste gevallen binnen 60 minuten na uw aanvraag vertrekken vanuit Nederland. Wij zijn 24/7 bereikbaar, ook in het weekend en op feestdagen.`,
+    },
+    {
+      q: `Wat is de leveringstijd naar ${naam}?`,
+      a: `De rijtijd vanuit Nederland naar ${naam} bedraagt afhankelijk van de exacte bestemming circa 14 tot 18 uur directe rit. Wij rijden non-stop met twee chauffeurs wanneer dit nodig is.`,
+    },
+    {
+      q: `Wat moet ik aanleveren voor een rit naar ${naam}?`,
+      a: `Voor een vlotte rit naar ${naam} ontvangen wij graag: ophaal- en afleveradres, contactpersoon, afmetingen en gewicht van de zending, omschrijving van de inhoud en eventuele douanedocumenten of CMR-vrachtbrief.`,
+    },
+    {
+      q: `Is mijn zending naar ${naam} verzekerd?`,
+      a: `Ja, elke spoedrit naar ${naam} is standaard CMR-verzekerd. Voor zendingen met hogere waarde regelen wij op verzoek aanvullende goederenverzekering.`,
+    },
+  ];
+
+  // JSON-LD: Service, BreadcrumbList, FAQPage
+  const serviceLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
+    serviceType: `Spoedkoerier naar ${naam}`,
     name: `Spoedkoerier naar ${naam}`,
-    description: `Spoedkoerier en koeriersdienst van Nederland naar ${naam}. Dagelijkse ritten, directe levering.`,
+    description: `Spoedkoerier en koeriersdienst van Nederland naar ${naam}. Dagelijkse directe ritten, één vaste chauffeur, 24/7 beschikbaar.`,
+    url: pageUrl,
     provider: {
-      '@type': 'Organization',
-      name: 'De Europa Koerier',
+      '@type': 'LocalBusiness',
+      '@id': `${origin}/#organization`,
+      name: CONTACT.bedrijf,
       telephone: CONTACT.telefoon,
       email: CONTACT.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: CONTACT.adres,
+        postalCode: CONTACT.postcode,
+        addressLocality: CONTACT.plaats,
+        addressCountry: 'NL',
+      },
     },
-    areaServed: { '@type': 'Country', name: naam },
+    areaServed: [
+      { '@type': 'Country', name: 'Netherlands' },
+      { '@type': 'Country', name: naam },
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `Spoedkoerier ritten naar ${naam}`,
+      itemListElement: (topRoutes || []).slice(0, 6).map((r: any) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: `Spoedkoerier ${r.nl_plaats?.naam} naar ${r.buitenland_stad?.naam}`,
+          url: `${origin}/route/${r.slug}`,
+        },
+      })),
+    },
+  };
+
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: origin || '/' },
+      { '@type': 'ListItem', position: 2, name: 'Bestemmingen', item: `${origin}/bestemmingen` },
+      { '@type': 'ListItem', position: 3, name: naam, item: pageUrl },
+    ],
+  };
+
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   };
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        pageKey="land_detail"
+        landNaam={naam}
+        variables={{ land: naam }}
+        canonicalPath={`/spoedkoerier-naar/${land.slug}`}
+        jsonLd={[serviceLd, breadcrumbLd, faqLd]}
+      />
       <Header landNaam={activeLand?.naam} />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
       <section className="bg-gradient-hero text-primary-foreground py-16">
@@ -199,7 +251,7 @@ const LandPage = () => {
         </div>
       </section>
 
-      {/* Geanimeerde route Eindhoven → bestemming */}
+      {/* Geanimeerde Leaflet kaart Eindhoven → bestemming */}
       {(() => {
         const target = steden?.find((s) => s.latitude != null && s.longitude != null);
         if (!target) return null;
@@ -214,7 +266,7 @@ const LandPage = () => {
                   Directe rit vanuit Eindhoven naar {target.naam} ({naam}), één chauffeur, zonder overslag.
                 </p>
               </div>
-              <AnimatedRouteMap
+              <AnimatedLeafletRouteMap
                 toName={`${target.naam} (${naam})`}
                 toLat={Number(target.latitude)}
                 toLng={Number(target.longitude)}
