@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Truck, Package } from 'lucide-react';
 import citan from '@/assets/citan.webp';
 import bakwagen from '@/assets/bakwagen.webp';
+import { useLand } from '@/hooks/useLand';
 
 const voertuigen = [
   {
@@ -34,92 +35,97 @@ const voertuigen = [
 ];
 
 
-const LaadcapaciteitPage = () => (
-  <HelmetProvider>
-    <SEOHead pageKey="laadcapaciteit" />
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <div className="container py-8">
-          <PageBreadcrumb items={[{ label: 'Laadcapaciteit' }]} />
-        </div>
+const LaadcapaciteitPage = () => {
+  const { land } = useLand();
+  const landNaam = land?.naam;
 
-        <section className="container pb-12">
-          <div className="max-w-3xl">
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">Laadcapaciteit</h1>
-            <p className="text-lg text-muted-foreground">
-              Bij De Europa Koerier beschikken wij over bestelwagens en bakwagens met laadklep.
-              Hierdoor vervoeren wij vrijwel elke soort zending, van kleine pakketten tot grote
-              pallets. Hieronder vindt u meer informatie over de laadcapaciteit van onze voertuigen.
-
-            </p>
+  return (
+    <HelmetProvider>
+      <SEOHead pageKey="laadcapaciteit" landNaam={landNaam} />
+      <div className="min-h-screen flex flex-col">
+        <Header landNaam={landNaam} />
+        <main className="flex-1">
+          <div className="container py-8">
+            <PageBreadcrumb items={[{ label: 'Laadcapaciteit' }]} />
           </div>
-        </section>
 
-        <section className="container space-y-12 pb-16">
-          {voertuigen.map((v, i) => {
-            const Icon = v.icon;
-            return (
-              <Card key={v.naam} className="overflow-hidden">
-                <div className={`grid md:grid-cols-2 gap-0 ${i % 2 === 1 ? 'md:[&>div:first-child]:order-2' : ''}`}>
-                  <div className="bg-muted flex items-center justify-center p-6">
-                    <img
-                      src={v.afbeelding}
-                      alt={`${v.naam} van De Europa Koerier`}
-                      loading="lazy"
-                      className="w-full h-auto object-contain max-h-80"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary">
-                        <Icon className="h-5 w-5 text-primary-foreground" />
-                      </div>
-                      <h2 className="font-display text-2xl font-bold">{v.naam}</h2>
-                    </div>
-                    <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4 text-sm">
-                      <div>
-                        <dt className="text-muted-foreground">Laadvermogen</dt>
-                        <dd className="font-semibold">{v.laadvermogen}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-muted-foreground">Afmetingen (L×B×H)</dt>
-                        <dd className="font-semibold">{v.afmetingen}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-muted-foreground">Pallets</dt>
-                        <dd className="font-semibold">{v.pallets}</dd>
-                      </div>
-                    </dl>
-                    <p className="text-muted-foreground">{v.beschrijving}</p>
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
-        </section>
+          <section className="container pb-12">
+            <div className="max-w-3xl">
+              <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">Laadcapaciteit</h1>
+              <p className="text-lg text-muted-foreground">
+                Bij De Europa Koerier beschikken wij over bestelwagens en bakwagens met laadklep.
+                Hierdoor vervoeren wij vrijwel elke soort zending, van kleine pakketten tot grote
+                pallets. Hieronder vindt u meer informatie over de laadcapaciteit van onze voertuigen.
 
-        <section className="container pb-20">
-          <Card className="p-8 md:p-12 text-center bg-gradient-primary text-primary-foreground">
-            <h2 className="font-display text-3xl font-bold mb-4">Vragen over de laadcapaciteit?</h2>
-            <p className="mb-6 max-w-2xl mx-auto opacity-90">
-              Onze voertuigen zijn goed onderhouden en uitgerust om uw zending veilig en snel op
-              de bestemming te krijgen. Neem contact op of vraag direct een offerte aan.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Button asChild size="lg" variant="secondary">
-                <Link to="/offerte">Offerte aanvragen</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="bg-transparent">
-                <Link to="/contact">Neem contact op</Link>
-              </Button>
+              </p>
             </div>
-          </Card>
-        </section>
-      </main>
-      <Footer />
-    </div>
-  </HelmetProvider>
-);
+          </section>
+
+          <section className="container space-y-12 pb-16">
+            {voertuigen.map((v, i) => {
+              const Icon = v.icon;
+              return (
+                <Card key={v.naam} className="overflow-hidden">
+                  <div className={`grid md:grid-cols-2 gap-0 ${i % 2 === 1 ? 'md:[&>div:first-child]:order-2' : ''}`}>
+                    <div className="bg-muted flex items-center justify-center p-6">
+                      <img
+                        src={v.afbeelding}
+                        alt={`${v.naam} van De Europa Koerier`}
+                        loading="lazy"
+                        className="w-full h-auto object-contain max-h-80"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary">
+                          <Icon className="h-5 w-5 text-primary-foreground" />
+                        </div>
+                        <h2 className="font-display text-2xl font-bold">{v.naam}</h2>
+                      </div>
+                      <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4 text-sm">
+                        <div>
+                          <dt className="text-muted-foreground">Laadvermogen</dt>
+                          <dd className="font-semibold">{v.laadvermogen}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-muted-foreground">Afmetingen (L×B×H)</dt>
+                          <dd className="font-semibold">{v.afmetingen}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-muted-foreground">Pallets</dt>
+                          <dd className="font-semibold">{v.pallets}</dd>
+                        </div>
+                      </dl>
+                      <p className="text-muted-foreground">{v.beschrijving}</p>
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
+          </section>
+
+          <section className="container pb-20">
+            <Card className="p-8 md:p-12 text-center bg-gradient-primary text-primary-foreground">
+              <h2 className="font-display text-3xl font-bold mb-4">Vragen over de laadcapaciteit?</h2>
+              <p className="mb-6 max-w-2xl mx-auto opacity-90">
+                Onze voertuigen zijn goed onderhouden en uitgerust om uw zending veilig en snel op
+                de bestemming te krijgen. Neem contact op of vraag direct een offerte aan.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <Button asChild size="lg" variant="secondary">
+                  <Link to="/offerte">Offerte aanvragen</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="bg-transparent">
+                  <Link to="/contact">Neem contact op</Link>
+                </Button>
+              </div>
+            </Card>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    </HelmetProvider>
+  );
+};
 
 export default LaadcapaciteitPage;

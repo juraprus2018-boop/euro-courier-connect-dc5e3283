@@ -4,6 +4,7 @@ import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { SEOHead } from '@/components/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CONTACT } from '@/lib/contact';
+import { useLand } from '@/hooks/useLand';
 
 const faq = [
   {
@@ -48,10 +49,13 @@ const faq = [
 ];
 
 const FaqPage = () => {
+  const { land } = useLand();
+  const landNaam = land?.naam;
+
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="faq" />
-      <Header />
+      <SEOHead pageKey="faq" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1 py-12">
         <div className="container">

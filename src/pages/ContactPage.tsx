@@ -5,12 +5,16 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Phone, Mail, MapPin, Clock, Building2 } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { SEOHead } from '@/components/SEOHead';
+import { useLand } from '@/hooks/useLand';
 
 const ContactPage = () => {
+  const { land } = useLand();
+  const landNaam = land?.naam;
+
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="contact" />
-      <Header />
+      <SEOHead pageKey="contact" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
       
       <main className="flex-1 py-12">
         <div className="container">
