@@ -111,7 +111,7 @@ serve(async (req) => {
 
   const depotLat = parseFloat(settings.depot_latitude || '51.4386732');
   const depotLon = parseFloat(settings.depot_longitude || '5.5223595');
-  const kmTarief = land.km_tarief || parseFloat(settings.km_tarief || '0.50');
+  const kmTarief = parseFloat(settings.km_tarief || '0.50');
 
   console.log(`Settings: km_tarief=${kmTarief}, depot=${depotLat},${depotLon}`);
 

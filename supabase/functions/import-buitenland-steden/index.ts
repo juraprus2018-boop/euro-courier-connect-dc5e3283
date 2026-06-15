@@ -72,7 +72,7 @@ const countryCodeMap: Record<string, string> = {
 };
 
 // Top 10 largest cities per country (by population)
-const top10CitiesByCountry: Record<string, { name: string; lat: number; lon: number }[]> = {
+const fallbackCitiesByCountry: Record<string, { name: string; lat: number; lon: number }[]> = {
   France: [
     { name: 'Paris', lat: 48.8566, lon: 2.3522 },
     { name: 'Marseille', lat: 43.2965, lon: 5.3698 },
@@ -336,6 +336,16 @@ const top10CitiesByCountry: Record<string, { name: string; lat: number; lon: num
     { name: 'Karlovac', lat: 45.4929, lon: 15.5553 },
     { name: 'Varaždin', lat: 46.3057, lon: 16.3366 },
     { name: 'Šibenik', lat: 43.7350, lon: 15.8952 },
+    { name: 'Dubrovnik', lat: 42.6507, lon: 18.0944 },
+    { name: 'Sisak', lat: 45.4879, lon: 16.3753 },
+    { name: 'Vinkovci', lat: 45.2883, lon: 18.8057 },
+    { name: 'Vukovar', lat: 45.3431, lon: 19.0000 },
+    { name: 'Bjelovar', lat: 45.8986, lon: 16.8423 },
+    { name: 'Koprivnica', lat: 46.1635, lon: 16.8339 },
+    { name: 'Požega', lat: 45.3403, lon: 17.6853 },
+    { name: 'Samobor', lat: 45.8031, lon: 15.7181 },
+    { name: 'Čakovec', lat: 46.3844, lon: 16.4339 },
+    { name: 'Virovitica', lat: 45.8319, lon: 17.3839 },
   ],
   Slovenia: [
     { name: 'Ljubljana', lat: 46.0569, lon: 14.5058 },
@@ -452,16 +462,22 @@ Deno.serve(async (req) => {
     let cities: { name: string; lat: number; lon: number }[] = [];
 
     if (iso) {
-      console.log(`Fetching top 100 cities for ${countryName} (${iso}) via Overpass...`);
-      cities = await fetchTopCitiesOverpass(iso, 100);
+      console.log(`Fetching top 20 cities for ${countryName} (${iso}) via Overpass...`);
+      cities = await fetchTopCitiesOverpass(iso, 20);
       console.log(`Overpass returned ${cities.length} cities`);
     }
 
-    // Fallback to hardcoded top 10 if Overpass failed
-    if (cities.length === 0) {
-      const fallback = top10CitiesByCountry[countryName] || [];
-      cities = fallback;
-      console.log(`Using fallback top 10: ${cities.length} cities`);
+    // Altijd aanvullen met vaste lijst als Overpass minder dan 20 teruggeeft
+    const fallback = fallbackCitiesByCountry[countryName] || [];
+    if (fallback.length > 0) {
+      const seen = new Set(cities.map((city) => slugify(city.name)));
+      for (const city of fallback) {
+        if (seen.has(slugify(city.name))) continue;
+        cities.push(city);
+        seen.add(slugify(city.name));
+        if (cities.length >= 20) break;
+      }
+      console.log(`Using merged city list: ${cities.length} cities`);
     }
 
     if (cities.length === 0) {

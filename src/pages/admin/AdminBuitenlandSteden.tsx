@@ -7,9 +7,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { slugify } from '@/lib/slugify';
+import { COUNTRY_CITY_OPTIONS } from '@/lib/placeOptions';
 import { Plus, Loader2, Trash2, RefreshCw } from 'lucide-react';
 
 interface Land {
@@ -30,6 +33,8 @@ const AdminBuitenlandSteden = () => {
   const [landen, setLanden] = useState<Land[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [addingSelected, setAddingSelected] = useState(false);
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [formData, setFormData] = useState({ naam: '', land_id: '' });
   const { toast } = useToast();
 
@@ -68,6 +73,51 @@ const AdminBuitenlandSteden = () => {
 
       // Trigger route generation
       supabase.functions.invoke('generate-routes', { body: { stadId: data.id } });
+    }
+  };
+
+  const selectedLand = landen.find((land) => land.id === formData.land_id);
+  const cityOptions = selectedLand ? (COUNTRY_CITY_OPTIONS[slugify(selectedLand.naam)] || []) : [];
+  const existingCitySlugsForLand = steden
+    .filter((stad) => stad.land?.naam === selectedLand?.naam)
+    .map((stad) => stad.slug);
+  const missingCityOptions = cityOptions.filter((city) => !existingCitySlugsForLand.includes(slugify(city.naam)));
+
+  const handleAddSelectedCities = async () => {
+    if (!formData.land_id) return;
+    const citiesToAdd = cityOptions.filter((city) => selectedCities.includes(city.naam));
+    if (citiesToAdd.length === 0) return;
+
+    setAddingSelected(true);
+    try {
+      const { data, error } = await supabase
+        .from('buitenland_steden')
+        .upsert(
+          citiesToAdd.map((city) => ({
+            naam: city.naam,
+            slug: slugify(city.naam),
+            land_id: formData.land_id,
+            latitude: city.lat,
+            longitude: city.lon,
+            route_generatie_status: 'pending',
+          })),
+          { onConflict: 'land_id,slug' },
+        )
+        .select('id');
+
+      if (error) throw error;
+
+      toast({ title: `${citiesToAdd.length} stad(en) toegevoegd`, description: 'Routes worden op de achtergrond aangemaakt.' });
+      setDialogOpen(false);
+      setSelectedCities([]);
+      setFormData({ naam: '', land_id: '' });
+      fetchData();
+      (data || []).forEach((stad) => supabase.functions.invoke('generate-routes', { body: { stadId: stad.id } }));
+    } catch (error) {
+      console.error('Add selected cities error:', error);
+      toast({ title: 'Fout bij toevoegen steden', variant: 'destructive' });
+    } finally {
+      setAddingSelected(false);
     }
   };
 
@@ -133,7 +183,7 @@ const AdminBuitenlandSteden = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="land">Land</Label>
-                  <Select value={formData.land_id} onValueChange={(value) => setFormData({ ...formData, land_id: value })}>
+                  <Select value={formData.land_id} onValueChange={(value) => { setFormData({ ...formData, land_id: value }); setSelectedCities([]); }}>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecteer land" />
                     </SelectTrigger>
@@ -144,6 +194,32 @@ const AdminBuitenlandSteden = () => {
                     </SelectContent>
                   </Select>
                 </div>
+                {missingCityOptions.length > 0 && (
+                  <div className="space-y-3">
+                    <Label>Kies bestaande plaatsnamen</Label>
+                    <ScrollArea className="h-64 pr-4">
+                      <div className="space-y-3">
+                        {missingCityOptions.map((city) => (
+                          <label key={city.naam} className="flex items-center gap-3 rounded-md border p-3 text-sm">
+                            <Checkbox
+                              checked={selectedCities.includes(city.naam)}
+                              onCheckedChange={(checked) => {
+                                setSelectedCities((current) => checked
+                                  ? [...current, city.naam]
+                                  : current.filter((naam) => naam !== city.naam));
+                              }}
+                            />
+                            <span className="font-medium">{city.naam}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                    <Button type="button" className="w-full" onClick={handleAddSelectedCities} disabled={addingSelected || selectedCities.length === 0}>
+                      {addingSelected && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                      Geselecteerde steden aanmaken + routes genereren
+                    </Button>
+                  </div>
+                )}
                 <div className="space-y-2">
                   <Label htmlFor="naam">Stadsnaam</Label>
                   <Input
