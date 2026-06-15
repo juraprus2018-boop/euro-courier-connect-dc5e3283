@@ -4,14 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { slugify } from '@/lib/slugify';
-import { NL_PLACE_OPTIONS } from '@/lib/placeOptions';
-import { Loader2, Plus, RefreshCw, Search } from 'lucide-react';
+import { PlaceSearch, type PlaceResult } from '@/components/admin/PlaceSearch';
+import { Loader2, Plus, RefreshCw, Search, X } from 'lucide-react';
 
 interface NlPlaats {
   id: string;
