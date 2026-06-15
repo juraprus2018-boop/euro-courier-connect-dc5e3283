@@ -400,17 +400,7 @@ const AdminLanden = () => {
                     placeholder="www.koerier-frankrijk.nl"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="km_tarief">Kilometerprijs (€)</Label>
-                  <Input
-                    id="km_tarief"
-                    type="number"
-                    step="0.01"
-                    value={formData.km_tarief}
-                    onChange={(e) => setFormData({ ...formData, km_tarief: e.target.value })}
-                    required
-                  />
-                </div>
+                {/* Kilometerprijs wordt centraal beheerd via Instellingen (globaal tarief) */}
                 <div className="flex items-center gap-2">
                   <Switch
                     id="actief"
