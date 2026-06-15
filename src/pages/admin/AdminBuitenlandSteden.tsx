@@ -138,7 +138,7 @@ const AdminBuitenlandSteden = () => {
             <h1 className="font-display text-3xl font-bold">Buitenlandse Steden</h1>
             <p className="text-muted-foreground mt-1">Voeg steden toe om routes te genereren.</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) { setPendingCities([]); setLandId(''); } }}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
@@ -147,12 +147,12 @@ const AdminBuitenlandSteden = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Nieuwe stad</DialogTitle>
+                <DialogTitle>Nieuwe stad toevoegen</DialogTitle>
               </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="land">Land</Label>
-                  <Select value={formData.land_id} onValueChange={(value) => { setFormData({ ...formData, land_id: value }); setSelectedCities([]); }}>
+                  <Select value={landId} onValueChange={(value) => { setLandId(value); setPendingCities([]); }}>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecteer land" />
                     </SelectTrigger>
@@ -163,46 +163,45 @@ const AdminBuitenlandSteden = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                {missingCityOptions.length > 0 && (
-                  <div className="space-y-3">
-                    <Label>Kies bestaande plaatsnamen</Label>
-                    <ScrollArea className="h-64 pr-4">
-                      <div className="space-y-3">
-                        {missingCityOptions.map((city) => (
-                          <label key={city.naam} className="flex items-center gap-3 rounded-md border p-3 text-sm">
-                            <Checkbox
-                              checked={selectedCities.includes(city.naam)}
-                              onCheckedChange={(checked) => {
-                                setSelectedCities((current) => checked
-                                  ? [...current, city.naam]
-                                  : current.filter((naam) => naam !== city.naam));
-                              }}
-                            />
-                            <span className="font-medium">{city.naam}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                    <Button type="button" className="w-full" onClick={handleAddSelectedCities} disabled={addingSelected || selectedCities.length === 0}>
-                      {addingSelected && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      Geselecteerde steden aanmaken + routes genereren
-                    </Button>
+
+                {selectedLand && !selectedLand.iso_code && (
+                  <p className="text-sm text-destructive">Dit land heeft geen ISO-code ingesteld. Voeg de iso_code toe in de database.</p>
+                )}
+
+                {selectedLand?.iso_code && (
+                  <div className="space-y-2">
+                    <Label>Zoek plaats in {selectedLand.naam}</Label>
+                    <PlaceSearch
+                      countryCode={selectedLand.iso_code}
+                      placeholder={`Zoek elke plaats in ${selectedLand.naam}...`}
+                      onSelect={(p) => {
+                        setPendingCities((cur) => cur.some((x) => slugify(x.naam) === slugify(p.naam)) ? cur : [...cur, p]);
+                      }}
+                    />
                   </div>
                 )}
-                <div className="space-y-2">
-                  <Label htmlFor="naam">Stadsnaam</Label>
-                  <Input
-                    id="naam"
-                    value={formData.naam}
-                    onChange={(e) => setFormData({ ...formData, naam: e.target.value })}
-                    placeholder="Parijs"
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full" disabled={!formData.land_id}>
-                  Toevoegen & routes genereren
+
+                {pendingCities.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">Geselecteerd ({pendingCities.length})</p>
+                    <div className="space-y-2 max-h-60 overflow-auto">
+                      {pendingCities.map((p) => (
+                        <div key={p.naam} className="flex items-center justify-between rounded-md border p-2 text-sm">
+                          <span className="font-medium">{p.naam}</span>
+                          <Button variant="ghost" size="icon" onClick={() => setPendingCities((cur) => cur.filter((x) => x.naam !== p.naam))}>
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <Button type="button" className="w-full" onClick={handleAddSelectedCities} disabled={addingSelected || !landId || pendingCities.length === 0}>
+                  {addingSelected && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Aanmaken + routes genereren
                 </Button>
-              </form>
+              </div>
             </DialogContent>
           </Dialog>
         </div>
