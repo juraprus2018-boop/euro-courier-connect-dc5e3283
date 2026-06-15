@@ -85,6 +85,10 @@ function landifySeoText(text: string, landNaam: string, siteNaam: string) {
     .replace(/\bEuropa\b/g, landNaam);
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export function SEOHead({ title, description, landNaam, canonicalPath, noindex, pageKey, variables, jsonLd }: SEOHeadProps) {
   const fallbackLandNaam = useMemo(() => detectLandNameFromHostname(), []);
   const effectiveLandNaam = landNaam || fallbackLandNaam;
@@ -175,8 +179,12 @@ export function SEOHead({ title, description, landNaam, canonicalPath, noindex, 
       ? undefined
       : override?.description
   ) || defaultDescription;
-  const finalTitle = seoLandNaam ? landifySeoText(rawTitle, seoLandNaam, siteNaam) : rawTitle;
-  const finalDescription = seoLandNaam ? landifySeoText(rawDescription, seoLandNaam, siteNaam) : rawDescription;
+  const normalizeLandSpelling = (text: string) => {
+    if (!seoLandNaam || !effectiveLandNaam || seoLandNaam === effectiveLandNaam) return text;
+    return text.replace(new RegExp(escapeRegExp(effectiveLandNaam), 'g'), seoLandNaam);
+  };
+  const finalTitle = seoLandNaam ? normalizeLandSpelling(landifySeoText(rawTitle, seoLandNaam, siteNaam)) : rawTitle;
+  const finalDescription = seoLandNaam ? normalizeLandSpelling(landifySeoText(rawDescription, seoLandNaam, siteNaam)) : rawDescription;
 
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const path = canonicalPath ?? (typeof window !== 'undefined' ? window.location.pathname : '/');
