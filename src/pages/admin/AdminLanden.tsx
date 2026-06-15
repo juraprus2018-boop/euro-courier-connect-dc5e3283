@@ -144,7 +144,7 @@ const AdminLanden = () => {
     fetchLanden();
   }, []);
 
-  const importSteden = async (landId: string, landNaam: string) => {
+  const importSteden = async (landId: string, landNaam: string, autoSync = false) => {
     setImporting(landId);
     toast({ title: `Steden importeren voor ${landNaam}...` });
 
@@ -158,6 +158,10 @@ const AdminLanden = () => {
       if (data.success) {
         toast({ title: data.message });
         fetchLanden();
+        if (autoSync) {
+          // Direct routes genereren na succesvolle import
+          syncRoutes(landId, landNaam);
+        }
       } else {
         toast({ title: data.error || 'Import mislukt', variant: 'destructive' });
       }
@@ -168,6 +172,7 @@ const AdminLanden = () => {
       setImporting(null);
     }
   };
+
 
   const syncRoutes = async (landId: string, landNaam: string) => {
     setSyncing(landId);
@@ -297,7 +302,7 @@ const AdminLanden = () => {
         
         // Automatically import cities for the new country
         if (newLand) {
-          importSteden(newLand.id, formData.naam);
+          importSteden(newLand.id, formData.naam, true);
         }
       }
     }
