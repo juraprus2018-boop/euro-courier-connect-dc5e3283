@@ -142,7 +142,7 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
               </ul>
               <Link
                 to="/offerte"
-                className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-md hover:bg-primary/90 transition-all"
               >
                 Direct offerte aanvragen <ArrowRight className="h-4 w-4" />
               </Link>
