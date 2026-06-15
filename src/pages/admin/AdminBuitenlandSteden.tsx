@@ -33,18 +33,18 @@ const AdminBuitenlandSteden = () => {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [addingSelected, setAddingSelected] = useState(false);
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
-  const [formData, setFormData] = useState({ naam: '', land_id: '' });
+  const [pendingCities, setPendingCities] = useState<PlaceResult[]>([]);
+  const [landId, setLandId] = useState<string>('');
   const { toast } = useToast();
 
   const fetchData = async () => {
     const [{ data: stedenData }, { data: landenData }] = await Promise.all([
       supabase.from('buitenland_steden').select('id, naam, slug, route_generatie_status, land:landen(naam)').order('naam'),
-      supabase.from('landen').select('id, naam').eq('actief', true).order('naam'),
+      supabase.from('landen').select('id, naam, iso_code').eq('actief', true).order('naam'),
     ]);
 
     setSteden((stedenData || []) as unknown as BuitenlandStad[]);
-    setLanden(landenData || []);
+    setLanden((landenData || []) as Land[]);
     setLoading(false);
   };
 
@@ -52,50 +52,20 @@ const AdminBuitenlandSteden = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const { data, error } = await supabase.from('buitenland_steden').insert({
-      naam: formData.naam,
-      slug: slugify(formData.naam),
-      land_id: formData.land_id,
-      route_generatie_status: 'pending',
-    }).select().single();
-
-    if (error) {
-      toast({ title: 'Fout bij toevoegen', variant: 'destructive' });
-    } else {
-      toast({ title: 'Stad toegevoegd', description: 'Route generatie wordt gestart...' });
-      setDialogOpen(false);
-      setFormData({ naam: '', land_id: '' });
-      fetchData();
-
-      // Trigger route generation
-      supabase.functions.invoke('generate-routes', { body: { stadId: data.id } });
-    }
-  };
-
-  const selectedLand = landen.find((land) => land.id === formData.land_id);
-  const cityOptions = selectedLand ? (COUNTRY_CITY_OPTIONS[slugify(selectedLand.naam)] || []) : [];
-  const existingCitySlugsForLand = steden
-    .filter((stad) => stad.land?.naam === selectedLand?.naam)
-    .map((stad) => stad.slug);
-  const missingCityOptions = cityOptions.filter((city) => !existingCitySlugsForLand.includes(slugify(city.naam)));
+  const selectedLand = landen.find((land) => land.id === landId);
 
   const handleAddSelectedCities = async () => {
-    if (!formData.land_id) return;
-    const citiesToAdd = cityOptions.filter((city) => selectedCities.includes(city.naam));
-    if (citiesToAdd.length === 0) return;
+    if (!landId || pendingCities.length === 0) return;
 
     setAddingSelected(true);
     try {
       const { data, error } = await supabase
         .from('buitenland_steden')
         .upsert(
-          citiesToAdd.map((city) => ({
+          pendingCities.map((city) => ({
             naam: city.naam,
             slug: slugify(city.naam),
-            land_id: formData.land_id,
+            land_id: landId,
             latitude: city.lat,
             longitude: city.lon,
             route_generatie_status: 'pending',
@@ -106,10 +76,10 @@ const AdminBuitenlandSteden = () => {
 
       if (error) throw error;
 
-      toast({ title: `${citiesToAdd.length} stad(en) toegevoegd`, description: 'Routes worden op de achtergrond aangemaakt.' });
+      toast({ title: `${pendingCities.length} stad(en) toegevoegd`, description: 'Routes worden op de achtergrond aangemaakt.' });
       setDialogOpen(false);
-      setSelectedCities([]);
-      setFormData({ naam: '', land_id: '' });
+      setPendingCities([]);
+      setLandId('');
       fetchData();
       (data || []).forEach((stad) => supabase.functions.invoke('generate-routes', { body: { stadId: stad.id } }));
     } catch (error) {
