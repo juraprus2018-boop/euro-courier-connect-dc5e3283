@@ -3,12 +3,16 @@ import { Footer } from '@/components/public/Footer';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { PriceCalculator } from '@/components/public/PriceCalculator';
 import { SEOHead } from '@/components/SEOHead';
+import { useLand } from '@/hooks/useLand';
 
 const PrijsIndicatiePage = () => {
+  const { land } = useLand();
+  const landNaam = land?.naam;
+
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="prijs_berekenen" />
-      <Header />
+      <SEOHead pageKey="prijs_berekenen" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1">
         <section className="bg-gradient-dark text-primary-foreground py-12 lg:py-16">
@@ -29,7 +33,7 @@ const PrijsIndicatiePage = () => {
 
         <section className="py-12 lg:py-16 bg-muted/30">
           <div className="container">
-            <PriceCalculator />
+            <PriceCalculator landNaam={landNaam} />
           </div>
         </section>
       </main>

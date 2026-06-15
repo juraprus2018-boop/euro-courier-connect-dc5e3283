@@ -5,9 +5,12 @@ import { QuoteForm } from '@/components/public/QuoteForm';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { EuropaRouteMap } from '@/components/public/EuropaRouteMap';
 import { SEOHead } from '@/components/SEOHead';
+import { useLand } from '@/hooks/useLand';
 
 const QuotePage = () => {
   const [searchParams] = useSearchParams();
+  const { land } = useLand();
+  const landNaam = land?.naam;
   const van = searchParams.get('van') || undefined;
   const naar = searchParams.get('naar') || undefined;
   const afstandStr = searchParams.get('afstand');
@@ -21,8 +24,8 @@ const QuotePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="quote" />
-      <Header />
+      <SEOHead pageKey="quote" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1 py-12">
         <div className="container">

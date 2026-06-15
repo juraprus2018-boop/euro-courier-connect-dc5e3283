@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2, MapPin, ArrowRight, Clock, CheckCircle2, Truck, FileText, PhoneCall } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
+import { useLand } from '@/hooks/useLand';
 
 interface AanvraagStatus {
   status: string;
@@ -56,6 +57,8 @@ function useCountdown(target: Date | null) {
 
 const OfferteStatusPage = () => {
   const { token } = useParams<{ token: string }>();
+  const { land } = useLand();
+  const landNaam = land?.naam;
   const [data, setData] = useState<AanvraagStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -97,7 +100,7 @@ const OfferteStatusPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <SEOHead title="Status niet gevonden" noindex />
-        <Header />
+        <Header landNaam={landNaam} />
         <main className="flex-1 py-20 container text-center">
           <h1 className="font-display text-2xl font-bold mb-4">Status niet gevonden</h1>
           <p className="text-muted-foreground mb-6">
@@ -116,7 +119,7 @@ const OfferteStatusPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead title="Status van uw offerte-aanvraag" noindex />
-      <Header />
+      <Header landNaam={landNaam} />
       <main className="flex-1 py-12">
         <div className="container max-w-3xl">
           <PageBreadcrumb items={[{ label: 'Status aanvraag' }]} className="mb-6" />

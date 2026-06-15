@@ -3,6 +3,7 @@ import { Footer } from '@/components/public/Footer';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { SEOHead } from '@/components/SEOHead';
 import { CONTACT } from '@/lib/contact';
+import { useLand } from '@/hooks/useLand';
 
 const items = [
   {
@@ -53,10 +54,13 @@ const items = [
 ];
 
 const PrivacybeleidPage = () => {
+  const { land } = useLand();
+  const landNaam = land?.naam;
+
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="privacybeleid" />
-      <Header />
+      <SEOHead pageKey="privacybeleid" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1 py-12">
         <div className="container">

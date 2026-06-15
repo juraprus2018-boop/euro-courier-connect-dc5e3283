@@ -3,12 +3,16 @@ import { Footer } from '@/components/public/Footer';
 import { PageBreadcrumb } from '@/components/public/PageBreadcrumb';
 import { SEOHead } from '@/components/SEOHead';
 import { FileText } from 'lucide-react';
+import { useLand } from '@/hooks/useLand';
 
 const AlgemeneVoorwaardenPage = () => {
+  const { land } = useLand();
+  const landNaam = land?.naam;
+
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="algemene_voorwaarden" />
-      <Header />
+      <SEOHead pageKey="algemene_voorwaarden" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1 py-12">
         <div className="container">

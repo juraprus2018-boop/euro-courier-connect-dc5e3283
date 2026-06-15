@@ -8,16 +8,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { SEOHead } from '@/components/SEOHead';
 import { CONTACT } from '@/lib/contact';
+import { useLand } from '@/hooks/useLand';
 
 const PrijsBerekenenPage = () => {
   const [searchParams] = useSearchParams();
+  const { land } = useLand();
+  const landNaam = land?.naam;
   const van = searchParams.get('van') || undefined;
   const naar = searchParams.get('naar') || undefined;
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead pageKey="prijs_berekenen" />
-      <Header />
+      <SEOHead pageKey="prijs_berekenen" landNaam={landNaam} />
+      <Header landNaam={landNaam} />
 
       <main className="flex-1">
         <section className="bg-gradient-dark text-primary-foreground py-16 lg:py-20">
