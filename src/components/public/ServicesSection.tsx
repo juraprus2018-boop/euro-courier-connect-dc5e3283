@@ -1,4 +1,4 @@
-import { Truck, Package, Clock, Shield, MapPin, Headphones } from 'lucide-react';
+import { Truck, Package, MapPin, Headphones } from 'lucide-react';
 
 const services = [
   {
@@ -10,11 +10,6 @@ const services = [
     icon: Package,
     title: 'Palletvervoer',
     description: 'Van kleine pakketten tot volledige pallets. Wij vervoeren alles veilig en efficiënt.',
-  },
-  {
-    icon: Clock,
-    title: 'Geplande ritten',
-    description: 'Vaste rijtijden naar populaire bestemmingen. Betrouwbaar en voorspelbaar transport.',
   },
   {
     icon: MapPin,
