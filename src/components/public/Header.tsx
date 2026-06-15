@@ -233,10 +233,10 @@ export function Header({ landNaam }: HeaderProps) {
             </div>
 
             {/* Footer CTAs in menu */}
-            <div className="mt-12 pt-8 border-t border-primary-foreground/15 grid gap-3 sm:grid-cols-2">
+            <div className="mt-12 pt-8 border-t border-white/15 grid gap-3 sm:grid-cols-2">
               <a
                 href={CONTACT.telefoonHref}
-                className="flex items-center justify-center gap-2 rounded-full bg-primary-foreground text-primary px-6 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
+                className="flex items-center justify-center gap-2 rounded-full bg-white text-[#020b1f] px-6 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
               >
                 <Phone className="h-4 w-4" /> Bel direct: {CONTACT.telefoon}
               </a>
