@@ -16,6 +16,7 @@ import { Plus, Loader2, Trash2, RefreshCw, X } from 'lucide-react';
 interface Land {
   id: string;
   naam: string;
+  iso_code: string | null;
 }
 
 interface BuitenlandStad {
