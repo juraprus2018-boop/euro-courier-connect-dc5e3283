@@ -12,6 +12,7 @@ import { useTarieven } from '@/hooks/useTarieven';
 import { CONTACT } from '@/lib/contact';
 
 const RouteMap = lazy(() => import('./RouteMap'));
+import { AnimatedRouteMap } from './AnimatedRouteMap';
 
 interface Coordinates {
   lat: number;
