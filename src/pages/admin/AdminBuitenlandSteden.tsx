@@ -7,13 +7,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { slugify } from '@/lib/slugify';
-import { COUNTRY_CITY_OPTIONS } from '@/lib/placeOptions';
-import { Plus, Loader2, Trash2, RefreshCw } from 'lucide-react';
+import { PlaceSearch, type PlaceResult } from '@/components/admin/PlaceSearch';
+import { Plus, Loader2, Trash2, RefreshCw, X } from 'lucide-react';
 
 interface Land {
   id: string;
