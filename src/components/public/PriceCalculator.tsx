@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, MapPin, Navigation, Euro, Truck, Clock, Phone, FileText } from 'lucide-react';
+import { Loader2, MapPin, Navigation, Euro, Truck, Phone, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { SmartCTA } from './SmartCTA';
 import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
@@ -236,17 +236,10 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                 <div className="pt-6 border-t space-y-4">
                   <h3 className="font-display font-bold text-lg">Resultaat</h3>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-4 rounded-xl bg-muted">
-                      <MapPin className="h-5 w-5 mx-auto text-primary mb-2" />
-                      <div className="text-2xl font-bold">{Math.round(distance)} km</div>
-                      <div className="text-xs text-muted-foreground">Afstand</div>
-                    </div>
-                    <div className="text-center p-4 rounded-xl bg-muted">
-                      <Clock className="h-5 w-5 mx-auto text-primary mb-2" />
-                      <div className="text-2xl font-bold">{formattedDuration}</div>
-                      <div className="text-xs text-muted-foreground">Rijtijd</div>
-                    </div>
+                  <div className="text-center p-4 rounded-xl bg-muted">
+                    <MapPin className="h-5 w-5 mx-auto text-primary mb-2" />
+                    <div className="text-2xl font-bold">{Math.round(distance)} km</div>
+                    <div className="text-xs text-muted-foreground">Afstand</div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
