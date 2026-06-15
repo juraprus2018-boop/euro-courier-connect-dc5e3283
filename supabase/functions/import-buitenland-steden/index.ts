@@ -363,6 +363,65 @@ const top10CitiesByCountry: Record<string, { name: string; lat: number; lon: num
   ],
 };
 
+// ISO 3166-1 alpha-2 codes per country (for Overpass area filter)
+const countryIsoMap: Record<string, string> = {
+  France: 'FR', Germany: 'DE', Belgium: 'BE', Spain: 'ES', Italy: 'IT',
+  Portugal: 'PT', Austria: 'AT', Switzerland: 'CH', Poland: 'PL', Czechia: 'CZ',
+  Denmark: 'DK', Sweden: 'SE', Norway: 'NO', Finland: 'FI',
+  'United Kingdom': 'GB', Ireland: 'IE', Luxembourg: 'LU', Greece: 'GR',
+  Hungary: 'HU', Romania: 'RO', Bulgaria: 'BG', Croatia: 'HR',
+  Slovenia: 'SI', Slovakia: 'SK',
+};
+
+async function fetchTopCitiesOverpass(iso: string, limit = 100): Promise<{ name: string; lat: number; lon: number }[]> {
+  const query = `
+[out:json][timeout:90];
+area["ISO3166-1"="${iso}"][admin_level=2]->.c;
+(
+  node["place"~"^(city|town)$"]["population"](area.c);
+);
+out body;
+`;
+  const endpoints = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+  ];
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'data=' + encodeURIComponent(query),
+      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const items = (data.elements || [])
+        .map((el: any) => ({
+          name: el.tags?.name || el.tags?.['name:nl'] || el.tags?.['name:en'],
+          lat: el.lat,
+          lon: el.lon,
+          pop: parseInt(el.tags?.population || '0', 10) || 0,
+        }))
+        .filter((c: any) => c.name && c.lat && c.lon)
+        .sort((a: any, b: any) => b.pop - a.pop);
+
+      const seen = new Set<string>();
+      const out: { name: string; lat: number; lon: number }[] = [];
+      for (const c of items) {
+        const key = c.name.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push({ name: c.name, lat: c.lat, lon: c.lon });
+        if (out.length >= limit) break;
+      }
+      if (out.length > 0) return out;
+    } catch (e) {
+      console.error(`Overpass fetch failed for ${iso}:`, e);
+    }
+  }
+  return [];
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -370,44 +429,47 @@ Deno.serve(async (req) => {
 
   try {
     const { landId, landNaam } = await req.json();
-    
     console.log(`Starting import for country: ${landNaam} (ID: ${landId})`);
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+    );
 
-    // Get country name for Overpass API
     const countryName = countryCodeMap[landNaam.toLowerCase()];
-    
     if (!countryName) {
-      console.error(`Unknown country: ${landNaam}`);
       return new Response(
         JSON.stringify({
           success: false,
-          error: `Onbekend land: ${landNaam}. Voeg de landcode toe aan de mapping.`,
+          error: `Onbekend land: ${landNaam}.`,
           supportedCountries: [...new Set(Object.keys(countryCodeMap))]
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log(`Country name: ${countryName}`);
+    const iso = countryIsoMap[countryName];
+    let cities: { name: string; lat: number; lon: number }[] = [];
 
-    // Get top 10 cities for this country
-    const cities = top10CitiesByCountry[countryName];
-    
-    if (!cities || cities.length === 0) {
+    if (iso) {
+      console.log(`Fetching top 100 cities for ${countryName} (${iso}) via Overpass...`);
+      cities = await fetchTopCitiesOverpass(iso, 100);
+      console.log(`Overpass returned ${cities.length} cities`);
+    }
+
+    // Fallback to hardcoded top 10 if Overpass failed
+    if (cities.length === 0) {
+      const fallback = top10CitiesByCountry[countryName] || [];
+      cities = fallback;
+      console.log(`Using fallback top 10: ${cities.length} cities`);
+    }
+
+    if (cities.length === 0) {
       return new Response(
-        JSON.stringify({
-          success: false,
-          error: `Geen steden gevonden voor ${landNaam}. Voeg steden toe aan de top10 lijst.`,
-        }),
+        JSON.stringify({ success: false, error: `Geen steden gevonden voor ${landNaam}.` }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-
-    console.log(`Importing ${cities.length} top cities for ${countryName}`);
 
     const cityData = cities.map((city) => ({
       naam: city.name,
@@ -415,14 +477,13 @@ Deno.serve(async (req) => {
       land_id: landId,
       latitude: city.lat,
       longitude: city.lon,
-      route_generatie_status: 'pending'
+      route_generatie_status: 'pending',
     }));
 
-    // Upsert cities
     const { error } = await supabase
       .from('buitenland_steden')
       .upsert(cityData, { onConflict: 'land_id,slug' });
-    
+
     if (error) {
       console.error('Insert error:', error);
       return new Response(
@@ -432,22 +493,20 @@ Deno.serve(async (req) => {
     }
 
     console.log(`Import complete: ${cities.length} cities imported for ${landNaam}`);
-
     return new Response(
       JSON.stringify({
         success: true,
-        message: `${cities.length} steden geïmporteerd voor ${landNaam} (top 10 grootste steden)`,
-        count: cities.length
+        message: `${cities.length} steden geïmporteerd voor ${landNaam}`,
+        count: cities.length,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Import error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ success: false, error: errorMessage }),
+      JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown error' }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
 });
+
