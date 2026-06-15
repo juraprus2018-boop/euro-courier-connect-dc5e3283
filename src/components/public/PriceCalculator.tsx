@@ -231,13 +231,34 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                 <div className="pt-6 border-t space-y-4">
                   <h3 className="font-display font-bold text-lg">Resultaat</h3>
 
-                  <div className="text-center p-4 rounded-xl bg-muted">
-                    <MapPin className="h-5 w-5 mx-auto text-primary mb-2" />
-                    <div className="text-2xl font-bold">{Math.round(distance)} km</div>
-                    <div className="text-xs text-muted-foreground">Afstand</div>
-                  </div>
+                  <Button asChild size="lg" className="w-full bg-cta text-cta-foreground hover:opacity-90">
+                    <Link
+                      to={`/offerte?${new URLSearchParams({
+                        van: pickupAddress,
+                        naar: destinationAddress,
+                        afstand: String(Math.round(distance)),
+                        ...(duration ? { rijtijd: String(Math.round(duration)) } : {}),
+                        prijs: String(calculatedPrice),
+                        prijs_bakwagen: String(Math.round(distance * tarieven.bakwagen)),
+                      }).toString()}`}
+                    >
+                      <FileText className="mr-2 h-5 w-5" />
+                      Vraag direct offerte aan
+                    </Link>
+                  </Button>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <p className="text-xs text-muted-foreground">
+                    * {PRIJS_DISCLAIMER}
+                  </p>
+
+                  <SmartCTA
+                    afstandKm={distance}
+                    rijtijdMinuten={duration ?? undefined}
+                    prijsVanaf={calculatedPrice}
+                    variant="wide"
+                  />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
                     <div className="p-4 rounded-xl bg-accent/10 border border-accent/30">
                       <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground mb-1">
                         <Truck className="h-3.5 w-3.5" /> Bestelwagen
@@ -261,36 +282,6 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
                       </div>
                     </div>
                   </div>
-
-
-                  <Button asChild size="lg" className="w-full bg-cta text-cta-foreground hover:opacity-90">
-                    <Link
-                      to={`/offerte?${new URLSearchParams({
-                        van: pickupAddress,
-                        naar: destinationAddress,
-                        afstand: String(Math.round(distance)),
-                        ...(duration ? { rijtijd: String(Math.round(duration)) } : {}),
-                        prijs: String(calculatedPrice),
-                        prijs_bakwagen: String(Math.round(distance * tarieven.bakwagen)),
-                      }).toString()}`}
-                    >
-                      <FileText className="mr-2 h-5 w-5" />
-                      Vraag direct offerte aan
-                    </Link>
-                  </Button>
-
-                  <p className="text-xs text-muted-foreground">
-                    * {PRIJS_DISCLAIMER}
-                  </p>
-
-
-
-                  <SmartCTA
-                    afstandKm={distance}
-                    rijtijdMinuten={duration ?? undefined}
-                    prijsVanaf={calculatedPrice}
-                    variant="wide"
-                  />
                 </div>
               )}
             </CardContent>
