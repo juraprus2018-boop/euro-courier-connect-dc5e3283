@@ -117,12 +117,12 @@ export function SEOHead({ title, description, landNaam, canonicalPath, noindex, 
 
       // 2. Per-land override eerst, dan globale template
       const vars = {
+        ...(variables || {}),
         land: seoLandNaam || effectiveLandNaam,
         land_met_accents: effectiveLandNaam,
         site_naam: siteNaam,
         bedrijf: siteNaam,
         vlag: landVlag,
-        ...(variables || {}),
       };
 
       if (landId) {
