@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Truck, Phone, Menu, X, ArrowRight, User, MapPin, Home, Calculator, Mail, Briefcase } from 'lucide-react';
+import { Truck, Phone, Menu, X, ArrowRight, MapPin, Home, Calculator, Mail, Briefcase } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -17,7 +17,6 @@ const quickLinks = [
   { label: 'Home', to: '/', icon: Home },
   { label: 'Prijs berekenen', to: '/prijs-berekenen', icon: Calculator },
   { label: 'Contact', to: '/contact', icon: Mail },
-  { label: 'Mijn Account', to: '/account', icon: User },
 ];
 
 interface HeaderProps {
