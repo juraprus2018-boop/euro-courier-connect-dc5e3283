@@ -77,14 +77,17 @@ export function Header({ landNaam }: HeaderProps) {
 
           {/* Right side */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <a
+          <a
               href={CONTACT.telefoonHref}
               className="hidden sm:inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary px-4 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all"
             >
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10">
                 <Phone className="h-3.5 w-3.5" />
               </span>
-              Bel: {CONTACT.telefoon}
+              <span className="flex flex-col leading-tight">
+                <span>Bel: {CONTACT.telefoon}</span>
+                <span className="text-[10px] font-normal opacity-80">ma–vr 08:00–18:00</span>
+              </span>
             </a>
             <Button
               asChild
@@ -233,11 +236,14 @@ export function Header({ landNaam }: HeaderProps) {
 
             {/* Footer CTAs in menu */}
             <div className="mt-12 pt-8 border-t border-white/15 grid gap-3 sm:grid-cols-2">
-              <a
+            <a
                 href={CONTACT.telefoonHref}
-                className="flex items-center justify-center gap-2 rounded-full bg-white text-[#020b1f] px-6 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
+                className="flex flex-col items-center justify-center gap-1 rounded-full bg-white text-[#020b1f] px-6 py-4 font-semibold shadow-lg hover:shadow-xl transition-all"
               >
-                <Phone className="h-4 w-4" /> Bel direct: {CONTACT.telefoon}
+                <span className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" /> Bel direct: {CONTACT.telefoon}
+                </span>
+                <span className="text-xs font-normal opacity-80">ma–vr 08:00–18:00 · WhatsApp 24/7</span>
               </a>
               <Link
                 to="/offerte"
