@@ -7,6 +7,8 @@ export const CONTACT = {
   telefoon: '085 7602 999',
   telefoonHref: 'tel:+31857602999',
   telefoonInternational: '+31 85 7602 999',
+  whatsapp: '085 7602 999',
+  whatsappHref: 'https://wa.me/31857602999',
   email: 'info@deeuropakoerier.nl',
   emailHref: 'mailto:info@deeuropakoerier.nl',
   btw: 'NL8550.69.764.B.02',
