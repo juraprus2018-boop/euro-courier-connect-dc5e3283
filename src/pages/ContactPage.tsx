@@ -59,7 +59,10 @@ const ContactPage = () => {
                     <a href={CONTACT.telefoonHref} className="text-muted-foreground mt-1 block hover:text-foreground transition-colors">
                       {CONTACT.telefoon}
                     </a>
-                    <p className="text-sm text-muted-foreground">Ma-Vr: 08:00 - 18:00</p>
+                    <p className="text-sm text-muted-foreground">ma–vr: 08:00 – 18:00</p>
+                    <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 mt-1">
+                      WhatsApp 24/7
+                    </a>
                   </div>
                 </div>
               </CardContent>

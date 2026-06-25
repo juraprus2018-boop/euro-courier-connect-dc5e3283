@@ -53,10 +53,12 @@ const BestemmingenPage = () => {
         <div className="container">
           <PageBreadcrumb items={[{ label: 'Bestemmingen' }]} className="mb-6" />
           <h1 className="font-display text-3xl font-bold mb-2">
-            {land ? `Bestemmingen in ${land.naam}` : 'Alle bestemmingen'}
+            {land ? `Wij rijden o.a. naar deze steden in ${land.naam}` : 'Wij rijden o.a. naar deze steden in Europa'}
           </h1>
           <p className="text-muted-foreground mb-4">
-            Kies een stad om de beschikbare routes te bekijken.
+            {land
+              ? `Wij rijden vanuit heel Nederland naar elke gewenste plek in ${land.naam}. Kies een stad om de beschikbare routes te bekijken.`
+              : 'Wij rijden vanuit heel Nederland naar elke gewenste plek in Europa. Kies een stad om de beschikbare routes te bekijken.'}
           </p>
 
           <div className="mb-10 rounded-2xl border border-primary/20 bg-primary/5 p-6 lg:p-8">
