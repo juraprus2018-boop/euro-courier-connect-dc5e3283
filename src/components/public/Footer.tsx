@@ -75,6 +75,10 @@ export function Footer() {
               <a href={telHref} className="block text-muted-foreground hover:text-foreground transition-colors">
                 {telefoon}
               </a>
+              <p className="text-xs text-muted-foreground/80">ma–vr: 08:00 – 18:00</p>
+              <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                WhatsApp 24/7
+              </a>
             </div>
 
             <div className="pt-2">
