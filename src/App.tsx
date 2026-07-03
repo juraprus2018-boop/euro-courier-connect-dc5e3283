@@ -29,6 +29,7 @@ import MedischTransportPage from "./pages/services/MedischTransportPage";
 import OnBoardKoeriersdienstPage from "./pages/services/OnBoardKoeriersdienstPage";
 import LaadcapaciteitPage from "./pages/LaadcapaciteitPage";
 import CertificeringenPage from "./pages/CertificeringenPage";
+import TachograafPage from "./pages/TachograafPage";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminLanden from "./pages/admin/AdminLanden";
