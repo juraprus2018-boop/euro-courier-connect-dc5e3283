@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Truck, FileText } from 'lucide-react';
+import { Truck, FileText, Gauge } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { useLand } from '@/hooks/useLand';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
