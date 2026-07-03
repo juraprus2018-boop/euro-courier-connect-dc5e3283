@@ -66,9 +66,9 @@ const TachograafPage = () => {
                 <h2 className="font-display text-2xl font-bold">Buitenland ritten</h2>
               </div>
               <p className="text-muted-foreground">
-                Wij zijn dagelijks beschikbaar voor spoedritten naar het buitenland. Of het nu gaat
-                om een rit naar Duitsland, Frankrijk, Italië, Kroatië of elk ander Europees land —
-                wij staan voor u klaar.
+                {bedrijf} is dagelijks beschikbaar voor spoedritten naar het buitenland. Of het nu
+                gaat om een rit naar Duitsland, Frankrijk, Italië, Kroatië of elk ander Europees
+                land, wij staan voor u klaar.
               </p>
             </Card>
 
