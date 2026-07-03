@@ -33,6 +33,13 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-card">
+      <div className="bg-gradient-primary text-primary-foreground">
+        <div className="container py-4 text-center text-sm md:text-base font-medium">
+          <Link to="/tachograaf-buitenland-ritten" className="hover:underline">
+            Wij zijn uitgerust met tachograaf en beschikbaar voor buitenland ritten →
+          </Link>
+        </div>
+      </div>
       <div className="container py-8">
         <div className="pb-6 mb-6 border-b border-border">
           <h4 className="font-display font-semibold text-center mb-6">Ons wagenpark</h4>
