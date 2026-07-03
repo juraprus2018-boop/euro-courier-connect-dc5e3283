@@ -100,7 +100,7 @@ const BestemmingDetailPage = () => {
     { q: `Hoe snel rijdt u naar ${stadNaam}?`, a: `Onze spoedkoerier rijdt binnen 60 minuten uit naar ${stadNaam}. Wij zijn 24/7 bereikbaar voor directe ritten vanuit heel Nederland.` },
     { q: `Is mijn zending naar ${stadNaam} verzekerd?`, a: `Ja, alle ritten naar ${stadNaam} zijn standaard CMR-verzekerd. Aanvullende goederenverzekering is op aanvraag mogelijk.` },
     { q: `Kan ik 's nachts laten ophalen voor ${stadNaam}?`, a: `Ja, wij rijden 24/7 naar ${stadNaam}, inclusief 's nachts, weekend en feestdagen.` },
-    { q: `Wat vervoeren jullie naar ${stadNaam}?`, a: `Documenten, pakketten, pallets, machine-onderdelen, medische zendingen en bestelbusladingen — alles wat in een bestelbus past, vervoeren wij direct naar ${stadNaam}.` },
+    { q: `Wat vervoeren jullie naar ${stadNaam}?`, a: `Documenten, pakketten, pallets, machine-onderdelen, medische zendingen en bestelbusladingen, alles wat in een bestelbus past, vervoeren wij direct naar ${stadNaam}.` },
   ];
   const bestemmingJsonLd = [
     {

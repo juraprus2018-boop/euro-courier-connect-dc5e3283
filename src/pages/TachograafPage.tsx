@@ -31,13 +31,13 @@ const TachograafPage = () => {
           <section className="container pb-12">
             <div className="max-w-3xl">
               <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Uitgerust met tachograaf — beschikbaar voor buitenland ritten
+                {bedrijf} is uitgerust met tachograaf en beschikbaar voor buitenland ritten
               </h1>
               <p className="text-lg text-muted-foreground">
-                Wij zijn uitgerust met een <strong>tachograaf</strong> en volledig beschikbaar voor{' '}
-                <strong>buitenland ritten</strong>. Hierdoor kunnen wij legaal, veilig en zonder
-                onderbrekingen door heel Europa rijden — precies wat u van een professionele
-                spoedkoerier mag verwachten.
+                {bedrijf} is uitgerust met een <strong>tachograaf</strong> en volledig beschikbaar
+                voor <strong>buitenland ritten</strong>. Hierdoor kunnen wij bij {bedrijf} legaal,
+                veilig en zonder onderbrekingen door heel Europa rijden, precies wat u van een
+                professionele spoedkoerier mag verwachten.
               </p>
             </div>
           </section>
@@ -66,9 +66,9 @@ const TachograafPage = () => {
                 <h2 className="font-display text-2xl font-bold">Buitenland ritten</h2>
               </div>
               <p className="text-muted-foreground">
-                Wij zijn dagelijks beschikbaar voor spoedritten naar het buitenland. Of het nu gaat
-                om een rit naar Duitsland, Frankrijk, Italië, Kroatië of elk ander Europees land —
-                wij staan voor u klaar.
+                {bedrijf} is dagelijks beschikbaar voor spoedritten naar het buitenland. Of het nu
+                gaat om een rit naar Duitsland, Frankrijk, Italië, Kroatië of elk ander Europees
+                land, wij staan voor u klaar.
               </p>
             </Card>
 

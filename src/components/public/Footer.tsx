@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Truck, FileText } from 'lucide-react';
+import { Truck, FileText, Gauge } from 'lucide-react';
 import { CONTACT } from '@/lib/contact';
 import { useLand } from '@/hooks/useLand';
 import niwoLogo from '@/assets/niwo-eurovergunning.png';
@@ -34,10 +34,28 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="bg-gradient-primary text-primary-foreground">
-        <div className="container py-4 text-center text-sm md:text-base font-medium">
-          <Link to="/tachograaf-buitenland-ritten" className="hover:underline">
-            Wij zijn uitgerust met tachograaf en beschikbaar voor buitenland ritten →
-          </Link>
+        <div className="container py-8 md:py-10">
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-center md:text-left">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/15 backdrop-blur">
+              <Gauge className="h-7 w-7" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-display text-xl md:text-2xl font-bold mb-2">
+                {bedrijf} is uitgerust met tachograaf
+              </h3>
+              <p className="text-sm md:text-base opacity-90 max-w-2xl">
+                Volledig beschikbaar voor buitenland ritten door heel Europa. Wij rijden legaal,
+                veilig en volgens de Europese rij- en rusttijdenwetgeving, zodat uw zending
+                zonder oponthoud op de bestemming aankomt.
+              </p>
+            </div>
+            <Link
+              to="/tachograaf-buitenland-ritten"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary hover:bg-white/90 transition-colors whitespace-nowrap"
+            >
+              Meer informatie
+            </Link>
+          </div>
         </div>
       </div>
       <div className="container py-8">

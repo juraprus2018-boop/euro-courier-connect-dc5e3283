@@ -35,17 +35,26 @@ const DEFAULT_FAQ: FAQItem[] = [
   {
     vraag: 'Hoe kan ik een zending aanmelden?',
     antwoord: 'U kunt eenvoudig online een offerte aanvragen via onze website. Na goedkeuring plannen wij de ophaling in op de door u gewenste datum.'
+  },
+  {
+    vraag: 'Zijn jullie uitgerust met een tachograaf voor buitenland ritten?',
+    antwoord: 'Ja, onze voertuigen zijn uitgerust met een tachograaf en wij zijn volledig beschikbaar voor buitenland ritten door heel Europa. Dankzij de tachograaf voldoen wij aan de Europese rij- en rusttijdenwetgeving, zodat uw zending legaal, veilig en zonder oponthoud op de bestemming aankomt.'
   }
 ];
 
 export function FAQSection({ landNaam, customFaq }: FAQSectionProps) {
+  const bedrijf = landNaam ? `De ${landNaam} Koerier` : 'De Europa Koerier';
   const faqItems = customFaq && customFaq.length > 0 ? customFaq : DEFAULT_FAQ;
   
   // Generate land-specific FAQ items
   const landSpecificFaq: FAQItem[] = landNaam ? [
     {
       vraag: `Hoe vaak rijden jullie naar ${landNaam}?`,
-      antwoord: `Wij rijden meerdere keren per week naar ${landNaam}. Afhankelijk van de bestemming kunnen wij vaak binnen 24-48 uur leveren.`
+      antwoord: `${bedrijf} rijdt meerdere keren per week naar ${landNaam}. Afhankelijk van de bestemming kunnen wij vaak binnen 24-48 uur leveren.`
+    },
+    {
+      vraag: `Is ${bedrijf} uitgerust met een tachograaf voor ritten naar ${landNaam}?`,
+      antwoord: `Ja, ${bedrijf} is uitgerust met een tachograaf en volledig beschikbaar voor buitenland ritten naar ${landNaam}. Wij rijden legaal en veilig volgens de Europese rij- en rusttijdenwetgeving.`
     },
     ...faqItems.slice(0, 5)
   ] : faqItems;
