@@ -11,7 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { slugify } from '@/lib/slugify';
 import { PlaceSearch, type PlaceResult } from '@/components/admin/PlaceSearch';
-import { Plus, Loader2, Trash2, RefreshCw, X } from 'lucide-react';
+import { Plus, Loader2, Trash2, RefreshCw, X, Pencil } from 'lucide-react';
 
 interface Land {
   id: string;
@@ -35,6 +35,10 @@ const AdminBuitenlandSteden = () => {
   const [addingSelected, setAddingSelected] = useState(false);
   const [pendingCities, setPendingCities] = useState<PlaceResult[]>([]);
   const [landId, setLandId] = useState<string>('');
+  const [editStad, setEditStad] = useState<BuitenlandStad | null>(null);
+  const [editNaam, setEditNaam] = useState('');
+  const [editSlug, setEditSlug] = useState('');
+  const [savingEdit, setSavingEdit] = useState(false);
   const { toast } = useToast();
 
   const fetchData = async () => {
@@ -109,6 +113,36 @@ const AdminBuitenlandSteden = () => {
     supabase.functions.invoke('generate-routes', { body: { stadId: id } });
     fetchData();
   };
+
+  const openEdit = (stad: BuitenlandStad) => {
+    setEditStad(stad);
+    setEditNaam(stad.naam);
+    setEditSlug(stad.slug);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editStad) return;
+    const naam = editNaam.trim();
+    const slug = (editSlug.trim() || slugify(naam));
+    if (!naam) {
+      toast({ title: 'Naam is verplicht', variant: 'destructive' });
+      return;
+    }
+    setSavingEdit(true);
+    const { error } = await supabase
+      .from('buitenland_steden')
+      .update({ naam, slug })
+      .eq('id', editStad.id);
+    setSavingEdit(false);
+    if (error) {
+      toast({ title: 'Fout bij opslaan', description: error.message, variant: 'destructive' });
+      return;
+    }
+    toast({ title: 'Stad bijgewerkt' });
+    setEditStad(null);
+    fetchData();
+  };
+
 
   const getStatusBadge = (status: string) => {
     const styles = {
@@ -219,7 +253,7 @@ const AdminBuitenlandSteden = () => {
                     <TableHead>Stad</TableHead>
                     <TableHead>Land</TableHead>
                     <TableHead>Route Status</TableHead>
-                    <TableHead className="w-[100px]">Acties</TableHead>
+                    <TableHead className="w-[140px]">Acties</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -230,6 +264,9 @@ const AdminBuitenlandSteden = () => {
                       <TableCell>{getStatusBadge(stad.route_generatie_status)}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="icon" onClick={() => openEdit(stad)} title="Naam aanpassen">
+                            <Pencil className="h-4 w-4" />
+                          </Button>
                           <Button variant="ghost" size="icon" onClick={() => handleRegenerateRoutes(stad.id)} title="Regenereer routes">
                             <RefreshCw className="h-4 w-4" />
                           </Button>
@@ -252,6 +289,49 @@ const AdminBuitenlandSteden = () => {
             )}
           </CardContent>
         </Card>
+
+        <Dialog open={!!editStad} onOpenChange={(o) => { if (!o) setEditStad(null); }}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Stad aanpassen</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="edit-naam">Naam (bijv. "Parijs" i.p.v. "Paris")</Label>
+                <Input
+                  id="edit-naam"
+                  value={editNaam}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setEditNaam(v);
+                    // Keep slug in sync if it matched previous slugified name
+                    if (editStad && (editSlug === editStad.slug || editSlug === slugify(editNaam))) {
+                      setEditSlug(slugify(v));
+                    }
+                  }}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit-slug">Slug (URL)</Label>
+                <Input
+                  id="edit-slug"
+                  value={editSlug}
+                  onChange={(e) => setEditSlug(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Let op: als je de slug wijzigt, veranderen bestaande URL's voor deze stad.
+                </p>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setEditStad(null)}>Annuleren</Button>
+                <Button onClick={handleSaveEdit} disabled={savingEdit}>
+                  {savingEdit && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Opslaan
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </AdminLayout>
   );
