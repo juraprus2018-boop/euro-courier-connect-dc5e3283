@@ -253,7 +253,7 @@ const AdminBuitenlandSteden = () => {
                     <TableHead>Stad</TableHead>
                     <TableHead>Land</TableHead>
                     <TableHead>Route Status</TableHead>
-                    <TableHead className="w-[100px]">Acties</TableHead>
+                    <TableHead className="w-[140px]">Acties</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
