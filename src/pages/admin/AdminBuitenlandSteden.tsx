@@ -11,7 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { slugify } from '@/lib/slugify';
 import { PlaceSearch, type PlaceResult } from '@/components/admin/PlaceSearch';
-import { Plus, Loader2, Trash2, RefreshCw, X } from 'lucide-react';
+import { Plus, Loader2, Trash2, RefreshCw, X, Pencil } from 'lucide-react';
 
 interface Land {
   id: string;
