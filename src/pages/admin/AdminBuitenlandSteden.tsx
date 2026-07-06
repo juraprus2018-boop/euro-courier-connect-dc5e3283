@@ -35,6 +35,10 @@ const AdminBuitenlandSteden = () => {
   const [addingSelected, setAddingSelected] = useState(false);
   const [pendingCities, setPendingCities] = useState<PlaceResult[]>([]);
   const [landId, setLandId] = useState<string>('');
+  const [editStad, setEditStad] = useState<BuitenlandStad | null>(null);
+  const [editNaam, setEditNaam] = useState('');
+  const [editSlug, setEditSlug] = useState('');
+  const [savingEdit, setSavingEdit] = useState(false);
   const { toast } = useToast();
 
   const fetchData = async () => {
