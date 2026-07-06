@@ -264,6 +264,9 @@ const AdminBuitenlandSteden = () => {
                       <TableCell>{getStatusBadge(stad.route_generatie_status)}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="icon" onClick={() => openEdit(stad)} title="Naam aanpassen">
+                            <Pencil className="h-4 w-4" />
+                          </Button>
                           <Button variant="ghost" size="icon" onClick={() => handleRegenerateRoutes(stad.id)} title="Regenereer routes">
                             <RefreshCw className="h-4 w-4" />
                           </Button>
