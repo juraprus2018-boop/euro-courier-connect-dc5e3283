@@ -114,6 +114,36 @@ const AdminBuitenlandSteden = () => {
     fetchData();
   };
 
+  const openEdit = (stad: BuitenlandStad) => {
+    setEditStad(stad);
+    setEditNaam(stad.naam);
+    setEditSlug(stad.slug);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editStad) return;
+    const naam = editNaam.trim();
+    const slug = (editSlug.trim() || slugify(naam));
+    if (!naam) {
+      toast({ title: 'Naam is verplicht', variant: 'destructive' });
+      return;
+    }
+    setSavingEdit(true);
+    const { error } = await supabase
+      .from('buitenland_steden')
+      .update({ naam, slug })
+      .eq('id', editStad.id);
+    setSavingEdit(false);
+    if (error) {
+      toast({ title: 'Fout bij opslaan', description: error.message, variant: 'destructive' });
+      return;
+    }
+    toast({ title: 'Stad bijgewerkt' });
+    setEditStad(null);
+    fetchData();
+  };
+
+
   const getStatusBadge = (status: string) => {
     const styles = {
       pending: 'bg-warning/10 text-warning',
