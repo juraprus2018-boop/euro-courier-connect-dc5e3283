@@ -289,6 +289,49 @@ const AdminBuitenlandSteden = () => {
             )}
           </CardContent>
         </Card>
+
+        <Dialog open={!!editStad} onOpenChange={(o) => { if (!o) setEditStad(null); }}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Stad aanpassen</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="edit-naam">Naam (bijv. "Parijs" i.p.v. "Paris")</Label>
+                <Input
+                  id="edit-naam"
+                  value={editNaam}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    setEditNaam(v);
+                    // Keep slug in sync if it matched previous slugified name
+                    if (editStad && (editSlug === editStad.slug || editSlug === slugify(editNaam))) {
+                      setEditSlug(slugify(v));
+                    }
+                  }}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit-slug">Slug (URL)</Label>
+                <Input
+                  id="edit-slug"
+                  value={editSlug}
+                  onChange={(e) => setEditSlug(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Let op: als je de slug wijzigt, veranderen bestaande URL's voor deze stad.
+                </p>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setEditStad(null)}>Annuleren</Button>
+                <Button onClick={handleSaveEdit} disabled={savingEdit}>
+                  {savingEdit && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Opslaan
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </AdminLayout>
   );
