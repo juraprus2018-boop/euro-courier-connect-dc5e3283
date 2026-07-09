@@ -19,6 +19,7 @@ import { StatsSection } from '@/components/public/StatsSection';
 import { TestimonialsSection } from '@/components/public/TestimonialsSection';
 import { MainCTASection } from '@/components/public/MainCTASection';
 import { PriceCalculator } from '@/components/public/PriceCalculator';
+import { PopulaireRoutesSection } from '@/components/public/PopulaireRoutesSection';
 import { Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
