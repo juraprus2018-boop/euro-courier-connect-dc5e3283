@@ -175,35 +175,73 @@ const RouteDetailPage = () => {
         {/* Route Info */}
         <section className="py-12">
           <div className="container">
-            <div className="grid md:grid-cols-2 gap-6 mb-12">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                      <Truck className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Directe rit</p>
-                      <p className="font-display text-2xl font-bold">Eén chauffeur</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            {(() => {
+              const rijtijdUren = km > 0 ? km / 80 : 0;
+              const rijtijdLabel = rijtijdUren > 0
+                ? (rijtijdUren < 10
+                    ? `± ${rijtijdUren.toFixed(1).replace('.', ',')} uur`
+                    : `± ${Math.round(rijtijdUren)} uur`)
+                : 'op aanvraag';
+              return (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                          <MapPin className="h-6 w-6 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground">Afstand</p>
+                          <p className="font-display text-2xl font-bold">{km > 0 ? `${Math.round(km)} km` : 'op aanvraag'}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-success/10">
-                      <Clock className="h-6 w-6 text-success" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Levertijd</p>
-                      <p className="font-display text-2xl font-bold">24-48 uur</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-success/10">
+                          <Clock className="h-6 w-6 text-success" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground">Geschatte rijtijd</p>
+                          <p className="font-display text-2xl font-bold">{rijtijdLabel}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                          <Truck className="h-6 w-6 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground">Directe rit</p>
+                          <p className="font-display text-2xl font-bold">Eén chauffeur</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-success/10">
+                          <Clock className="h-6 w-6 text-success" />
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground">Beschikbaar</p>
+                          <p className="font-display text-2xl font-bold">24/7</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })()}
 
             <div className="grid lg:grid-cols-2 gap-12">
               <div className="space-y-6">
