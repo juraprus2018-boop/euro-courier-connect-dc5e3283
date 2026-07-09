@@ -209,6 +209,7 @@ const Index = () => {
         <PriceCalculator />
         <ServicesSection />
         <CountriesSection />
+        <PopulaireRoutesSection />
         <TestimonialsSection />
         <MainCTASection />
       </main>
