@@ -40,7 +40,7 @@ export function SpoedHero({ bedrijfsNaam, tagline, landNaam }: SpoedHeroProps) {
           {/* LEFT: title + booking card */}
           <div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
-              Spoedkoerier {landNaam ? `naar ${landNaam}` : 'door heel Europa'}
+              Spoedkoerier {landNaam ? `vanuit Nederland naar ${landNaam}` : 'door heel Europa'}
             </h1>
             <p className="mt-4 text-lg sm:text-xl text-primary-foreground/90 leading-relaxed max-w-xl">
               Wij zijn <strong>{bedrijfsNaam}</strong> en rijden jouw spoedzending
