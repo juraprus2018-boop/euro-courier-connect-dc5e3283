@@ -216,7 +216,20 @@ const LandPage = () => {
         landNaam={naam}
         variables={{ land: naam }}
         canonicalPath={`/spoedkoerier-naar/${land.slug}`}
-        jsonLd={[serviceLd, breadcrumbLd, faqLd]}
+        jsonLd={[
+          serviceLd,
+          breadcrumbLd,
+          faqLd,
+          localBusinessJsonLd({
+            landNaam: naam,
+            origin,
+            areaCities: (steden || []).map((s) => ({
+              naam: s.naam,
+              latitude: s.latitude,
+              longitude: s.longitude,
+            })),
+          }),
+        ]}
       />
       <Header landNaam={activeLand?.naam} />
 
