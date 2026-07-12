@@ -111,6 +111,7 @@ const RouteDetailPage = () => {
 
   const km = Number(route.afstand_km) || 0;
   const prijsBestelwagen = Math.round(km * kmTarief);
+  const rijtijdUren = km > 0 ? km / 80 : 0;
   const faq = buildRouteFaq({ nlPlaats, buitenlandStad, landNaam, afstandKm: km, prijsBestelwagen });
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const pagePath = `/spoed-koerier-${canonicalSlug}/${slug}`;
@@ -122,6 +123,7 @@ const RouteDetailPage = () => {
       { name: `${nlPlaats} → ${buitenlandStad}`, url: `${origin}${pagePath}` },
     ]),
     serviceJsonLd({ nlPlaats, buitenlandStad, landNaam, prijsVanaf: prijsBestelwagen, url: `${origin}${pagePath}` }),
+    howToJsonLd({ nlPlaats, buitenlandStad, landNaam, afstandKm: km, rijtijdUren }),
   ];
 
   return (
