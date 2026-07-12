@@ -8,7 +8,7 @@ import { SEOHead } from '@/components/SEOHead';
 import { RouteFAQ } from '@/components/public/RouteFAQ';
 import { RelatedRoutes } from '@/components/public/RelatedRoutes';
 import { SmartCTA } from '@/components/public/SmartCTA';
-import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd } from '@/lib/seo';
+import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd, howToJsonLd } from '@/lib/seo';
 import { formatPrijsRange } from '@/lib/prijs';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
@@ -111,6 +111,7 @@ const RouteDetailPage = () => {
 
   const km = Number(route.afstand_km) || 0;
   const prijsBestelwagen = Math.round(km * kmTarief);
+  const rijtijdUren = km > 0 ? km / 80 : 0;
   const faq = buildRouteFaq({ nlPlaats, buitenlandStad, landNaam, afstandKm: km, prijsBestelwagen });
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const pagePath = `/spoed-koerier-${canonicalSlug}/${slug}`;
@@ -122,6 +123,7 @@ const RouteDetailPage = () => {
       { name: `${nlPlaats} → ${buitenlandStad}`, url: `${origin}${pagePath}` },
     ]),
     serviceJsonLd({ nlPlaats, buitenlandStad, landNaam, prijsVanaf: prijsBestelwagen, url: `${origin}${pagePath}` }),
+    howToJsonLd({ nlPlaats, buitenlandStad, landNaam, afstandKm: km, rijtijdUren }),
   ];
 
   return (

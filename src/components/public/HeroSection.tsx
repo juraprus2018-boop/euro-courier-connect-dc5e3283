@@ -12,7 +12,7 @@ export function HeroSection({ landNaam, heroTitel, heroSubtitel }: HeroSectionPr
   const siteNaam = landNaam ? `De ${landNaam} Koerier` : 'De Europa Koerier';
 
   const title = heroTitel || (landNaam
-    ? `Spoedkoerier naar ${landNaam}`
+    ? `Spoedkoerier vanuit Nederland naar ${landNaam}`
     : 'Spoedkoerier door heel Europa');
 
   const subtitle = heroSubtitel || (landNaam
