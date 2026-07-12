@@ -40,17 +40,41 @@ export function PriceCalculator({ landNaam, restrictToCountry }: PriceCalculator
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const tryGeocode = async (q: string, countryCode?: string): Promise<Coordinates | null> => {
+    const countryParam = countryCode ? `&countrycodes=${countryCode}` : '';
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}${countryParam}&limit=1`
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (data && data.length > 0) {
+      return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+    }
+    return null;
+  };
+
   const geocodeAddress = async (address: string, countryCode?: string): Promise<Coordinates | null> => {
     try {
-      const countryParam = countryCode ? `&countrycodes=${countryCode}` : '';
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}${countryParam}&limit=1`,
-        { headers: { 'User-Agent': 'DeEuropaKoerier/1.0' } }
-      );
-      const data = await response.json();
-      
-      if (data && data.length > 0) {
-        return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+      // 1. Volledig adres + landfilter
+      let r = await tryGeocode(address, countryCode);
+      if (r) return r;
+      // 2. Volledig adres zonder landfilter
+      r = await tryGeocode(address);
+      if (r) return r;
+      // 3. Zonder huisnummer (verwijder eerste getallen-token)
+      const zonderNr = address.replace(/\b\d+[a-zA-Z]?\b/, '').replace(/\s+,/g, ',').trim();
+      if (zonderNr && zonderNr !== address) {
+        r = await tryGeocode(zonderNr, countryCode);
+        if (r) return r;
+      }
+      // 4. Alleen postcode + plaats of alleen laatste deel (plaats/land)
+      const parts = address.split(',').map(s => s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        const laatste = parts.slice(-1)[0];
+        r = await tryGeocode(laatste, countryCode);
+        if (r) return r;
+        r = await tryGeocode(laatste);
+        if (r) return r;
       }
       return null;
     } catch (err) {
