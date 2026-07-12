@@ -8,7 +8,7 @@ import { SEOHead } from '@/components/SEOHead';
 import { RouteFAQ } from '@/components/public/RouteFAQ';
 import { RelatedRoutes } from '@/components/public/RelatedRoutes';
 import { SmartCTA } from '@/components/public/SmartCTA';
-import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd } from '@/lib/seo';
+import { buildRouteFaq, faqJsonLd, breadcrumbJsonLd, serviceJsonLd, howToJsonLd } from '@/lib/seo';
 import { formatPrijsRange } from '@/lib/prijs';
 import { supabase } from '@/integrations/supabase/client';
 import { useLand } from '@/hooks/useLand';
