@@ -13,6 +13,8 @@ import { AnimatedLeafletRouteMap } from '@/components/public/AnimatedLeafletRout
 import RouteMap from '@/components/public/RouteMap';
 import { formatPrijsRange } from '@/lib/prijs';
 import { SmartCTA } from '@/components/public/SmartCTA';
+import { ServiceAreaMap } from '@/components/public/ServiceAreaMap';
+import { localBusinessJsonLd } from '@/lib/seo';
 import { SEOHead } from '@/components/SEOHead';
 
 const LandPage = () => {
