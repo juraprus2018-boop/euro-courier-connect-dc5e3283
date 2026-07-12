@@ -291,6 +291,33 @@ const LandPage = () => {
         );
       })()}
 
+      {/* Servicegebied kaart */}
+      {steden && steden.some((s) => s.latitude != null && s.longitude != null) && (
+        <section className="py-12 bg-muted/20">
+          <div className="container">
+            <div className="mb-4">
+              <h2 className="font-display text-xl md:text-2xl font-bold">
+                Servicegebied in {naam}
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl">
+                Wij bedienen heel {naam} vanuit ons depot in Son en Breugel. De kaart toont
+                onze belangrijkste bestemmingen; ook plaatsen daarbuiten rijden wij op aanvraag.
+              </p>
+            </div>
+            <ServiceAreaMap
+              cities={(steden || []).map((s) => ({
+                id: s.id,
+                naam: s.naam,
+                latitude: s.latitude,
+                longitude: s.longitude,
+              }))}
+              landNaam={naam}
+            />
+          </div>
+        </section>
+      )}
+
+
       {/* SEO content */}
       <section className="py-12 bg-muted/30">
         <div className="container">
