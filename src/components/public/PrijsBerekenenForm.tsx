@@ -165,14 +165,6 @@ export function PrijsBerekenenForm({
       setCalcError('Vul eerst laad- en losplaats in.');
       return;
     }
-    if (!values.contact_naam || !values.contact_email || !values.contact_telefoon) {
-      setCalcError('Vul eerst je contactgegevens (naam, e-mail en telefoon) in om de prijs te zien.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.contact_email)) {
-      setCalcError('Vul een geldig e-mailadres in.');
-      return;
-    }
     setCalculating(true);
     try {
       const pickup = await geocode(values.ophaal_adres, 'nl');
