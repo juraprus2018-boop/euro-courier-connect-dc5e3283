@@ -1,0 +1,40 @@
+# De Europa Koerier
+
+> Multi-domain platform voor spoedkoerierdiensten door heel Europa. Eén codebase bedient deeuropakoerier.nl en land-domeinen zoals dekroatiekoerier.nl. Direct transport vanuit Nederland naar elk Europees land, 24/7 beschikbaar, met offerte-aanvraag en prijsberekening.
+
+De Europa Koerier is een spoedkoerierplatform dat vanuit Nederland directe ritten rijdt naar bestemmingen in Europa. Per landdomein wordt dezelfde dienst aangeboden, maar dan met land-specifieke branding, content en routes. Bezoekers kunnen een prijsindicatie berekenen, een offerte aanvragen, bestemmingen bekijken en servicepagina’s raadplegen.
+
+## Pages
+
+- [/](/): Homepage met spoedkoerierdiensten, voertuigen, trust signals en call-to-actions.
+- [/bestemmingen](/bestemmingen): Overzicht van bestemmingen en routes per land.
+- [/offerte](/offerte): Offerte-aanvraagformulier voor spoedtransport.
+- [/offerte-aanvragen](/offerte-aanvragen): Prijs berekenen en direct offerte aanvragen.
+- [/prijs-berekenen](/prijs-berekenen): Interactieve prijsberekening voor een route.
+- [/prijs-indicatie](/prijs-indicatie): Overzicht van een eerder berekende prijsindicatie.
+- [/contact](/contact): Contactgegevens, WhatsApp-link en terugbelverzoek.
+- [/faq](/faq): Veelgestelde vragen over spoedkoerierdiensten.
+- [/laadcapaciteit](/laadcapaciteit): Laadmaten en gewichtslimieten per voertuigtype.
+- [/certificeringen](/certificeringen): Certificeringen, ADR, ISO en tachograaf.
+- [/tachograaf-buitenland-ritten](/tachograaf-buitenland-ritten): Uitleg over tachograaf en buitenlandritten.
+- [/algemene-voorwaarden](/algemene-voorwaarden): Algemene voorwaarden.
+- [/privacybeleid](/privacybeleid): Privacybeleid.
+- [/blog](/blog): Blogoverzicht met koerier- en transportgerelateerde artikelen.
+
+## Services
+
+- [/internationaal-transport](/internationaal-transport): Internationaal transport en spoedkoerierdiensten.
+- [/kunsttransport](/kunsttransport): Transport van kunst en antiek.
+- [/medisch-transport](/medisch-transport): Medische spoedtransporten.
+- [/on-board-koeriersdienst](/on-board-koeriersdienst): On-board koeriersdienst voor urgente zendingen.
+
+## Dynamic routes
+
+- [/spoedkoerier-naar/{land}](/spoedkoerier-naar/kroatie): Landingspagina voor een specifiek land.
+- [/bestemming/{stad}](/bestemming/zagreb): Detailpagina voor een buitenlandse stad.
+- [/route/{slug}](/route/amsterdam-zagreb): Route-detailpagina met prijsindicatie en FAQ.
+- [/blog/{slug}](/blog/spoedkoerier-europa): Blogartikel.
+
+## Optional
+
+- [/offerte-status/{token}](/offerte-status): Statuspagina voor een ingediende offerte.
