@@ -47,6 +47,14 @@ const quoteSchema = z.object({
 
 type QuoteFormData = z.infer<typeof quoteSchema>;
 
+const isAccessPolicyError = (error: unknown) => {
+  const err = error as { code?: string; message?: string } | null;
+  return (
+    err?.code === '42501' ||
+    /row-level security|permission denied/i.test(err?.message || '')
+  );
+};
+
 interface QuoteFormProps {
   routeId?: string;
   landId?: string;
@@ -266,9 +274,12 @@ export function QuoteForm({
       });
     } catch (error) {
       console.error('Error submitting quote:', error);
+      const accessPolicyError = isAccessPolicyError(error);
       toast({
-        title: 'Er ging iets mis',
-        description: 'Probeer het later opnieuw.',
+        title: accessPolicyError ? 'Aanvraag kon niet worden opgeslagen' : 'Er ging iets mis',
+        description: accessPolicyError
+          ? 'Uw gegevens zijn goed ingevuld, maar de aanvraag werd door onze beveiliging geblokkeerd. Bel ons direct of probeer het over enkele minuten opnieuw.'
+          : 'Probeer het later opnieuw.',
         variant: 'destructive',
       });
     } finally {
