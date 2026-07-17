@@ -67,6 +67,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+const isAccessPolicyError = (error: unknown) => {
+  const err = error as { code?: string; message?: string } | null;
+  return (
+    err?.code === '42501' ||
+    /row-level security|permission denied/i.test(err?.message || '')
+  );
+};
+
 interface PriceResult {
   prijs: number;
   afstand_km: number;
@@ -259,9 +267,12 @@ export function PrijsBerekenenForm({
       });
     } catch (e) {
       console.error(e);
+      const accessPolicyError = isAccessPolicyError(e);
       toast({
-        title: 'Er ging iets mis',
-        description: 'Probeer het later opnieuw.',
+        title: accessPolicyError ? 'Aanvraag kon niet worden opgeslagen' : 'Er ging iets mis',
+        description: accessPolicyError
+          ? 'Uw gegevens zijn goed ingevuld, maar de aanvraag werd door onze beveiliging geblokkeerd. Bel ons direct of probeer het over enkele minuten opnieuw.'
+          : 'Probeer het later opnieuw.',
         variant: 'destructive',
       });
     } finally {
