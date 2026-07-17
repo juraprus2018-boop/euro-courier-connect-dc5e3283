@@ -193,7 +193,7 @@ export function QuoteForm({
       ].filter(Boolean);
       const opmerkingen = opmerkingenParts.length ? opmerkingenParts.join(' · ') : null;
 
-      const { data: inserted, error } = await supabase
+      const insertQuery = supabase
         .from('aanvragen')
         .insert({
           route_id: routeId || null,
@@ -211,13 +211,20 @@ export function QuoteForm({
           contact_telefoon: data.contact_telefoon || null,
           afstand_km: afstandKm || null,
           opmerkingen,
-        })
-        .select('public_token')
-        .single();
+        });
 
-      if (error) throw error;
+      // Voor ingelogde klanten kunnen we het public_token direct terug lezen
+      // (RLS staat anonieme SELECT niet toe, dus zonder auth slaan we .select() over).
+      let token: string | undefined;
+      if (user) {
+        const { data: inserted, error } = await insertQuery.select('public_token').single();
+        if (error) throw error;
+        token = inserted?.public_token as string | undefined;
+      } else {
+        const { error } = await insertQuery;
+        if (error) throw error;
+      }
 
-      const token = inserted?.public_token as string | undefined;
       const statusUrl = token && typeof window !== 'undefined'
         ? `${window.location.origin}/offerte-status/${token}`
         : undefined;
