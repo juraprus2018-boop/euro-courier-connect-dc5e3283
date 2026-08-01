@@ -549,6 +549,44 @@ export function QuoteForm({
             </div>
           </div>
 
+          {(indicatieLoading || indicatie || indicatieFout) && (
+            <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4 text-primary" />
+                <span className="text-sm font-semibold text-primary">Prijsindicatie</span>
+                {indicatieLoading && <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />}
+              </div>
+
+              {indicatie && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-lg border bg-card p-3">
+                    <div className="flex items-center gap-2 text-sm font-semibold">
+                      <Truck className="h-4 w-4 text-primary" /> Bestelbus
+                    </div>
+                    <div className="mt-1 text-lg font-bold">{formatPrijsRange(indicatie.prijs)}</div>
+                    <p className="text-xs text-muted-foreground">Indicatie excl. BTW</p>
+                  </div>
+                  <div className="rounded-lg border bg-card p-3">
+                    <div className="flex items-center gap-2 text-sm font-semibold">
+                      <Package className="h-4 w-4 text-primary" /> Bakwagen met laadklep
+                    </div>
+                    <div className="mt-1 text-lg font-bold">Prijs op aanvraag</div>
+                    <p className="text-xs text-muted-foreground">
+                      De exacte prijs wordt correct berekend en ontvangt u per e-mail.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {indicatieFout && !indicatie && (
+                <p className="text-sm text-muted-foreground">{indicatieFout}</p>
+              )}
+
+              {indicatie && <p className="text-xs text-muted-foreground">{PRIJS_DISCLAIMER}</p>}
+            </div>
+          )}
+
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="datum">Gewenste datum</Label>
@@ -588,7 +626,20 @@ export function QuoteForm({
             </div>
           </div>
 
+          {/* Anti-spam honeypot, onzichtbaar voor bezoekers */}
+          <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+            <label htmlFor={HONEYPOT_FIELD}>Website</label>
+            <input
+              id={HONEYPOT_FIELD}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              {...register('website_url')}
+            />
+          </div>
+
           <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
