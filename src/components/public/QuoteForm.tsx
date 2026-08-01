@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { BookUser, Loader2, Send } from 'lucide-react';
+import { BookUser, Loader2, Send, Truck, Package, Info } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +20,32 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { AddressAutocomplete } from './AddressAutocomplete';
+import { Textarea } from '@/components/ui/textarea';
+import { useTarieven } from '@/hooks/useTarieven';
+import { formatPrijsRange, PRIJS_DISCLAIMER } from '@/lib/prijs';
+import { detectSpam, HONEYPOT_FIELD } from '@/lib/antispam';
+
+const DEPOT = { lat: 51.4386732, lng: 5.5223595 };
+
+async function geocodeAdres(address: string, country?: string) {
+  const cc = country ? `&countrycodes=${country}` : '';
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}${cc}&limit=1`,
+  );
+  const data = await res.json();
+  if (!data?.length) return null;
+  return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+}
+
+async function osrmAfstand(coords: { lat: number; lng: number }[]) {
+  const path = coords.map((c) => `${c.lng},${c.lat}`).join(';');
+  const res = await fetch(
+    `https://router.project-osrm.org/route/v1/driving/${path}?overview=false`,
+  );
+  const data = await res.json();
+  if (data.code !== 'Ok' || !data.routes?.length) return null;
+  return { distance: data.routes[0].distance / 1000 };
+}
 
 interface KlantAdres {
   id: string;
@@ -39,7 +65,12 @@ const quoteSchema = z.object({
   aflever_postcode: z.string().max(20).optional(),
   aflever_plaats: z.string().min(1, 'Afleverplaats is verplicht').max(100),
   datum: z.string().optional(),
-  omschrijving: z.string().max(2000).optional(),
+  omschrijving: z
+    .string()
+    .trim()
+    .min(3, 'Vertel kort wat u wilt versturen')
+    .max(2000),
+  website_url: z.string().max(200).optional(),
   contact_naam: z.string().min(1, 'Naam is verplicht').max(100),
   contact_email: z.string().email('Ongeldig e-mailadres').max(255),
   contact_telefoon: z.string().min(1, 'Telefoonnummer is verplicht').max(50),
@@ -137,6 +168,67 @@ export function QuoteForm({
   const ophaalAdres = values.ophaal_adres;
   const afleverAdres = values.aflever_adres;
 
+  // Anti-spam: tijdstip waarop het formulier geopend werd
+  const [startedAt] = useState(() => Date.now());
+
+  // Prijsindicatie zodra ophaal- en afleveradres bekend zijn
+  const { tarieven } = useTarieven();
+  const [indicatie, setIndicatie] = useState<{ prijs: number } | null>(null);
+  const [indicatieLoading, setIndicatieLoading] = useState(false);
+  const [indicatieFout, setIndicatieFout] = useState<string | null>(null);
+
+  const ophaalKey = `${ophaalAdres || ''}|${values.ophaal_plaats || ''}`;
+  const afleverKey = `${afleverAdres || ''}|${values.aflever_plaats || ''}`;
+
+  useEffect(() => {
+    const van = (ophaalAdres || values.ophaal_plaats || '').trim();
+    const naar = (afleverAdres || values.aflever_plaats || '').trim();
+    if (van.length < 3 || naar.length < 3) {
+      setIndicatie(null);
+      setIndicatieFout(null);
+      return;
+    }
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      setIndicatieLoading(true);
+      setIndicatieFout(null);
+      try {
+        const pickup = await geocodeAdres(van, 'nl');
+        const dest = await geocodeAdres(naar, afleverCountries);
+        if (!pickup || !dest) {
+          if (!cancelled) {
+            setIndicatie(null);
+            setIndicatieFout('Wij konden dit adres niet vinden, de prijs volgt per e-mail.');
+          }
+          return;
+        }
+        const route = await osrmAfstand([DEPOT, pickup, dest, DEPOT]);
+        if (!route) {
+          if (!cancelled) {
+            setIndicatie(null);
+            setIndicatieFout('Route kon niet worden berekend, de prijs volgt per e-mail.');
+          }
+          return;
+        }
+        if (!cancelled) {
+          setIndicatie({ prijs: Math.round(route.distance * tarieven.bestelwagen) });
+        }
+      } catch {
+        if (!cancelled) {
+          setIndicatie(null);
+          setIndicatieFout('Prijsindicatie is tijdelijk niet beschikbaar.');
+        }
+      } finally {
+        if (!cancelled) setIndicatieLoading(false);
+      }
+    }, 1200);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ophaalKey, afleverKey, afleverCountries, tarieven.bestelwagen]);
+
   // Autofill profielgegevens + standaard adresboek bij ingelogde klant
   useEffect(() => {
     if (!user || autofilled) return;
@@ -193,6 +285,27 @@ export function QuoteForm({
       : '';
 
   const onSubmit = async (data: QuoteFormData) => {
+    // Anti-spam controle vóór opslaan
+    const spamReden = detectSpam({
+      honeypot: data.website_url,
+      startedAt,
+      fields: [data.contact_naam, data.omschrijving, data.ophaal_adres, data.aflever_adres],
+    });
+    if (spamReden) {
+      if (spamReden === 'honeypot' || spamReden === 'te snel verzonden') {
+        // Stil afwijzen: bots krijgen een "succes" te zien, er wordt niets opgeslagen.
+        setIsSubmitted(true);
+        return;
+      }
+      toast({
+        title: 'Aanvraag geweigerd',
+        description:
+          'Uw aanvraag lijkt op spam (bijvoorbeeld door links of vreemde tekens). Haal links weg of bel ons direct.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const opmerkingenParts = [
