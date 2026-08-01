@@ -33,6 +33,7 @@ import { useLand } from '@/hooks/useLand';
 import { useTarieven } from '@/hooks/useTarieven';
 import { CONTACT } from '@/lib/contact';
 import { AddressAutocomplete } from './AddressAutocomplete';
+import { detectSpam, HONEYPOT_FIELD } from '@/lib/antispam';
 
 
 const SOORTEN = [
@@ -63,6 +64,7 @@ const schema = z.object({
   contact_naam: z.string().min(1, 'Naam is verplicht').max(100),
   contact_email: z.string().email('Ongeldig e-mailadres').max(255),
   contact_telefoon: z.string().min(1, 'Telefoonnummer is verplicht').max(50),
+  website_url: z.string().max(200).optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -166,6 +168,7 @@ export function PrijsBerekenenForm({
   });
 
   const values = watch();
+  const [startedAt] = useState(() => Date.now());
 
   const calculatePrice = async () => {
     setCalcError(null);
@@ -227,6 +230,24 @@ export function PrijsBerekenenForm({
   };
 
   const onSubmit = async (data: FormData) => {
+    const spamReden = detectSpam({
+      honeypot: data.website_url,
+      startedAt,
+      fields: [data.contact_naam, data.ophaal_adres, data.aflever_adres],
+    });
+    if (spamReden) {
+      if (spamReden === 'honeypot' || spamReden === 'te snel verzonden') {
+        setIsSubmitted(true);
+        return;
+      }
+      toast({
+        title: 'Aanvraag geweigerd',
+        description:
+          'Uw aanvraag lijkt op spam (bijvoorbeeld door links of vreemde tekens). Haal links weg of bel ons direct.',
+        variant: 'destructive',
+      });
+      return;
+    }
     setIsSubmitting(true);
     try {
       const totaalGewicht = data.lading_items.reduce(
@@ -588,6 +609,19 @@ export function PrijsBerekenenForm({
             )}
 
           </div>
+
+          {/* Anti-spam honeypot, onzichtbaar voor bezoekers */}
+          <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+            <label htmlFor={HONEYPOT_FIELD}>Website</label>
+            <input
+              id={HONEYPOT_FIELD}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              {...register('website_url')}
+            />
+          </div>
+
 
           <Button
             type="submit"
