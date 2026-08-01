@@ -443,48 +443,6 @@ export function QuoteForm({
             )}
             <span className="text-xs text-muted-foreground ml-auto">Vooraf ingevuld, vul aan en verstuur</span>
           </div>
-
-          {(indicatieLoading || indicatie || indicatieFout) && (
-            <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <Info className="h-4 w-4 text-primary" />
-                <span className="text-sm font-semibold text-primary">Prijsindicatie</span>
-                {indicatieLoading && <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />}
-              </div>
-
-              {indicatie && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="rounded-lg border bg-card p-3">
-                    <div className="flex items-center gap-2 text-sm font-semibold">
-                      <Truck className="h-4 w-4 text-primary" /> Bestelbus
-                    </div>
-                    <div className="mt-1 text-lg font-bold">
-                      {formatPrijsRange(indicatie.prijs)}
-                    </div>
-                    <p className="text-xs text-muted-foreground">Indicatie excl. BTW</p>
-                  </div>
-                  <div className="rounded-lg border bg-card p-3">
-                    <div className="flex items-center gap-2 text-sm font-semibold">
-                      <Package className="h-4 w-4 text-primary" /> Bakwagen met laadklep
-                    </div>
-                    <div className="mt-1 text-lg font-bold">Prijs op aanvraag</div>
-                    <p className="text-xs text-muted-foreground">
-                      De exacte prijs wordt correct berekend en ontvangt u per e-mail.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {indicatieFout && !indicatie && (
-                <p className="text-sm text-muted-foreground">{indicatieFout}</p>
-              )}
-
-              {indicatie && (
-                <p className="text-xs text-muted-foreground">{PRIJS_DISCLAIMER}</p>
-              )}
-            </div>
-          )}
-
         )}
         {user && autofilled && (
           <div className="mb-4 rounded-lg border border-success/40 bg-success/5 p-3 text-sm flex items-center gap-2">
